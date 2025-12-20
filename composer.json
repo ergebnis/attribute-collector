@@ -1,0 +1,75 @@
+{
+  "name": "ergebnis/attribute-collector",
+  "description": "Provides collectors for collecting attributes targeting classes, constants, properties, methods, method parameters, functions, and function parameters.",
+  "license": "MIT",
+  "type": "library",
+  "authors": [
+    {
+      "name": "Andreas Möller",
+      "email": "am@localheinz.com",
+      "homepage": "https://localheinz.com"
+    }
+  ],
+  "homepage": "https://github.com/ergebnis/attribute-collector",
+  "support": {
+    "issues": "https://github.com/ergebnis/attribute-collector/issues",
+    "source": "https://github.com/ergebnis/attribute-collector",
+    "security": "https://github.com/ergebnis/attribute-collector/blob/main/.github/SECURITY.md"
+  },
+  "require": {
+    "php": "~8.0.0 || ~8.1.0 || ~8.2.0 || ~8.3.0 || ~8.4.0 || ~8.5.0"
+  },
+  "require-dev": {
+    "ergebnis/composer-normalize": "^2.48.2",
+    "ergebnis/data-provider": "^3.6.0",
+    "ergebnis/license": "^2.7.0",
+    "ergebnis/php-cs-fixer-config": "^6.58.1",
+    "ergebnis/phpstan-rules": "^2.12.0",
+    "ergebnis/phpunit-slow-test-detector": "^2.20.0",
+    "ergebnis/rector-rules": "^1.9.0",
+    "fakerphp/faker": "^1.24.1",
+    "infection/infection": "~0.26.16",
+    "phpstan/extension-installer": "^1.4.3",
+    "phpstan/phpstan": "^2.1.33",
+    "phpstan/phpstan-deprecation-rules": "^2.0.3",
+    "phpstan/phpstan-phpunit": "^2.0.11",
+    "phpstan/phpstan-strict-rules": "^2.0.7",
+    "phpunit/phpunit": "^9.6.31",
+    "rector/rector": "^2.3.0"
+  },
+  "autoload": {
+    "psr-4": {
+      "Ergebnis\\AttributeCollector\\": "src/"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "Ergebnis\\AttributeCollector\\Test\\": "test/"
+    }
+  },
+  "config": {
+    "allow-plugins": {
+      "composer/package-versions-deprecated": true,
+      "ergebnis/composer-normalize": true,
+      "infection/extension-installer": true,
+      "phpstan/extension-installer": true
+    },
+    "audit": {
+      "abandoned": "report"
+    },
+    "platform": {
+      "php": "8.0.30"
+    },
+    "preferred-install": "dist",
+    "sort-packages": true
+  },
+  "extra": {
+    "branch-alias": {
+      "dev-main": "1.0-dev"
+    },
+    "composer-normalize": {
+      "indent-size": 2,
+      "indent-style": "space"
+    }
+  }
+}
