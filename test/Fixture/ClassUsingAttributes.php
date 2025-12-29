@@ -39,7 +39,14 @@ final class ClassUsingAttributes
         bar: 345,
     )]
     #[AttributeWithoutParameters()]
-    public function foo(): void
-    {
+    public function foo(
+        #[AttributeWithParameters(
+            foo: 'bar',
+            bar: 456,
+        )]
+        #[AttributeWithoutParameters()]
+        string $bar,
+        int $baz,
+    ): void {
     }
 }
