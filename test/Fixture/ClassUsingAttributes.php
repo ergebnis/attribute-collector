@@ -20,4 +20,10 @@ namespace Ergebnis\AttributeCollector\Test\Fixture;
 #[AttributeWithoutParameters()]
 final class ClassUsingAttributes
 {
+    #[AttributeWithParameters(
+        foo: 'bar',
+        bar: 123,
+    )]
+    #[AttributeWithoutParameters()]
+    public const FOO = 'bar';
 }
