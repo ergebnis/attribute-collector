@@ -22,6 +22,7 @@ use PHPUnit\Framework;
 /**
  * @covers \Ergebnis\AttributeCollector\Attribute
  *
+ * @uses \Ergebnis\AttributeCollector\Location\ClassLocation
  * @uses \Ergebnis\AttributeCollector\Name\ClassName
  */
 final class AttributeTest extends Framework\TestCase
@@ -36,7 +37,7 @@ final class AttributeTest extends Framework\TestCase
             $faker->word(),
             $faker->numberBetween(1),
         );
-        $location = $this->createStub(Location\Location::class);
+        $location = Location\ClassLocation::create(Name\ClassName::fromString(Test\Fixture\ClassUsingAttributeWithParameters::class));
 
         $attribute = Attribute::create(
             $location,
