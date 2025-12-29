@@ -33,4 +33,13 @@ final class ClassUsingAttributes
     )]
     #[AttributeWithoutParameters()]
     public string $foo = 'bar';
+
+    #[AttributeWithParameters(
+        foo: 'bar',
+        bar: 345,
+    )]
+    #[AttributeWithoutParameters()]
+    public function foo(): void
+    {
+    }
 }
