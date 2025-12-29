@@ -18,8 +18,15 @@ namespace Ergebnis\AttributeCollector\Test\Fixture;
     bar: 234,
 )]
 #[AttributeWithoutParameters()]
-function foo(): void
-{
+function foo(
+    #[AttributeWithParameters(
+        foo: 'quz',
+        bar: 345,
+    )]
+    #[AttributeWithoutParameters()]
+    string $bar,
+    int $baz,
+): void {
 }
 
 #[AttributeWithParameters(
@@ -27,10 +34,15 @@ function foo(): void
     bar: 345,
 )]
 #[AttributeWithoutParameters()]
-function bar(): void
-{
+function bar(
+    #[AttributeWithoutParameters()]
+    string $baz,
+    float $qux,
+): void {
 }
 
-function baz(): void
-{
+function baz(
+    string $qux,
+    int $baz,
+): void {
 }
