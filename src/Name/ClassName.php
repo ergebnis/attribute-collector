@@ -11,19 +11,36 @@ declare(strict_types=1);
  * @see https://github.com/ergebnis/attribute-collector
  */
 
-namespace Ergebnis\AttributeCollector;
+namespace Ergebnis\AttributeCollector\Name;
 
-final class Example
+use Ergebnis\AttributeCollector\Exception;
+
+final class ClassName
 {
+    /**
+     * @param class-string $value
+     */
     private function __construct(private string $value)
     {
     }
 
+    /**
+     * @param class-string $value
+     *
+     * @throws Exception\InvalidClassName
+     */
     public static function fromString(string $value): self
     {
+        if ('' === \trim($value)) {
+            throw Exception\InvalidClassName::blankOrEmpty();
+        }
+
         return new self($value);
     }
 
+    /**
+     * @return class-string
+     */
     public function toString(): string
     {
         return $this->value;
