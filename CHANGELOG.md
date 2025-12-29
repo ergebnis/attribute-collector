@@ -11,9 +11,11 @@ For a full diff see [`e66cfff...main`][e66cfff...main].
 ### Added
 
 - Added `Attribute` ([#1]), by [@localheinz]
+- Added `Location\ClassLocation` ([#2]), by [@localheinz]
 
 [e66cfff...main]: https://github.com/ergebnis/attribute-collector/compare/e66cfff...main
 
 [#1]: https://github.com/ergebnis/attribute-collector/pull/1
+[#2]: https://github.com/ergebnis/attribute-collector/pull/2
 
 [@localheinz]: https://github.com/localheinz
