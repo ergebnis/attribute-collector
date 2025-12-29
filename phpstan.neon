@@ -7,6 +7,9 @@ parameters:
 			classesAllowedToBeExtended:
 				- InvalidArgumentException
 
+	excludePaths:
+		- test/Fixture/constants.php
+
 	inferPrivatePropertyTypeFromConstructor: true
 
 	level: max
