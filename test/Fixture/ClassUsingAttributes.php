@@ -26,4 +26,11 @@ final class ClassUsingAttributes
     )]
     #[AttributeWithoutParameters()]
     public const FOO = 'bar';
+
+    #[AttributeWithParameters(
+        foo: 'bar',
+        bar: 234,
+    )]
+    #[AttributeWithoutParameters()]
+    public string $foo = 'bar';
 }
