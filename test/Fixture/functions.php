@@ -1,0 +1,36 @@
+<?php
+
+declare(strict_types=1);
+
+/**
+ * Copyright (c) 2025 Andreas Möller
+ *
+ * For the full copyright and license information, please view
+ * the LICENSE.md file that was distributed with this source code.
+ *
+ * @see https://github.com/ergebnis/attribute-collector
+ */
+
+namespace Ergebnis\AttributeCollector\Test\Fixture;
+
+#[AttributeWithParameters(
+    foo: 'qux',
+    bar: 234,
+)]
+#[AttributeWithoutParameters()]
+function foo(): void
+{
+}
+
+#[AttributeWithParameters(
+    foo: 'quz',
+    bar: 345,
+)]
+#[AttributeWithoutParameters()]
+function bar(): void
+{
+}
+
+function baz(): void
+{
+}
