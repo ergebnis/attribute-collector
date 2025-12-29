@@ -17,14 +17,14 @@ use Ergebnis\AttributeCollector\Exception;
 use PHPUnit\Framework;
 
 /**
- * @covers \Ergebnis\AttributeCollector\Exception\InvalidClassPropertyName
+ * @covers \Ergebnis\AttributeCollector\Exception\InvalidPropertyName
  */
-final class InvalidClassPropertyNameTest extends Framework\TestCase
+final class InvalidPropertyNameTest extends Framework\TestCase
 {
     public function testBlankOrEmptyReturnsException(): void
     {
-        $exception = Exception\InvalidClassPropertyName::blankOrEmpty();
+        $exception = Exception\InvalidPropertyName::blankOrEmpty();
 
-        self::assertSame('Class property name cannot be blank or empty.', $exception->getMessage());
+        self::assertSame('Property name cannot be blank or empty.', $exception->getMessage());
     }
 }

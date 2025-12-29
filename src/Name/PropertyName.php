@@ -22,12 +22,12 @@ final class PropertyName
     }
 
     /**
-     * @throws Exception\InvalidClassPropertyName
+     * @throws Exception\InvalidPropertyName
      */
     public static function fromString(string $value): self
     {
         if ('' === \trim($value)) {
-            throw Exception\InvalidClassPropertyName::blankOrEmpty();
+            throw Exception\InvalidPropertyName::blankOrEmpty();
         }
 
         return new self($value);

@@ -13,10 +13,10 @@ declare(strict_types=1);
 
 namespace Ergebnis\AttributeCollector\Exception;
 
-final class InvalidClassPropertyName extends \InvalidArgumentException implements Exception
+final class InvalidPropertyName extends \InvalidArgumentException implements Exception
 {
     public static function blankOrEmpty(): self
     {
-        return new self('Class property name cannot be blank or empty.');
+        return new self('Property name cannot be blank or empty.');
     }
 }

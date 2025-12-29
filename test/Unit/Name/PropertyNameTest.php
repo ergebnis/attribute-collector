@@ -21,7 +21,7 @@ use PHPUnit\Framework;
 /**
  * @covers \Ergebnis\AttributeCollector\Name\PropertyName
  *
- * @uses \Ergebnis\AttributeCollector\Exception\InvalidClassPropertyName
+ * @uses \Ergebnis\AttributeCollector\Exception\InvalidPropertyName
  */
 final class PropertyNameTest extends Framework\TestCase
 {
@@ -33,7 +33,7 @@ final class PropertyNameTest extends Framework\TestCase
      */
     public function testFromStringRejectsInvalidValue(string $value): void
     {
-        $this->expectException(Exception\InvalidClassPropertyName::class);
+        $this->expectException(Exception\InvalidPropertyName::class);
 
         Name\PropertyName::fromString($value);
     }
