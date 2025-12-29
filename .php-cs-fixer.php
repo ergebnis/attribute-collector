@@ -44,7 +44,10 @@ $finder = Finder::create()
         '.note/',
     ])
     ->ignoreDotFiles(false)
-    ->in(__DIR__);
+    ->in(__DIR__)
+    ->notPath([
+        'test/Fixture/constants.php',
+    ]);
 
 $config = PhpCsFixer\Config\Factory::fromRuleSet($ruleSet);
 
