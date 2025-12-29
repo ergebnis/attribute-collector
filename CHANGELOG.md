@@ -19,6 +19,7 @@ For a full diff see [`e66cfff...main`][e66cfff...main].
 - Added `Location\FunctionLocation` ([#7]), by [@localheinz]
 - Added `Location\FunctionParameterLocation` ([#8]), by [@localheinz]
 - Added `Location\ConstantLocation` ([#9]), by [@localheinz]
+- Added `AttributeCollection` ([#10]), by [@localheinz]
 
 [e66cfff...main]: https://github.com/ergebnis/attribute-collector/compare/e66cfff...main
 
@@ -31,5 +32,6 @@ For a full diff see [`e66cfff...main`][e66cfff...main].
 [#7]: https://github.com/ergebnis/attribute-collector/pull/7
 [#8]: https://github.com/ergebnis/attribute-collector/pull/8
 [#9]: https://github.com/ergebnis/attribute-collector/pull/9
+[#10]: https://github.com/ergebnis/attribute-collector/pull/10
 
 [@localheinz]: https://github.com/localheinz
