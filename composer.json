@@ -1,6 +1,6 @@
 {
   "name": "ergebnis/attribute-collector",
-  "description": "Provides collectors for collecting attributes targeting classes, constants, properties, methods, method parameters, functions, and function parameters.",
+  "description": "Provides collectors for collecting attributes located on classes, class constants, properties, methods, method parameters, functions, function parameters, and constants.",
   "license": "MIT",
   "type": "library",
   "authors": [

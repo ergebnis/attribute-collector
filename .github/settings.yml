@@ -85,7 +85,7 @@ repository:
   archived: false
   default_branch: "main"
   delete_branch_on_merge: true
-  description: "🪣 Provides a composer package for collecting attributes targeting classes, class constants, properties, methods, method parameters, functions, function parameters, and constants."
+  description: "🪣 Provides a composer package with collectors for collecting attributes located on classes, class constants, properties, methods, method parameters, functions, function parameters, and constants."
   enable_automated_security_fixes: true
   enable_vulnerability_alerts: true
   has_discussions: false
