@@ -17,18 +17,18 @@ final class Attribute
 {
     private function __construct(
         private Name\ClassName $className,
-        private Location\Location $target,
+        private Location\Location $location,
         private object $instance,
     ) {
     }
 
     public static function create(
-        Location\Location $target,
+        Location\Location $location,
         object $instance,
     ): self {
         return new self(
             Name\ClassName::fromString($instance::class),
-            $target,
+            $location,
             $instance,
         );
     }
@@ -40,7 +40,7 @@ final class Attribute
 
     public function location(): Location\Location
     {
-        return $this->target;
+        return $this->location;
     }
 
     public function instance(): object
