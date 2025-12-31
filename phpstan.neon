@@ -6,6 +6,7 @@ parameters:
 		noExtends:
 			classesAllowedToBeExtended:
 				- InvalidArgumentException
+				- RuntimeException
 
 	excludePaths:
 		- test/Fixture/constants.php

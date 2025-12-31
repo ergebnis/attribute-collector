@@ -1,6 +1,54 @@
 parameters:
 	ignoreErrors:
 		-
+			message: '#^Argument of an invalid type mixed supplied for foreach, only iterables are supported\.$#'
+			identifier: foreach.nonIterable
+			count: 1
+			path: src/Collector/TraversingAttributeFromLocationCollector.php
+
+		-
+			message: '#^Call to an undefined method ReflectionConstant\:\:getAttributes\(\)\.$#'
+			identifier: method.notFound
+			count: 1
+			path: src/Collector/TraversingAttributeFromLocationCollector.php
+
+		-
+			message: '#^Cannot call method newInstance\(\) on mixed\.$#'
+			identifier: method.nonObject
+			count: 1
+			path: src/Collector/TraversingAttributeFromLocationCollector.php
+
+		-
+			message: '#^Method Ergebnis\\AttributeCollector\\Collector\\TraversingAttributeFromLocationCollector\:\:findReflectionFunctionParameterWithParameterName\(\) has a nullable return type declaration\.$#'
+			identifier: ergebnis.noNullableReturnTypeDeclaration
+			count: 1
+			path: src/Collector/TraversingAttributeFromLocationCollector.php
+
+		-
+			message: '#^Method Ergebnis\\AttributeCollector\\Collector\\TraversingAttributeFromLocationCollector\:\:findReflectionMethodParameterWithParameterName\(\) has a nullable return type declaration\.$#'
+			identifier: ergebnis.noNullableReturnTypeDeclaration
+			count: 1
+			path: src/Collector/TraversingAttributeFromLocationCollector.php
+
+		-
+			message: '#^Parameter \#2 \$instance of static method Ergebnis\\AttributeCollector\\Attribute\:\:create\(\) expects object, mixed given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/Collector/TraversingAttributeFromLocationCollector.php
+
+		-
+			message: '#^Call to function in_array\(\) requires parameter \#3 to be true\.$#'
+			identifier: function.strict
+			count: 1
+			path: src/Collector/VisitedLocationCollection.php
+
+		-
+			message: '#^Parameter \#1 \$value of static method Ergebnis\\AttributeCollector\\Name\\ClassName\:\:fromString\(\) expects class\-string, string given\.$#'
+			identifier: argument.type
+			count: 5
+			path: test/Unit/Collector/TraversingAttributeFromLocationCollectorTest.php
+
+		-
 			message: '#^Parameter \#1 \$value of static method Ergebnis\\AttributeCollector\\Name\\ClassName\:\:fromString\(\) expects class\-string, string given\.$#'
 			identifier: argument.type
 			count: 1
