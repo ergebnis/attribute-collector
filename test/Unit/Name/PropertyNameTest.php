@@ -46,4 +46,24 @@ final class PropertyNameTest extends Framework\TestCase
 
         self::assertSame($value, $propertyName->toString());
     }
+
+    public function testEqualsReturnsFalseWhenValuesAreDifferent(): void
+    {
+        $faker = self::faker()->unique();
+
+        $one = Name\PropertyName::fromString($faker->word());
+        $two = Name\PropertyName::fromString($faker->word());
+
+        self::assertFalse($one->equals($two));
+    }
+
+    public function testEqualsReturnsTrueWhenValuesAreEqual(): void
+    {
+        $value = self::faker()->word();
+
+        $one = Name\PropertyName::fromString($value);
+        $two = Name\PropertyName::fromString($value);
+
+        self::assertTrue($one->equals($two));
+    }
 }

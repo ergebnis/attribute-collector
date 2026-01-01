@@ -43,4 +43,20 @@ final class ClassNameTest extends Framework\TestCase
 
         self::assertSame($value, $className->toString());
     }
+
+    public function testEqualsReturnsFalseWhenValuesAreDifferent(): void
+    {
+        $one = Name\ClassName::fromString(self::class);
+        $two = Name\ClassName::fromString(parent::class);
+
+        self::assertFalse($one->equals($two));
+    }
+
+    public function testEqualsReturnsTrueWhenValuesAreEqual(): void
+    {
+        $one = Name\ClassName::fromString(self::class);
+        $two = Name\ClassName::fromString(self::class);
+
+        self::assertTrue($one->equals($two));
+    }
 }
