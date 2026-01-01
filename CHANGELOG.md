@@ -20,6 +20,7 @@ For a full diff see [`e66cfff...main`][e66cfff...main].
 - Added `Location\FunctionParameterLocation` ([#8]), by [@localheinz]
 - Added `Location\ConstantLocation` ([#9]), by [@localheinz]
 - Added `AttributeCollection` ([#10]), by [@localheinz]
+- Added `Collector\TraversingAttributeFromLocationCollector`, which allows collecting attributes by iterating over and traversing into known locations ([#11]), by [@localheinz]
 
 [e66cfff...main]: https://github.com/ergebnis/attribute-collector/compare/e66cfff...main
 
@@ -33,5 +34,6 @@ For a full diff see [`e66cfff...main`][e66cfff...main].
 [#8]: https://github.com/ergebnis/attribute-collector/pull/8
 [#9]: https://github.com/ergebnis/attribute-collector/pull/9
 [#10]: https://github.com/ergebnis/attribute-collector/pull/10
+[#11]: https://github.com/ergebnis/attribute-collector/pull/11
 
 [@localheinz]: https://github.com/localheinz
