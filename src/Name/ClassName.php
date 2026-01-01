@@ -48,6 +48,6 @@ final class ClassName
 
     public function equals(self $other): bool
     {
-        return $this->value === $other->value;
+        return \strtolower($this->value) === \strtolower($other->value);
     }
 }

@@ -66,4 +66,12 @@ final class ParameterNameTest extends Framework\TestCase
 
         self::assertTrue($one->equals($two));
     }
+
+    public function testEqualsReturnsTrueWhenValuesAreEqualWithDifferentCase(): void
+    {
+        $one = Name\ParameterName::fromString('FoO');
+        $two = Name\ParameterName::fromString('fOo');
+
+        self::assertTrue($one->equals($two));
+    }
 }

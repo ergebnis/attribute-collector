@@ -66,4 +66,12 @@ final class ConstantNameTest extends Framework\TestCase
 
         self::assertTrue($one->equals($two));
     }
+
+    public function testEqualsReturnsTrueWhenValuesAreEqualWithDifferentCase(): void
+    {
+        $one = Name\ConstantName::fromString('FoO');
+        $two = Name\ConstantName::fromString('fOo');
+
+        self::assertTrue($one->equals($two));
+    }
 }

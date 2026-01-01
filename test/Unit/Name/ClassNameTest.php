@@ -59,4 +59,12 @@ final class ClassNameTest extends Framework\TestCase
 
         self::assertTrue($one->equals($two));
     }
+
+    public function testEqualsReturnsTrueWhenValuesAreEqualWithDifferentCase(): void
+    {
+        $one = Name\ClassName::fromString('FoO');
+        $two = Name\ClassName::fromString('fOo');
+
+        self::assertTrue($one->equals($two));
+    }
 }
