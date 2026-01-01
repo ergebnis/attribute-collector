@@ -66,4 +66,12 @@ final class MethodNameTest extends Framework\TestCase
 
         self::assertTrue($one->equals($two));
     }
+
+    public function testEqualsReturnsTrueWhenValuesAreEqualWithDifferentCase(): void
+    {
+        $one = Name\MethodName::fromString('FoO');
+        $two = Name\MethodName::fromString('fOo');
+
+        self::assertTrue($one->equals($two));
+    }
 }

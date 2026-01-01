@@ -66,4 +66,12 @@ final class PropertyNameTest extends Framework\TestCase
 
         self::assertTrue($one->equals($two));
     }
+
+    public function testEqualsReturnsTrueWhenValuesAreEqualWithDifferentCase(): void
+    {
+        $one = Name\PropertyName::fromString('FoO');
+        $two = Name\PropertyName::fromString('fOo');
+
+        self::assertTrue($one->equals($two));
+    }
 }

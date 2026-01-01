@@ -30,6 +30,7 @@ $license->save();
 $ruleSet = PhpCsFixer\Config\RuleSet\Php80::create()
     ->withHeader($license->header())
     ->withRules(PhpCsFixer\Config\Rules::fromArray([
+        'mb_str_functions' => false,
         'php_unit_test_case_static_method_calls' => [
             'methods' => [
                 'createStub' => 'this',
