@@ -23,15 +23,15 @@ final class VisitedLocationCollection
     /**
      * @var list<Location>
      */
-    private array $locations = [];
+    private array $visitedLocations = [];
 
     public function add(Location $location): void
     {
-        $this->locations[] = $location;
+        $this->visitedLocations[] = $location;
     }
 
     public function has(Location $location): bool
     {
-        return \in_array($location, $this->locations, false);
+        return \in_array($location, $this->visitedLocations, false);
     }
 }
