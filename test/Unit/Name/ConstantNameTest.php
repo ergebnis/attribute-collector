@@ -46,4 +46,24 @@ final class ConstantNameTest extends Framework\TestCase
 
         self::assertSame($value, $constantName->toString());
     }
+
+    public function testEqualsReturnsFalseWhenValuesAreDifferent(): void
+    {
+        $faker = self::faker()->unique();
+
+        $one = Name\ConstantName::fromString($faker->word());
+        $two = Name\ConstantName::fromString($faker->word());
+
+        self::assertFalse($one->equals($two));
+    }
+
+    public function testEqualsReturnsTrueWhenValuesAreEqual(): void
+    {
+        $value = self::faker()->word();
+
+        $one = Name\ConstantName::fromString($value);
+        $two = Name\ConstantName::fromString($value);
+
+        self::assertTrue($one->equals($two));
+    }
 }

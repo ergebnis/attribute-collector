@@ -46,4 +46,24 @@ final class ParameterNameTest extends Framework\TestCase
 
         self::assertSame($value, $parameterName->toString());
     }
+
+    public function testEqualsReturnsFalseWhenValuesAreDifferent(): void
+    {
+        $faker = self::faker()->unique();
+
+        $one = Name\ParameterName::fromString($faker->word());
+        $two = Name\ParameterName::fromString($faker->word());
+
+        self::assertFalse($one->equals($two));
+    }
+
+    public function testEqualsReturnsTrueWhenValuesAreEqual(): void
+    {
+        $value = self::faker()->word();
+
+        $one = Name\ParameterName::fromString($value);
+        $two = Name\ParameterName::fromString($value);
+
+        self::assertTrue($one->equals($two));
+    }
 }

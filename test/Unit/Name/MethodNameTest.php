@@ -46,4 +46,24 @@ final class MethodNameTest extends Framework\TestCase
 
         self::assertSame($value, $methodName->toString());
     }
+
+    public function testEqualsReturnsFalseWhenValuesAreDifferent(): void
+    {
+        $faker = self::faker()->unique();
+
+        $one = Name\MethodName::fromString($faker->word());
+        $two = Name\MethodName::fromString($faker->word());
+
+        self::assertFalse($one->equals($two));
+    }
+
+    public function testEqualsReturnsTrueWhenValuesAreEqual(): void
+    {
+        $value = self::faker()->word();
+
+        $one = Name\MethodName::fromString($value);
+        $two = Name\MethodName::fromString($value);
+
+        self::assertTrue($one->equals($two));
+    }
 }
