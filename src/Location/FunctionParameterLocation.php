@@ -42,4 +42,21 @@ final class FunctionParameterLocation implements Location
     {
         return $this->parameterName;
     }
+
+    public function equals(Location $other): bool
+    {
+        if (!$other instanceof self) {
+            return false;
+        }
+
+        if (!$this->functionName->equals($other->functionName)) {
+            return false;
+        }
+
+        if (!$this->parameterName->equals($other->parameterName)) {
+            return false;
+        }
+
+        return true;
+    }
 }

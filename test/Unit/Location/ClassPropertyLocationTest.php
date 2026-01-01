@@ -39,4 +39,57 @@ final class ClassPropertyLocationTest extends Framework\TestCase
         self::assertSame($className, $location->className());
         self::assertSame($propertyName, $location->propertyName());
     }
+
+    public function testEqualsReturnsFalseWhenTypesAreDifferent(): void
+    {
+        $one = Location\ClassPropertyLocation::create(
+            Name\ClassName::fromString(self::class),
+            Name\PropertyName::fromString('foo'),
+        );
+        $two = $this->createStub(Location\Location::class);
+
+        self::assertFalse($one->equals($two));
+    }
+
+    public function testEqualsReturnsFalseWhenClassNamesAreDifferent(): void
+    {
+        $one = Location\ClassPropertyLocation::create(
+            Name\ClassName::fromString(self::class),
+            Name\PropertyName::fromString('foo'),
+        );
+        $two = Location\ClassPropertyLocation::create(
+            Name\ClassName::fromString(parent::class),
+            Name\PropertyName::fromString('foo'),
+        );
+
+        self::assertFalse($one->equals($two));
+    }
+
+    public function testEqualsReturnsFalseWhenPropertyNamesAreDifferent(): void
+    {
+        $one = Location\ClassPropertyLocation::create(
+            Name\ClassName::fromString(self::class),
+            Name\PropertyName::fromString('foo'),
+        );
+        $two = Location\ClassPropertyLocation::create(
+            Name\ClassName::fromString(self::class),
+            Name\PropertyName::fromString('bar'),
+        );
+
+        self::assertFalse($one->equals($two));
+    }
+
+    public function testEqualsReturnsTrueWhenClassNamesAndPropertyNamesAreEqual(): void
+    {
+        $one = Location\ClassPropertyLocation::create(
+            Name\ClassName::fromString(self::class),
+            Name\PropertyName::fromString('foo'),
+        );
+        $two = Location\ClassPropertyLocation::create(
+            Name\ClassName::fromString(self::class),
+            Name\PropertyName::fromString('foo'),
+        );
+
+        self::assertTrue($one->equals($two));
+    }
 }

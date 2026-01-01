@@ -38,4 +38,57 @@ final class FunctionParameterLocationTest extends Framework\TestCase
         self::assertSame($functionName, $location->functionName());
         self::assertSame($parameterName, $location->parameterName());
     }
+
+    public function testEqualsReturnsFalseWhenTypesAreDifferent(): void
+    {
+        $one = Location\FunctionParameterLocation::create(
+            Name\FunctionName::fromString('foo'),
+            Name\ParameterName::fromString('bar'),
+        );
+        $two = $this->createStub(Location\Location::class);
+
+        self::assertFalse($one->equals($two));
+    }
+
+    public function testEqualsReturnsFalseWhenFunctionNamesAreDifferent(): void
+    {
+        $one = Location\FunctionParameterLocation::create(
+            Name\FunctionName::fromString('foo'),
+            Name\ParameterName::fromString('bar'),
+        );
+        $two = Location\FunctionParameterLocation::create(
+            Name\FunctionName::fromString('baz'),
+            Name\ParameterName::fromString('bar'),
+        );
+
+        self::assertFalse($one->equals($two));
+    }
+
+    public function testEqualsReturnsFalseWhenParameterNamesAreDifferent(): void
+    {
+        $one = Location\FunctionParameterLocation::create(
+            Name\FunctionName::fromString('foo'),
+            Name\ParameterName::fromString('bar'),
+        );
+        $two = Location\FunctionParameterLocation::create(
+            Name\FunctionName::fromString('foo'),
+            Name\ParameterName::fromString('baz'),
+        );
+
+        self::assertFalse($one->equals($two));
+    }
+
+    public function testEqualsReturnsTrueWhenFunctionNamesAndParameterNamesAreEqual(): void
+    {
+        $one = Location\FunctionParameterLocation::create(
+            Name\FunctionName::fromString('foo'),
+            Name\ParameterName::fromString('bar'),
+        );
+        $two = Location\FunctionParameterLocation::create(
+            Name\FunctionName::fromString('foo'),
+            Name\ParameterName::fromString('bar'),
+        );
+
+        self::assertTrue($one->equals($two));
+    }
 }

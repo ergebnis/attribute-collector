@@ -30,4 +30,17 @@ final class ClassLocation implements Location
     {
         return $this->className;
     }
+
+    public function equals(Location $other): bool
+    {
+        if (!$other instanceof self) {
+            return false;
+        }
+
+        if (!$this->className->equals($other->className)) {
+            return false;
+        }
+
+        return true;
+    }
 }

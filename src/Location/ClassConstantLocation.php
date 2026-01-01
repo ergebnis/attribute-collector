@@ -42,4 +42,21 @@ final class ClassConstantLocation implements Location
     {
         return $this->constantName;
     }
+
+    public function equals(Location $other): bool
+    {
+        if (!$other instanceof self) {
+            return false;
+        }
+
+        if (!$this->className->equals($other->className)) {
+            return false;
+        }
+
+        if (!$this->constantName->equals($other->constantName)) {
+            return false;
+        }
+
+        return true;
+    }
 }

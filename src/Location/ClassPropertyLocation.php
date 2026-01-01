@@ -42,4 +42,21 @@ final class ClassPropertyLocation implements Location
     {
         return $this->propertyName;
     }
+
+    public function equals(Location $other): bool
+    {
+        if (!$other instanceof self) {
+            return false;
+        }
+
+        if (!$this->className->equals($other->className)) {
+            return false;
+        }
+
+        if (!$this->propertyName->equals($other->propertyName)) {
+            return false;
+        }
+
+        return true;
+    }
 }
