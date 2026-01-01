@@ -36,5 +36,6 @@ For a full diff see [`e66cfff...main`][e66cfff...main].
 [#9]: https://github.com/ergebnis/attribute-collector/pull/9
 [#10]: https://github.com/ergebnis/attribute-collector/pull/10
 [#11]: https://github.com/ergebnis/attribute-collector/pull/11
+[#12]: https://github.com/ergebnis/attribute-collector/pull/12
 
 [@localheinz]: https://github.com/localheinz
