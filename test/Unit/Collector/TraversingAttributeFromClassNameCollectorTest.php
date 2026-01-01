@@ -85,7 +85,7 @@ final class TraversingAttributeFromClassNameCollectorTest extends Framework\Test
         self::assertEquals($expected, $collection->toArray());
     }
 
-    public function testCollectFromClassNameReturnsAttributeCollectionWhenClassNamesContainDuplicateClassNameForClassUsingAttributes(): void
+    public function testCollectFromClassNameReturnsAttributeCollectionWhenClassNamesContainDuplicateClassNamesForClassUsingAttributes(): void
     {
         $classNames = [
             Name\ClassName::fromString(Test\Fixture\ClassUsingAttributes::class),
