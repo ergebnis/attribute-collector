@@ -45,6 +45,12 @@ parameters:
 		-
 			message: '#^Parameter \#1 \$value of static method Ergebnis\\AttributeCollector\\Name\\ClassName\:\:fromString\(\) expects class\-string, string given\.$#'
 			identifier: argument.type
+			count: 1
+			path: test/Unit/Collector/TraversingAttributeFromClassNameCollectorTest.php
+
+		-
+			message: '#^Parameter \#1 \$value of static method Ergebnis\\AttributeCollector\\Name\\ClassName\:\:fromString\(\) expects class\-string, string given\.$#'
+			identifier: argument.type
 			count: 5
 			path: test/Unit/Collector/TraversingAttributeFromLocationCollectorTest.php
 

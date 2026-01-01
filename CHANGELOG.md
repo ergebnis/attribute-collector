@@ -21,6 +21,7 @@ For a full diff see [`e66cfff...main`][e66cfff...main].
 - Added `Location\ConstantLocation` ([#9]), by [@localheinz]
 - Added `AttributeCollection` ([#10]), by [@localheinz]
 - Added `Collector\TraversingAttributeFromLocationCollector`, which allows collecting attributes by iterating over and traversing into known locations ([#11]), by [@localheinz]
+- Added `Collector\TraversingAttributeFromClassNameCollector`, which allows collecting attributes by iterating over and traversing into locations from class names ([#12]), by [@localheinz]
 
 [e66cfff...main]: https://github.com/ergebnis/attribute-collector/compare/e66cfff...main
 

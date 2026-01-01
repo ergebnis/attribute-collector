@@ -52,13 +52,14 @@ This package provides the following locations that describe where [attributes](#
 
 This package provides the following collectors for collecting attributes:
 
+- [`Ergebnis\AttributeCollector\Collector\TraversingAttributeFromClassNameCollector`](#collectortraversingattributefromclassnamecollector)
 - [`Ergebnis\AttributeCollector\Collector\TraversingAttributeFromLocationCollector`](#collectortraversingattributefromlocationcollector)
 
-### `Collector\TraversingAttributeFromLocationCollector`
+### `Collector\TraversingAttributeFromClassNameCollector`
 
-Use `Collector\TraversingAttributeFromLocationCollector` to collect [attributes](#attributes) by iterating over and traversing into known [locations](#locations).
+Use `Collector\TraversingAttributeFromClassNameCollector` to collect [attributes](#attributes) by iterating over and traversing into [locations](#locations) from class names.
 
-#### Collecting attributes by finding locations
+#### Collecting attributes by finding class names
 
 In most of the cases, you might want to collect attributes from classes in your project without having to specify these classes explicitly.
 
@@ -81,13 +82,13 @@ $classyConstructCollector = new Classy\Collector\DefaultConstructFromFinderColle
 
 $classyConstructs = $classyConstructCollector->collectFromFinder($finder);
 
-$locations = array_map(static function (Classy\Construct $construct): AttributeCollector\Location\ClassLocation {
-    return AttributeCollector\Location\ClassLocation::create(AttributeCollector\Name\ClassName::fromString($construct->name()->toString()));
+$classNames = array_map(static function (Classy\Construct $construct): AttributeCollector\Name\ClassName {
+    return AttributeCollector\Name\ClassName::fromString($construct->name()->toString());
 }, $classyConstructs);
 
-$attributeCollector = new AttributeCollector\Collector\TraversingAttributeFromLocationCollector();
+$attributeCollector = new AttributeCollector\Collector\TraversingAttributeFromClassNameCollector();
 
-$attributeCollection = $attributeCollector->collectFromLocation(...$locations);
+$attributeCollection = $attributeCollector->collectFromClassName(...$classNames);
 
 foreach ($attributeCollection->toArray() as $attribute) {
     $instance = $attribute->instance();
@@ -96,9 +97,37 @@ foreach ($attributeCollection->toArray() as $attribute) {
 }
 ```
 
-#### Collecting attributes by specifying locations
+#### Collecting attributes by specifying class names
 
-In other cases, you might want to collect attributes from specific locations that you already know.
+In other cases, you might want to collect attributes from specific class names that you already know.
+
+```php
+<?php
+
+declare(strict_types=1);
+
+use Ergebnis\AttributeCollector;
+
+$classNames = [
+    AttributeCollector\Name\ClassName::fromString(Foo::class),
+    AttributeCollector\Name\ClassName::fromString(Bar::class),
+    AttributeCollector\Name\ClassName::fromString(Baz::class),
+];
+
+$attributeCollector = new AttributeCollector\Collector\TraversingAttributeFromClassNameCollector();
+
+$attributeCollection = $attributeCollector->collectFromClassName(...$classNames);
+
+foreach ($attributeCollection->toArray() as $attribute) {
+    $instance = $attribute->instance();
+
+    // inspect or process concrete attribute instance here
+}
+```
+
+### `Collector\TraversingAttributeFromLocationCollector`
+
+Use `Collector\TraversingAttributeFromLocationCollector` to collect [attributes](#attributes) by iterating over and traversing into known [locations](#locations).
 
 ```php
 <?php
