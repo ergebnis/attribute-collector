@@ -32,4 +32,28 @@ final class FunctionLocationTest extends Framework\TestCase
 
         self::assertSame($functionName, $location->functionName());
     }
+
+    public function testEqualsReturnsFalseWhenTypesAreDifferent(): void
+    {
+        $one = Location\FunctionLocation::create(Name\FunctionName::fromString('foo'));
+        $two = $this->createStub(Location\Location::class);
+
+        self::assertFalse($one->equals($two));
+    }
+
+    public function testEqualsReturnsFalseWhenFunctionNamesAreDifferent(): void
+    {
+        $one = Location\FunctionLocation::create(Name\FunctionName::fromString('foo'));
+        $two = Location\FunctionLocation::create(Name\FunctionName::fromString('bar'));
+
+        self::assertFalse($one->equals($two));
+    }
+
+    public function testEqualsReturnsTrueWhenFunctionNamesAreEqual(): void
+    {
+        $one = Location\FunctionLocation::create(Name\FunctionName::fromString('foo'));
+        $two = Location\FunctionLocation::create(Name\FunctionName::fromString('foo'));
+
+        self::assertTrue($one->equals($two));
+    }
 }

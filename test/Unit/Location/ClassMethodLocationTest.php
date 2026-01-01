@@ -39,4 +39,57 @@ final class ClassMethodLocationTest extends Framework\TestCase
         self::assertSame($className, $location->className());
         self::assertSame($methodName, $location->methodName());
     }
+
+    public function testEqualsReturnsFalseWhenTypesAreDifferent(): void
+    {
+        $one = Location\ClassMethodLocation::create(
+            Name\ClassName::fromString(self::class),
+            Name\MethodName::fromString('foo'),
+        );
+        $two = $this->createStub(Location\Location::class);
+
+        self::assertFalse($one->equals($two));
+    }
+
+    public function testEqualsReturnsFalseWhenClassNamesAreDifferent(): void
+    {
+        $one = Location\ClassMethodLocation::create(
+            Name\ClassName::fromString(self::class),
+            Name\MethodName::fromString('foo'),
+        );
+        $two = Location\ClassMethodLocation::create(
+            Name\ClassName::fromString(parent::class),
+            Name\MethodName::fromString('foo'),
+        );
+
+        self::assertFalse($one->equals($two));
+    }
+
+    public function testEqualsReturnsFalseWhenMethodNamesAreDifferent(): void
+    {
+        $one = Location\ClassMethodLocation::create(
+            Name\ClassName::fromString(self::class),
+            Name\MethodName::fromString('foo'),
+        );
+        $two = Location\ClassMethodLocation::create(
+            Name\ClassName::fromString(self::class),
+            Name\MethodName::fromString('bar'),
+        );
+
+        self::assertFalse($one->equals($two));
+    }
+
+    public function testEqualsReturnsTrueWhenClassNamesAndMethodNamesAreEqual(): void
+    {
+        $one = Location\ClassMethodLocation::create(
+            Name\ClassName::fromString(self::class),
+            Name\MethodName::fromString('foo'),
+        );
+        $two = Location\ClassMethodLocation::create(
+            Name\ClassName::fromString(self::class),
+            Name\MethodName::fromString('foo'),
+        );
+
+        self::assertTrue($one->equals($two));
+    }
 }

@@ -30,4 +30,17 @@ final class FunctionLocation implements Location
     {
         return $this->functionName;
     }
+
+    public function equals(Location $other): bool
+    {
+        if (!$other instanceof self) {
+            return false;
+        }
+
+        if (!$this->functionName->equals($other->functionName)) {
+            return false;
+        }
+
+        return true;
+    }
 }

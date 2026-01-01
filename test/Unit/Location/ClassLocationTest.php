@@ -33,4 +33,28 @@ final class ClassLocationTest extends Framework\TestCase
 
         self::assertSame($className, $location->className());
     }
+
+    public function testEqualsReturnsFalseWhenTypesAreDifferent(): void
+    {
+        $one = Location\ClassLocation::create(Name\ClassName::fromString(self::class));
+        $two = $this->createStub(Location\Location::class);
+
+        self::assertFalse($one->equals($two));
+    }
+
+    public function testEqualsReturnsFalseWhenClassNamesAreDifferent(): void
+    {
+        $one = Location\ClassLocation::create(Name\ClassName::fromString(self::class));
+        $two = Location\ClassLocation::create(Name\ClassName::fromString(parent::class));
+
+        self::assertFalse($one->equals($two));
+    }
+
+    public function testEqualsReturnsTrueWhenClassNamesAreEqual(): void
+    {
+        $one = Location\ClassLocation::create(Name\ClassName::fromString(self::class));
+        $two = Location\ClassLocation::create(Name\ClassName::fromString(self::class));
+
+        self::assertTrue($one->equals($two));
+    }
 }

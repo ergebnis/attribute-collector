@@ -15,4 +15,5 @@ namespace Ergebnis\AttributeCollector\Location;
 
 interface Location
 {
+    public function equals(self $other): bool;
 }

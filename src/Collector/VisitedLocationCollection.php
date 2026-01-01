@@ -32,6 +32,12 @@ final class VisitedLocationCollection
 
     public function has(Location $location): bool
     {
-        return \in_array($location, $this->visitedLocations, false);
+        foreach ($this->visitedLocations as $visitedLocation) {
+            if ($visitedLocation->equals($location)) {
+                return true;
+            }
+        }
+
+        return false;
     }
 }

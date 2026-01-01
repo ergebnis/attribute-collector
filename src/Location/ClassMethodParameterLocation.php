@@ -50,4 +50,25 @@ final class ClassMethodParameterLocation implements Location
     {
         return $this->parameterName;
     }
+
+    public function equals(Location $other): bool
+    {
+        if (!$other instanceof self) {
+            return false;
+        }
+
+        if (!$this->className->equals($other->className)) {
+            return false;
+        }
+
+        if (!$this->methodName->equals($other->methodName)) {
+            return false;
+        }
+
+        if (!$this->parameterName->equals($other->parameterName)) {
+            return false;
+        }
+
+        return true;
+    }
 }

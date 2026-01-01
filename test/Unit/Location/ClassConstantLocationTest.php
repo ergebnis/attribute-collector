@@ -39,4 +39,57 @@ final class ClassConstantLocationTest extends Framework\TestCase
         self::assertSame($className, $location->className());
         self::assertSame($constantName, $location->constantName());
     }
+
+    public function testEqualsReturnsFalseWhenTypesAreDifferent(): void
+    {
+        $one = Location\ClassConstantLocation::create(
+            Name\ClassName::fromString(self::class),
+            Name\ConstantName::fromString('FOO'),
+        );
+        $two = $this->createStub(Location\Location::class);
+
+        self::assertFalse($one->equals($two));
+    }
+
+    public function testEqualsReturnsFalseWhenClassNamesAreDifferent(): void
+    {
+        $one = Location\ClassConstantLocation::create(
+            Name\ClassName::fromString(self::class),
+            Name\ConstantName::fromString('FOO'),
+        );
+        $two = Location\ClassConstantLocation::create(
+            Name\ClassName::fromString(parent::class),
+            Name\ConstantName::fromString('FOO'),
+        );
+
+        self::assertFalse($one->equals($two));
+    }
+
+    public function testEqualsReturnsFalseWhenConstantNamesAreDifferent(): void
+    {
+        $one = Location\ClassConstantLocation::create(
+            Name\ClassName::fromString(self::class),
+            Name\ConstantName::fromString('FOO'),
+        );
+        $two = Location\ClassConstantLocation::create(
+            Name\ClassName::fromString(self::class),
+            Name\ConstantName::fromString('BAR'),
+        );
+
+        self::assertFalse($one->equals($two));
+    }
+
+    public function testEqualsReturnsTrueWhenValuesAreEqual(): void
+    {
+        $one = Location\ClassConstantLocation::create(
+            Name\ClassName::fromString(self::class),
+            Name\ConstantName::fromString('FOO'),
+        );
+        $two = Location\ClassConstantLocation::create(
+            Name\ClassName::fromString(self::class),
+            Name\ConstantName::fromString('FOO'),
+        );
+
+        self::assertTrue($one->equals($two));
+    }
 }
