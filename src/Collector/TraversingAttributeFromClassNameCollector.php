@@ -35,13 +35,15 @@ final class TraversingAttributeFromClassNameCollector implements AttributeFromCl
             }
 
             try {
-                $reflectionClass = new \ReflectionClass($classLocation->className()->toString());
+                $reflectionClass = new \ReflectionClass($className->toString());
             } catch (\ReflectionException $reflectionException) {
                 throw Exception\ClassCouldNotBeReflected::forClassLocationWithReflectionException(
                     $classLocation,
                     $reflectionException,
                 );
             }
+
+            $classLocation = Location\ClassLocation::create(Name\ClassName::fromString($reflectionClass->getName()));
 
             foreach ($reflectionClass->getAttributes() as $reflectionAttributeLocatedOnClass) {
                 $attributes[] = Attribute::create(

@@ -102,6 +102,8 @@ final class TraversingAttributeFromLocationCollector implements AttributeFromLoc
 
         $attributes = [];
 
+        $classLocation = Location\ClassLocation::create(Name\ClassName::fromString($reflectionClass->getName()));
+
         foreach ($reflectionClass->getAttributes() as $reflectionAttributeLocatedOnClass) {
             $attributes[] = Attribute::create(
                 $classLocation,
@@ -220,7 +222,14 @@ final class TraversingAttributeFromLocationCollector implements AttributeFromLoc
             );
         }
 
+        $reflectionClass = new \ReflectionClass($classConstantLocation->className()->toString());
+
         $attributes = [];
+
+        $classConstantLocation = Location\ClassConstantLocation::create(
+            Name\ClassName::fromString($reflectionClass->getName()),
+            Name\ConstantName::fromString($reflectionClassConstant->getName()),
+        );
 
         foreach ($reflectionClassConstant->getAttributes() as $reflectionAttributeLocatedOnClassConstant) {
             $attributes[] = Attribute::create(
@@ -261,6 +270,13 @@ final class TraversingAttributeFromLocationCollector implements AttributeFromLoc
 
         $attributes = [];
 
+        $reflectionClass = new \ReflectionClass($classPropertyLocation->className()->toString());
+
+        $classPropertyLocation = Location\ClassPropertyLocation::create(
+            Name\ClassName::fromString($reflectionClass->getName()),
+            Name\PropertyName::fromString($reflectionProperty->getName()),
+        );
+
         foreach ($reflectionProperty->getAttributes() as $reflectionAttributeLocatedOnClassProperty) {
             $attributes[] = Attribute::create(
                 $classPropertyLocation,
@@ -299,6 +315,13 @@ final class TraversingAttributeFromLocationCollector implements AttributeFromLoc
         }
 
         $attributes = [];
+
+        $reflectionClass = new \ReflectionClass($classMethodLocation->className()->toString());
+
+        $classMethodLocation = Location\ClassMethodLocation::create(
+            Name\ClassName::fromString($reflectionClass->getName()),
+            Name\MethodName::fromString($reflectionMethod->getName()),
+        );
 
         foreach ($reflectionMethod->getAttributes() as $reflectionAttributeLocatedOnClassMethod) {
             $attributes[] = Attribute::create(
@@ -373,6 +396,14 @@ final class TraversingAttributeFromLocationCollector implements AttributeFromLoc
 
         $attributes = [];
 
+        $reflectionClass = new \ReflectionClass($classMethodParameterLocation->className()->toString());
+
+        $classMethodParameterLocation = Location\ClassMethodParameterLocation::create(
+            Name\ClassName::fromString($reflectionClass->getName()),
+            Name\MethodName::fromString($reflectionMethod->getName()),
+            Name\ParameterName::fromString($reflectionParameter->getName()),
+        );
+
         foreach ($reflectionParameter->getAttributes() as $reflectionAttributeLocatedOnMethodParameter) {
             $attributes[] = Attribute::create(
                 $classMethodParameterLocation,
@@ -427,6 +458,8 @@ final class TraversingAttributeFromLocationCollector implements AttributeFromLoc
 
         $attributes = [];
 
+        $constantLocation = Location\ConstantLocation::create(Name\ConstantName::fromString($reflectionConstant->getName()));
+
         foreach ($reflectionConstant->getAttributes() as $reflectionAttributedLocatedOnConstant) {
             $attributes[] = Attribute::create(
                 $constantLocation,
@@ -462,6 +495,8 @@ final class TraversingAttributeFromLocationCollector implements AttributeFromLoc
         }
 
         $attributes = [];
+
+        $functionLocation = Location\FunctionLocation::create(Name\FunctionName::fromString($reflectionFunction->getName()));
 
         foreach ($reflectionFunction->getAttributes() as $reflectionAttributeLocatedOnFunction) {
             $attributes[] = Attribute::create(
@@ -527,6 +562,11 @@ final class TraversingAttributeFromLocationCollector implements AttributeFromLoc
         }
 
         $attributes = [];
+
+        $functionParameterLocation = Location\FunctionParameterLocation::create(
+            Name\FunctionName::fromString($reflectionFunction->getName()),
+            Name\ParameterName::fromString($reflectionParameter->getName()),
+        );
 
         foreach ($reflectionParameter->getAttributes() as $reflectionAttributeLocatedOnFunctionParameter) {
             $attributes[] = Attribute::create(
