@@ -119,15 +119,15 @@ final class TraversingAttributeFromLocationCollectorTest extends Framework\TestC
 
     public function testCollectFromLocationReturnsAttributeCollectionWhenLocationsContainDuplicateClassLocationsForClassUsingAttributes(): void
     {
-        $location = Location\ClassLocation::create(Name\ClassName::fromString(Test\Fixture\ClassUsingAttributes::class));
+        $locations = [
+            Location\ClassLocation::create(Name\ClassName::fromString(Test\Fixture\ClassUsingAttributes::class)),
+            Location\ClassLocation::create(Name\ClassName::fromString(Test\Fixture\ClassUsingAttributes::class)),
+            Location\ClassLocation::create(Name\ClassName::fromString(Test\Fixture\ClassUsingAttributes::class)),
+        ];
 
         $collector = new Collector\TraversingAttributeFromLocationCollector();
 
-        $collection = $collector->collectFromLocation(
-            $location,
-            $location,
-            $location,
-        );
+        $collection = $collector->collectFromLocation(...$locations);
 
         $expected = self::attributesFromClassLocationForClassUsingAttributes();
 
@@ -194,18 +194,24 @@ final class TraversingAttributeFromLocationCollectorTest extends Framework\TestC
 
     public function testCollectFromLocationReturnsAttributeCollectionWhenLocationsContainDuplicateClassConstantLocationsForClassConstantUsingAttributes(): void
     {
-        $location = Location\ClassConstantLocation::create(
-            Name\ClassName::fromString(Test\Fixture\ClassUsingAttributes::class),
-            Name\ConstantName::fromString('FOO'),
-        );
+        $locations = [
+            Location\ClassConstantLocation::create(
+                Name\ClassName::fromString(Test\Fixture\ClassUsingAttributes::class),
+                Name\ConstantName::fromString('FOO'),
+            ),
+            Location\ClassConstantLocation::create(
+                Name\ClassName::fromString(Test\Fixture\ClassUsingAttributes::class),
+                Name\ConstantName::fromString('FOO'),
+            ),
+            Location\ClassConstantLocation::create(
+                Name\ClassName::fromString(Test\Fixture\ClassUsingAttributes::class),
+                Name\ConstantName::fromString('FOO'),
+            ),
+        ];
 
         $collector = new Collector\TraversingAttributeFromLocationCollector();
 
-        $collection = $collector->collectFromLocation(
-            $location,
-            $location,
-            $location,
-        );
+        $collection = $collector->collectFromLocation(...$locations);
 
         $expected = self::attributesFromClassConstantLocationForClassConstantUsingAttributes();
 
@@ -272,18 +278,24 @@ final class TraversingAttributeFromLocationCollectorTest extends Framework\TestC
 
     public function testCollectFromLocationReturnsAttributeCollectionWhenLocationsContainDuplicateClassPropertyLocationsForClassPropertyUsingAttributes(): void
     {
-        $location = Location\ClassPropertyLocation::create(
-            Name\ClassName::fromString(Test\Fixture\ClassUsingAttributes::class),
-            Name\PropertyName::fromString('fooBar'),
-        );
+        $locations = [
+            Location\ClassPropertyLocation::create(
+                Name\ClassName::fromString(Test\Fixture\ClassUsingAttributes::class),
+                Name\PropertyName::fromString('fooBar'),
+            ),
+            Location\ClassPropertyLocation::create(
+                Name\ClassName::fromString(Test\Fixture\ClassUsingAttributes::class),
+                Name\PropertyName::fromString('fooBar'),
+            ),
+            Location\ClassPropertyLocation::create(
+                Name\ClassName::fromString(Test\Fixture\ClassUsingAttributes::class),
+                Name\PropertyName::fromString('fooBar'),
+            ),
+        ];
 
         $collector = new Collector\TraversingAttributeFromLocationCollector();
 
-        $collection = $collector->collectFromLocation(
-            $location,
-            $location,
-            $location,
-        );
+        $collection = $collector->collectFromLocation(...$locations);
 
         $expected = self::attributesFromClassPropertyLocationForClassPropertyUsingAttributes();
 
@@ -350,18 +362,24 @@ final class TraversingAttributeFromLocationCollectorTest extends Framework\TestC
 
     public function testCollectFromLocationReturnsAttributeCollectionWhenLocationsContainDuplicateClassMethodLocationsForClassMethodUsingAttributes(): void
     {
-        $location = Location\ClassMethodLocation::create(
-            Name\ClassName::fromString(Test\Fixture\ClassUsingAttributes::class),
-            Name\MethodName::fromString('barBaz'),
-        );
+        $locations = [
+            Location\ClassMethodLocation::create(
+                Name\ClassName::fromString(Test\Fixture\ClassUsingAttributes::class),
+                Name\MethodName::fromString('barBaz'),
+            ),
+            Location\ClassMethodLocation::create(
+                Name\ClassName::fromString(Test\Fixture\ClassUsingAttributes::class),
+                Name\MethodName::fromString('barBaz'),
+            ),
+            Location\ClassMethodLocation::create(
+                Name\ClassName::fromString(Test\Fixture\ClassUsingAttributes::class),
+                Name\MethodName::fromString('barBaz'),
+            ),
+        ];
 
         $collector = new Collector\TraversingAttributeFromLocationCollector();
 
-        $collection = $collector->collectFromLocation(
-            $location,
-            $location,
-            $location,
-        );
+        $collection = $collector->collectFromLocation(...$locations);
 
         $expected = self::attributesFromClassMethodLocationForClassMethodUsingAttributes();
 
@@ -447,19 +465,27 @@ final class TraversingAttributeFromLocationCollectorTest extends Framework\TestC
 
     public function testCollectFromLocationReturnsAttributeCollectionWhenLocationsContainDuplicateClassMethodParameterLocationsForClassMethodParameterUsingAttributes(): void
     {
-        $location = Location\ClassMethodParameterLocation::create(
-            Name\ClassName::fromString(Test\Fixture\ClassUsingAttributes::class),
-            Name\MethodName::fromString('barBaz'),
-            Name\ParameterName::fromString('bazQux'),
-        );
+        $locations = [
+            Location\ClassMethodParameterLocation::create(
+                Name\ClassName::fromString(Test\Fixture\ClassUsingAttributes::class),
+                Name\MethodName::fromString('barBaz'),
+                Name\ParameterName::fromString('bazQux'),
+            ),
+            Location\ClassMethodParameterLocation::create(
+                Name\ClassName::fromString(Test\Fixture\ClassUsingAttributes::class),
+                Name\MethodName::fromString('barBaz'),
+                Name\ParameterName::fromString('bazQux'),
+            ),
+            Location\ClassMethodParameterLocation::create(
+                Name\ClassName::fromString(Test\Fixture\ClassUsingAttributes::class),
+                Name\MethodName::fromString('barBaz'),
+                Name\ParameterName::fromString('bazQux'),
+            ),
+        ];
 
         $collector = new Collector\TraversingAttributeFromLocationCollector();
 
-        $collection = $collector->collectFromLocation(
-            $location,
-            $location,
-            $location,
-        );
+        $collection = $collector->collectFromLocation(...$locations);
 
         $expected = self::attributesFromClassMethodParameterLocationForClassMethodParameterUsingAttributes();
 
@@ -529,15 +555,15 @@ final class TraversingAttributeFromLocationCollectorTest extends Framework\TestC
      */
     public function testCollectFromLocationReturnsAttributeCollectionWhenLocationsContainDuplicateConstantLocationsForConstantUsingAttributes(): void
     {
-        $location = Location\ConstantLocation::create(Name\ConstantName::fromString('Ergebnis\AttributeCollector\Test\Fixture\FOO'));
+        $locations = [
+            Location\ConstantLocation::create(Name\ConstantName::fromString('Ergebnis\AttributeCollector\Test\Fixture\FOO')),
+            Location\ConstantLocation::create(Name\ConstantName::fromString('Ergebnis\AttributeCollector\Test\Fixture\FOO')),
+            Location\ConstantLocation::create(Name\ConstantName::fromString('Ergebnis\AttributeCollector\Test\Fixture\FOO')),
+        ];
 
         $collector = new Collector\TraversingAttributeFromLocationCollector();
 
-        $collection = $collector->collectFromLocation(
-            $location,
-            $location,
-            $location,
-        );
+        $collection = $collector->collectFromLocation(...$locations);
 
         $expected = self::attributesFromConstantLocationForConstantUsingAttributes();
 
@@ -581,15 +607,15 @@ final class TraversingAttributeFromLocationCollectorTest extends Framework\TestC
 
     public function testCollectFromLocationReturnsAttributeCollectionWhenLocationsContainDuplicateFunctionLocationsForFunctionUsingAttributes(): void
     {
-        $location = Location\FunctionLocation::create(Name\FunctionName::fromString('Ergebnis\AttributeCollector\Test\Fixture\quuxCorge'));
+        $locations = [
+            Location\FunctionLocation::create(Name\FunctionName::fromString('Ergebnis\AttributeCollector\Test\Fixture\quuxCorge')),
+            Location\FunctionLocation::create(Name\FunctionName::fromString('Ergebnis\AttributeCollector\Test\Fixture\quuxCorge')),
+            Location\FunctionLocation::create(Name\FunctionName::fromString('Ergebnis\AttributeCollector\Test\Fixture\quuxCorge')),
+        ];
 
         $collector = new Collector\TraversingAttributeFromLocationCollector();
 
-        $collection = $collector->collectFromLocation(
-            $location,
-            $location,
-            $location,
-        );
+        $collection = $collector->collectFromLocation(...$locations);
 
         $expected = self::attributesFromFunctionLocationForFunctionUsingAttributes();
 
@@ -656,18 +682,24 @@ final class TraversingAttributeFromLocationCollectorTest extends Framework\TestC
 
     public function testCollectFromLocationReturnsAttributeCollectionWhenLocationsContainDuplicateFunctionParameterLocationsForFunctionParameterUsingAttributes(): void
     {
-        $location = Location\FunctionParameterLocation::create(
-            Name\FunctionName::fromString('Ergebnis\AttributeCollector\Test\Fixture\quuxCorge'),
-            Name\ParameterName::fromString('corgeGrault'),
-        );
+        $locations = [
+            Location\FunctionParameterLocation::create(
+                Name\FunctionName::fromString('Ergebnis\AttributeCollector\Test\Fixture\quuxCorge'),
+                Name\ParameterName::fromString('corgeGrault'),
+            ),
+            Location\FunctionParameterLocation::create(
+                Name\FunctionName::fromString('Ergebnis\AttributeCollector\Test\Fixture\quuxCorge'),
+                Name\ParameterName::fromString('corgeGrault'),
+            ),
+            Location\FunctionParameterLocation::create(
+                Name\FunctionName::fromString('Ergebnis\AttributeCollector\Test\Fixture\quuxCorge'),
+                Name\ParameterName::fromString('corgeGrault'),
+            ),
+        ];
 
         $collector = new Collector\TraversingAttributeFromLocationCollector();
 
-        $collection = $collector->collectFromLocation(
-            $location,
-            $location,
-            $location,
-        );
+        $collection = $collector->collectFromLocation(...$locations);
 
         $expected = self::attributesFromFunctionParameterLocationForFunctionParameterUsingAttributes();
 
