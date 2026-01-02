@@ -41,6 +41,11 @@ use PHPUnit\Framework;
  */
 final class TraversingAttributeFromClassNameCollectorTest extends Framework\TestCase
 {
+    protected function setUp(): void
+    {
+        require_once __DIR__ . '/../../Fixture/ClassUsingAttributes.php';
+    }
+
     public function testCollectFromClassNameReturnsEmptyAttributeCollectionWhenClassNamesAreEmpty(): void
     {
         $collector = new Collector\TraversingAttributeFromClassNameCollector();
@@ -88,9 +93,9 @@ final class TraversingAttributeFromClassNameCollectorTest extends Framework\Test
     public function testCollectFromClassNameReturnsAttributeCollectionWhenClassNamesContainDuplicateClassNamesForClassUsingAttributes(): void
     {
         $classNames = [
+            Name\ClassName::fromString(\strtolower(Test\Fixture\ClassUsingAttributes::class)),
             Name\ClassName::fromString(Test\Fixture\ClassUsingAttributes::class),
-            Name\ClassName::fromString(Test\Fixture\ClassNotUsingAttributes::class),
-            Name\ClassName::fromString(Test\Fixture\ClassUsingAttributes::class),
+            Name\ClassName::fromString(\strtoupper(Test\Fixture\ClassUsingAttributes::class)),
         ];
 
         $collector = new Collector\TraversingAttributeFromClassNameCollector();

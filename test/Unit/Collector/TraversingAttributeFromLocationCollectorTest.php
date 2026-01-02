@@ -55,11 +55,11 @@ final class TraversingAttributeFromLocationCollectorTest extends Framework\TestC
 {
     protected function setUp(): void
     {
-        if (\PHP_VERSION_ID < 80500) {
-            return;
-        }
+        require_once __DIR__ . '/../../Fixture/ClassUsingAttributes.php';
 
-        require_once __DIR__ . '/../../Fixture/constants.php';
+        if (\PHP_VERSION_ID >= 80500) {
+            require_once __DIR__ . '/../../Fixture/constants.php';
+        }
     }
 
     public function testCollectFromLocationReturnsEmptyAttributeCollectionWhenLocationsAreEmpty(): void
@@ -120,9 +120,9 @@ final class TraversingAttributeFromLocationCollectorTest extends Framework\TestC
     public function testCollectFromLocationReturnsAttributeCollectionWhenLocationsContainDuplicateClassLocationsForClassUsingAttributes(): void
     {
         $locations = [
+            Location\ClassLocation::create(Name\ClassName::fromString(\strtolower(Test\Fixture\ClassUsingAttributes::class))),
             Location\ClassLocation::create(Name\ClassName::fromString(Test\Fixture\ClassUsingAttributes::class)),
-            Location\ClassLocation::create(Name\ClassName::fromString(Test\Fixture\ClassUsingAttributes::class)),
-            Location\ClassLocation::create(Name\ClassName::fromString(Test\Fixture\ClassUsingAttributes::class)),
+            Location\ClassLocation::create(Name\ClassName::fromString(\strtoupper(Test\Fixture\ClassUsingAttributes::class))),
         ];
 
         $collector = new Collector\TraversingAttributeFromLocationCollector();
@@ -196,7 +196,7 @@ final class TraversingAttributeFromLocationCollectorTest extends Framework\TestC
     {
         $locations = [
             Location\ClassConstantLocation::create(
-                Name\ClassName::fromString(Test\Fixture\ClassUsingAttributes::class),
+                Name\ClassName::fromString(\strtolower(Test\Fixture\ClassUsingAttributes::class)),
                 Name\ConstantName::fromString('FOO'),
             ),
             Location\ClassConstantLocation::create(
@@ -204,7 +204,7 @@ final class TraversingAttributeFromLocationCollectorTest extends Framework\TestC
                 Name\ConstantName::fromString('FOO'),
             ),
             Location\ClassConstantLocation::create(
-                Name\ClassName::fromString(Test\Fixture\ClassUsingAttributes::class),
+                Name\ClassName::fromString(\strtoupper(Test\Fixture\ClassUsingAttributes::class)),
                 Name\ConstantName::fromString('FOO'),
             ),
         ];
@@ -280,7 +280,7 @@ final class TraversingAttributeFromLocationCollectorTest extends Framework\TestC
     {
         $locations = [
             Location\ClassPropertyLocation::create(
-                Name\ClassName::fromString(Test\Fixture\ClassUsingAttributes::class),
+                Name\ClassName::fromString(\strtolower(Test\Fixture\ClassUsingAttributes::class)),
                 Name\PropertyName::fromString('fooBar'),
             ),
             Location\ClassPropertyLocation::create(
@@ -288,7 +288,7 @@ final class TraversingAttributeFromLocationCollectorTest extends Framework\TestC
                 Name\PropertyName::fromString('fooBar'),
             ),
             Location\ClassPropertyLocation::create(
-                Name\ClassName::fromString(Test\Fixture\ClassUsingAttributes::class),
+                Name\ClassName::fromString(\strtoupper(Test\Fixture\ClassUsingAttributes::class)),
                 Name\PropertyName::fromString('fooBar'),
             ),
         ];
@@ -364,16 +364,16 @@ final class TraversingAttributeFromLocationCollectorTest extends Framework\TestC
     {
         $locations = [
             Location\ClassMethodLocation::create(
-                Name\ClassName::fromString(Test\Fixture\ClassUsingAttributes::class),
-                Name\MethodName::fromString('barBaz'),
+                Name\ClassName::fromString(\strtolower(Test\Fixture\ClassUsingAttributes::class)),
+                Name\MethodName::fromString(\strtolower('barBaz')),
             ),
             Location\ClassMethodLocation::create(
                 Name\ClassName::fromString(Test\Fixture\ClassUsingAttributes::class),
                 Name\MethodName::fromString('barBaz'),
             ),
             Location\ClassMethodLocation::create(
-                Name\ClassName::fromString(Test\Fixture\ClassUsingAttributes::class),
-                Name\MethodName::fromString('barBaz'),
+                Name\ClassName::fromString(\strtoupper(Test\Fixture\ClassUsingAttributes::class)),
+                Name\MethodName::fromString(\strtoupper('barBaz')),
             ),
         ];
 
@@ -467,8 +467,8 @@ final class TraversingAttributeFromLocationCollectorTest extends Framework\TestC
     {
         $locations = [
             Location\ClassMethodParameterLocation::create(
-                Name\ClassName::fromString(Test\Fixture\ClassUsingAttributes::class),
-                Name\MethodName::fromString('barBaz'),
+                Name\ClassName::fromString(\strtolower(Test\Fixture\ClassUsingAttributes::class)),
+                Name\MethodName::fromString(\strtolower('barBaz')),
                 Name\ParameterName::fromString('bazQux'),
             ),
             Location\ClassMethodParameterLocation::create(
@@ -477,8 +477,8 @@ final class TraversingAttributeFromLocationCollectorTest extends Framework\TestC
                 Name\ParameterName::fromString('bazQux'),
             ),
             Location\ClassMethodParameterLocation::create(
-                Name\ClassName::fromString(Test\Fixture\ClassUsingAttributes::class),
-                Name\MethodName::fromString('barBaz'),
+                Name\ClassName::fromString(\strtoupper(Test\Fixture\ClassUsingAttributes::class)),
+                Name\MethodName::fromString(\strtoupper('barBaz')),
                 Name\ParameterName::fromString('bazQux'),
             ),
         ];
@@ -556,9 +556,15 @@ final class TraversingAttributeFromLocationCollectorTest extends Framework\TestC
     public function testCollectFromLocationReturnsAttributeCollectionWhenLocationsContainDuplicateConstantLocationsForConstantUsingAttributes(): void
     {
         $locations = [
+            Location\ConstantLocation::create(Name\ConstantName::fromString(\sprintf(
+                '%s\FOO',
+                \strtolower('Ergebnis\AttributeCollector\Test\Fixture'),
+            ))),
             Location\ConstantLocation::create(Name\ConstantName::fromString('Ergebnis\AttributeCollector\Test\Fixture\FOO')),
-            Location\ConstantLocation::create(Name\ConstantName::fromString('Ergebnis\AttributeCollector\Test\Fixture\FOO')),
-            Location\ConstantLocation::create(Name\ConstantName::fromString('Ergebnis\AttributeCollector\Test\Fixture\FOO')),
+            Location\ConstantLocation::create(Name\ConstantName::fromString(\sprintf(
+                '%s\FOO',
+                \strtoupper('Ergebnis\AttributeCollector\Test\Fixture'),
+            ))),
         ];
 
         $collector = new Collector\TraversingAttributeFromLocationCollector();
@@ -608,9 +614,9 @@ final class TraversingAttributeFromLocationCollectorTest extends Framework\TestC
     public function testCollectFromLocationReturnsAttributeCollectionWhenLocationsContainDuplicateFunctionLocationsForFunctionUsingAttributes(): void
     {
         $locations = [
+            Location\FunctionLocation::create(Name\FunctionName::fromString(\strtolower('Ergebnis\AttributeCollector\Test\Fixture\quuxCorge'))),
             Location\FunctionLocation::create(Name\FunctionName::fromString('Ergebnis\AttributeCollector\Test\Fixture\quuxCorge')),
-            Location\FunctionLocation::create(Name\FunctionName::fromString('Ergebnis\AttributeCollector\Test\Fixture\quuxCorge')),
-            Location\FunctionLocation::create(Name\FunctionName::fromString('Ergebnis\AttributeCollector\Test\Fixture\quuxCorge')),
+            Location\FunctionLocation::create(Name\FunctionName::fromString(\strtoupper('Ergebnis\AttributeCollector\Test\Fixture\quuxCorge'))),
         ];
 
         $collector = new Collector\TraversingAttributeFromLocationCollector();
@@ -684,7 +690,7 @@ final class TraversingAttributeFromLocationCollectorTest extends Framework\TestC
     {
         $locations = [
             Location\FunctionParameterLocation::create(
-                Name\FunctionName::fromString('Ergebnis\AttributeCollector\Test\Fixture\quuxCorge'),
+                Name\FunctionName::fromString(\strtolower('Ergebnis\AttributeCollector\Test\Fixture\quuxCorge')),
                 Name\ParameterName::fromString('corgeGrault'),
             ),
             Location\FunctionParameterLocation::create(
@@ -692,7 +698,7 @@ final class TraversingAttributeFromLocationCollectorTest extends Framework\TestC
                 Name\ParameterName::fromString('corgeGrault'),
             ),
             Location\FunctionParameterLocation::create(
-                Name\FunctionName::fromString('Ergebnis\AttributeCollector\Test\Fixture\quuxCorge'),
+                Name\FunctionName::fromString(\strtoupper('Ergebnis\AttributeCollector\Test\Fixture\quuxCorge')),
                 Name\ParameterName::fromString('corgeGrault'),
             ),
         ];
