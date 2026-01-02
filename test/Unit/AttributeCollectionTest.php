@@ -88,9 +88,11 @@ final class AttributeCollectionTest extends Framework\TestCase
 
     public function testWhereAttributeClassNameEqualsReturnsEmptyCollectionWhenAttributeCollectionIsEmpty(): void
     {
+        $attributeClassName = Name\ClassName::fromString(Test\Fixture\AttributeWithoutParameters::class);
+
         $collection = AttributeCollection::create();
 
-        $filteredCollection = $collection->whereAttributeClassNameEquals(Name\ClassName::fromString(Test\Fixture\AttributeWithoutParameters::class));
+        $filteredCollection = $collection->whereAttributeClassNameEquals($attributeClassName);
 
         self::assertNotSame($collection, $filteredCollection);
         self::assertSame([], $filteredCollection->toArray());
@@ -98,6 +100,8 @@ final class AttributeCollectionTest extends Framework\TestCase
 
     public function testWhereAttributeClassNameEqualsReturnsEmptyCollectionWhenAttributeCollectionDoesNotContainAttributesWithClassName(): void
     {
+        $attributeClassName = Name\ClassName::fromString(Test\Fixture\AttributeWithoutParameters::class);
+
         $collection = AttributeCollection::create(
             Attribute::create(
                 Location\ClassLocation::create(Name\ClassName::fromString(Test\Fixture\ClassUsingAttributes::class)),
@@ -138,7 +142,7 @@ final class AttributeCollectionTest extends Framework\TestCase
             ),
         );
 
-        $filteredCollection = $collection->whereAttributeClassNameEquals(Name\ClassName::fromString(Test\Fixture\AttributeWithoutParameters::class));
+        $filteredCollection = $collection->whereAttributeClassNameEquals($attributeClassName);
 
         self::assertNotSame($collection, $filteredCollection);
         self::assertSame([], $filteredCollection->toArray());
@@ -146,6 +150,8 @@ final class AttributeCollectionTest extends Framework\TestCase
 
     public function testWhereAttributeClassNameEqualsReturnsCollectionWhereAttributeClassNamesAreEqual(): void
     {
+        $attributeClassName = Name\ClassName::fromString(Test\Fixture\AttributeWithParameters::class);
+
         $collection = AttributeCollection::create(
             Attribute::create(
                 Location\ClassLocation::create(Name\ClassName::fromString(Test\Fixture\ClassUsingAttributes::class)),
@@ -211,7 +217,7 @@ final class AttributeCollectionTest extends Framework\TestCase
             ),
         );
 
-        $filteredCollection = $collection->whereAttributeClassNameEquals(Name\ClassName::fromString(Test\Fixture\AttributeWithParameters::class));
+        $filteredCollection = $collection->whereAttributeClassNameEquals($attributeClassName);
 
         self::assertNotSame($collection, $filteredCollection);
 
