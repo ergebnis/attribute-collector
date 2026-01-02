@@ -37,4 +37,11 @@ final class AttributeCollection
     {
         return $this->attributes;
     }
+
+    public function whereAttributeClassNameEquals(Name\ClassName $className): self
+    {
+        return new self(...\array_filter($this->attributes, static function (Attribute $attribute) use ($className): bool {
+            return $attribute->className()->equals($className);
+        }));
+    }
 }

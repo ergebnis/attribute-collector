@@ -24,8 +24,14 @@ use PHPUnit\Framework;
  * @covers \Ergebnis\AttributeCollector\AttributeCollection
  *
  * @uses \Ergebnis\AttributeCollector\Attribute
+ * @uses \Ergebnis\AttributeCollector\Location\ClassConstantLocation
  * @uses \Ergebnis\AttributeCollector\Location\ClassLocation
+ * @uses \Ergebnis\AttributeCollector\Location\ClassMethodLocation
+ * @uses \Ergebnis\AttributeCollector\Location\ClassPropertyLocation
  * @uses \Ergebnis\AttributeCollector\Name\ClassName
+ * @uses \Ergebnis\AttributeCollector\Name\ConstantName
+ * @uses \Ergebnis\AttributeCollector\Name\MethodName
+ * @uses \Ergebnis\AttributeCollector\Name\PropertyName
  */
 final class AttributeCollectionTest extends Framework\TestCase
 {
@@ -78,5 +84,177 @@ final class AttributeCollectionTest extends Framework\TestCase
         $collection = AttributeCollection::create(...$attributes);
 
         self::assertSame(\array_values($attributes), $collection->toArray());
+    }
+
+    public function testWhereAttributeClassNameEqualsReturnsEmptyCollectionWhenAttributeCollectionIsEmpty(): void
+    {
+        $collection = AttributeCollection::create();
+
+        $filteredCollection = $collection->whereAttributeClassNameEquals(Name\ClassName::fromString(Test\Fixture\AttributeWithoutParameters::class));
+
+        self::assertNotSame($collection, $filteredCollection);
+        self::assertSame([], $filteredCollection->toArray());
+    }
+
+    public function testWhereAttributeClassNameEqualsReturnsEmptyCollectionWhenAttributeCollectionDoesNotContainAttributesWithClassName(): void
+    {
+        $collection = AttributeCollection::create(
+            Attribute::create(
+                Location\ClassLocation::create(Name\ClassName::fromString(Test\Fixture\ClassUsingAttributes::class)),
+                new Test\Fixture\AttributeWithParameters(
+                    'bar',
+                    1,
+                ),
+            ),
+            Attribute::create(
+                Location\ClassConstantLocation::create(
+                    Name\ClassName::fromString(Test\Fixture\ClassUsingAttributes::class),
+                    Name\ConstantName::fromString('FOO'),
+                ),
+                new Test\Fixture\AttributeWithParameters(
+                    'bar',
+                    123,
+                ),
+            ),
+            Attribute::create(
+                Location\ClassPropertyLocation::create(
+                    Name\ClassName::fromString(Test\Fixture\ClassUsingAttributes::class),
+                    Name\PropertyName::fromString('fooBar'),
+                ),
+                new Test\Fixture\AttributeWithParameters(
+                    'bar',
+                    234,
+                ),
+            ),
+            Attribute::create(
+                Location\ClassMethodLocation::create(
+                    Name\ClassName::fromString(Test\Fixture\ClassUsingAttributes::class),
+                    Name\MethodName::fromString('barBaz'),
+                ),
+                new Test\Fixture\AttributeWithParameters(
+                    'bar',
+                    345,
+                ),
+            ),
+        );
+
+        $filteredCollection = $collection->whereAttributeClassNameEquals(Name\ClassName::fromString(Test\Fixture\AttributeWithoutParameters::class));
+
+        self::assertNotSame($collection, $filteredCollection);
+        self::assertSame([], $filteredCollection->toArray());
+    }
+
+    public function testWhereAttributeClassNameEqualsReturnsCollectionWhereAttributeClassNamesAreEqual(): void
+    {
+        $collection = AttributeCollection::create(
+            Attribute::create(
+                Location\ClassLocation::create(Name\ClassName::fromString(Test\Fixture\ClassUsingAttributes::class)),
+                new Test\Fixture\AttributeWithParameters(
+                    'bar',
+                    1,
+                ),
+            ),
+            Attribute::create(
+                Location\ClassLocation::create(Name\ClassName::fromString(Test\Fixture\ClassUsingAttributes::class)),
+                new Test\Fixture\AttributeWithoutParameters(),
+            ),
+            Attribute::create(
+                Location\ClassConstantLocation::create(
+                    Name\ClassName::fromString(Test\Fixture\ClassUsingAttributes::class),
+                    Name\ConstantName::fromString('FOO'),
+                ),
+                new Test\Fixture\AttributeWithParameters(
+                    'bar',
+                    123,
+                ),
+            ),
+            Attribute::create(
+                Location\ClassConstantLocation::create(
+                    Name\ClassName::fromString(Test\Fixture\ClassUsingAttributes::class),
+                    Name\ConstantName::fromString('FOO'),
+                ),
+                new Test\Fixture\AttributeWithoutParameters(),
+            ),
+            Attribute::create(
+                Location\ClassPropertyLocation::create(
+                    Name\ClassName::fromString(Test\Fixture\ClassUsingAttributes::class),
+                    Name\PropertyName::fromString('fooBar'),
+                ),
+                new Test\Fixture\AttributeWithParameters(
+                    'bar',
+                    234,
+                ),
+            ),
+            Attribute::create(
+                Location\ClassPropertyLocation::create(
+                    Name\ClassName::fromString(Test\Fixture\ClassUsingAttributes::class),
+                    Name\PropertyName::fromString('fooBar'),
+                ),
+                new Test\Fixture\AttributeWithoutParameters(),
+            ),
+            Attribute::create(
+                Location\ClassMethodLocation::create(
+                    Name\ClassName::fromString(Test\Fixture\ClassUsingAttributes::class),
+                    Name\MethodName::fromString('barBaz'),
+                ),
+                new Test\Fixture\AttributeWithParameters(
+                    'bar',
+                    345,
+                ),
+            ),
+            Attribute::create(
+                Location\ClassMethodLocation::create(
+                    Name\ClassName::fromString(Test\Fixture\ClassUsingAttributes::class),
+                    Name\MethodName::fromString('barBaz'),
+                ),
+                new Test\Fixture\AttributeWithoutParameters(),
+            ),
+        );
+
+        $filteredCollection = $collection->whereAttributeClassNameEquals(Name\ClassName::fromString(Test\Fixture\AttributeWithParameters::class));
+
+        self::assertNotSame($collection, $filteredCollection);
+
+        $expectedAttributes = [
+            Attribute::create(
+                Location\ClassLocation::create(Name\ClassName::fromString(Test\Fixture\ClassUsingAttributes::class)),
+                new Test\Fixture\AttributeWithParameters(
+                    'bar',
+                    1,
+                ),
+            ),
+            Attribute::create(
+                Location\ClassConstantLocation::create(
+                    Name\ClassName::fromString(Test\Fixture\ClassUsingAttributes::class),
+                    Name\ConstantName::fromString('FOO'),
+                ),
+                new Test\Fixture\AttributeWithParameters(
+                    'bar',
+                    123,
+                ),
+            ),
+            Attribute::create(
+                Location\ClassPropertyLocation::create(
+                    Name\ClassName::fromString(Test\Fixture\ClassUsingAttributes::class),
+                    Name\PropertyName::fromString('fooBar'),
+                ),
+                new Test\Fixture\AttributeWithParameters(
+                    'bar',
+                    234,
+                ),
+            ),
+            Attribute::create(
+                Location\ClassMethodLocation::create(
+                    Name\ClassName::fromString(Test\Fixture\ClassUsingAttributes::class),
+                    Name\MethodName::fromString('barBaz'),
+                ),
+                new Test\Fixture\AttributeWithParameters(
+                    'bar',
+                    345,
+                ),
+            ),
+        ];
+
+        self::assertEquals($expectedAttributes, $filteredCollection->toArray());
     }
 }

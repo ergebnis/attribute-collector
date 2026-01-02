@@ -35,6 +35,23 @@ This package provides an `AttributeCollection` that composes a collection of [at
 
 You can obtain an `AttributeCollection` by using a [collector](#collectors) to collect attributes.
 
+### Filtering an attribute collection by attribute class name
+
+You can filter an attribute collection by attribute class name:
+
+```php
+<?php
+
+declare(strict_types=1);
+
+use Ergebnis\AttributeCollector;
+
+$attributeClassName = AttributeCollector\Name\ClassName::fromString(\Deprecated::class);
+
+/** @var AttributeCollector\AttributeCollection $attributeCollector */
+$filteredAttributeCollection = $attributeCollector->whereAttributeClassNameEquals($attributeClassName);
+```
+
 ## Locations
 
 This package provides the following locations that describe where [attributes](#attributes) could be or are located:
