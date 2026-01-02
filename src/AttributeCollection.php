@@ -44,4 +44,11 @@ final class AttributeCollection
             return $attribute->className()->equals($className);
         }));
     }
+
+    public function whereAttributeLocationEquals(Location\Location $location): self
+    {
+        return new self(...\array_filter($this->attributes, static function (Attribute $attribute) use ($location): bool {
+            return $attribute->location()->equals($location);
+        }));
+    }
 }
