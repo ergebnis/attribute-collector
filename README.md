@@ -52,6 +52,24 @@ $attributeClassName = AttributeCollector\Name\ClassName::fromString(\Deprecated:
 $filteredAttributeCollection = $attributeCollector->whereAttributeClassNameEquals($attributeClassName);
 ```
 
+You can filter an attribute collection by attribute location:
+
+```php
+<?php
+
+declare(strict_types=1);
+
+use Ergebnis\AttributeCollector;
+
+$attributeLocation = AttributeCollector\Location\ClassMethodLocation::create(
+    AttributeCollector\Name\ClassName::fromString(Foo::class),
+    AttributeCollector\Name\MethodName::fromString('bar')
+);
+
+/** @var AttributeCollector\AttributeCollection $attributeCollector */
+$filteredAttributeCollection = $attributeCollector->whereAttributeLocationEquals($attributeLocation);
+```
+
 ## Locations
 
 This package provides the following locations that describe where [attributes](#attributes) could be or are located:
