@@ -16,11 +16,11 @@ namespace Ergebnis\AttributeCollector\Test\Fixture;
 final class ClassNotUsingAttributes
 {
     public const FOO = 'bar';
-    public string $foo = 'bar';
+    public string $fooBar = 'bar';
 
-    public function foo(
-        string $bar,
-        int $baz,
+    public function barBaz(
+        string $bazQux,
+        int $quxQuux,
     ): void {
     }
 }

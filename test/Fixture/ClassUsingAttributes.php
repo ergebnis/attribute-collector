@@ -32,21 +32,21 @@ final class ClassUsingAttributes
         bar: 234,
     )]
     #[AttributeWithoutParameters()]
-    public string $foo = 'bar';
+    public string $fooBar = 'bar';
 
     #[AttributeWithParameters(
         foo: 'bar',
         bar: 345,
     )]
     #[AttributeWithoutParameters()]
-    public function foo(
+    public function barBaz(
         #[AttributeWithParameters(
             foo: 'bar',
             bar: 456,
         )]
         #[AttributeWithoutParameters()]
-        string $bar,
-        int $baz,
+        string $bazQux,
+        int $quxQuux,
     ): void {
     }
 }

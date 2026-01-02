@@ -31,7 +31,7 @@ final class FunctionCouldNotBeReflectedTest extends Framework\TestCase
 
     public function testForFunctionLocationWithReflectionExceptionReturnsException(): void
     {
-        $functionLocation = Location\FunctionLocation::create(Name\FunctionName::fromString('Ergebnis\AttributeCollector\Test\Fixture\foo'));
+        $functionLocation = Location\FunctionLocation::create(Name\FunctionName::fromString('Ergebnis\AttributeCollector\Test\Fixture\quuxCorge'));
         $reflectionException = new \ReflectionException(self::faker()->sentence());
 
         $exception = Exception\FunctionCouldNotBeReflected::forFunctionLocationWithReflectionException(

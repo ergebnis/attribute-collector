@@ -27,8 +27,8 @@ final class FunctionParameterLocationTest extends Framework\TestCase
 {
     public function testCreateReturnsLocation(): void
     {
-        $functionName = Name\FunctionName::fromString('Ergebnis\AttributeCollector\Test\Fixture\foo');
-        $parameterName = Name\ParameterName::fromString('bar');
+        $functionName = Name\FunctionName::fromString('Ergebnis\AttributeCollector\Test\Fixture\quuxCorge');
+        $parameterName = Name\ParameterName::fromString('corgeGrault');
 
         $location = Location\FunctionParameterLocation::create(
             $functionName,
@@ -42,8 +42,8 @@ final class FunctionParameterLocationTest extends Framework\TestCase
     public function testEqualsReturnsFalseWhenTypesAreDifferent(): void
     {
         $one = Location\FunctionParameterLocation::create(
-            Name\FunctionName::fromString('foo'),
-            Name\ParameterName::fromString('bar'),
+            Name\FunctionName::fromString('fooBar'),
+            Name\ParameterName::fromString('barBaz'),
         );
         $two = $this->createStub(Location\Location::class);
 
@@ -53,12 +53,12 @@ final class FunctionParameterLocationTest extends Framework\TestCase
     public function testEqualsReturnsFalseWhenFunctionNamesAreDifferent(): void
     {
         $one = Location\FunctionParameterLocation::create(
-            Name\FunctionName::fromString('foo'),
-            Name\ParameterName::fromString('bar'),
+            Name\FunctionName::fromString('fooBar'),
+            Name\ParameterName::fromString('barBaz'),
         );
         $two = Location\FunctionParameterLocation::create(
-            Name\FunctionName::fromString('baz'),
-            Name\ParameterName::fromString('bar'),
+            Name\FunctionName::fromString('bazQux'),
+            Name\ParameterName::fromString('barBaz'),
         );
 
         self::assertFalse($one->equals($two));
@@ -67,12 +67,12 @@ final class FunctionParameterLocationTest extends Framework\TestCase
     public function testEqualsReturnsFalseWhenParameterNamesAreDifferent(): void
     {
         $one = Location\FunctionParameterLocation::create(
-            Name\FunctionName::fromString('foo'),
-            Name\ParameterName::fromString('bar'),
+            Name\FunctionName::fromString('fooBar'),
+            Name\ParameterName::fromString('barBaz'),
         );
         $two = Location\FunctionParameterLocation::create(
-            Name\FunctionName::fromString('foo'),
-            Name\ParameterName::fromString('baz'),
+            Name\FunctionName::fromString('fooBar'),
+            Name\ParameterName::fromString('bazQux'),
         );
 
         self::assertFalse($one->equals($two));
@@ -81,12 +81,12 @@ final class FunctionParameterLocationTest extends Framework\TestCase
     public function testEqualsReturnsTrueWhenFunctionNamesAndParameterNamesAreEqual(): void
     {
         $one = Location\FunctionParameterLocation::create(
-            Name\FunctionName::fromString('foo'),
-            Name\ParameterName::fromString('bar'),
+            Name\FunctionName::fromString('fooBar'),
+            Name\ParameterName::fromString('barBaz'),
         );
         $two = Location\FunctionParameterLocation::create(
-            Name\FunctionName::fromString('foo'),
-            Name\ParameterName::fromString('bar'),
+            Name\FunctionName::fromString('fooBar'),
+            Name\ParameterName::fromString('barBaz'),
         );
 
         self::assertTrue($one->equals($two));

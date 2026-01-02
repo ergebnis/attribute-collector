@@ -26,7 +26,7 @@ final class FunctionLocationTest extends Framework\TestCase
 {
     public function testCreateReturnsLocation(): void
     {
-        $functionName = Name\FunctionName::fromString('Ergebnis\\AttributeCollector\\Test\\Fixture\\foo');
+        $functionName = Name\FunctionName::fromString('Ergebnis\\AttributeCollector\\Test\\Fixture\\quuxCorge');
 
         $location = Location\FunctionLocation::create($functionName);
 
@@ -35,7 +35,7 @@ final class FunctionLocationTest extends Framework\TestCase
 
     public function testEqualsReturnsFalseWhenTypesAreDifferent(): void
     {
-        $one = Location\FunctionLocation::create(Name\FunctionName::fromString('foo'));
+        $one = Location\FunctionLocation::create(Name\FunctionName::fromString('fooBar'));
         $two = $this->createStub(Location\Location::class);
 
         self::assertFalse($one->equals($two));
@@ -43,16 +43,16 @@ final class FunctionLocationTest extends Framework\TestCase
 
     public function testEqualsReturnsFalseWhenFunctionNamesAreDifferent(): void
     {
-        $one = Location\FunctionLocation::create(Name\FunctionName::fromString('foo'));
-        $two = Location\FunctionLocation::create(Name\FunctionName::fromString('bar'));
+        $one = Location\FunctionLocation::create(Name\FunctionName::fromString('fooBar'));
+        $two = Location\FunctionLocation::create(Name\FunctionName::fromString('barBaz'));
 
         self::assertFalse($one->equals($two));
     }
 
     public function testEqualsReturnsTrueWhenFunctionNamesAreEqual(): void
     {
-        $one = Location\FunctionLocation::create(Name\FunctionName::fromString('foo'));
-        $two = Location\FunctionLocation::create(Name\FunctionName::fromString('foo'));
+        $one = Location\FunctionLocation::create(Name\FunctionName::fromString('fooBar'));
+        $two = Location\FunctionLocation::create(Name\FunctionName::fromString('fooBar'));
 
         self::assertTrue($one->equals($two));
     }

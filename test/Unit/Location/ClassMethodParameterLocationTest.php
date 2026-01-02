@@ -30,8 +30,8 @@ final class ClassMethodParameterLocationTest extends Framework\TestCase
     public function testCreateReturnsLocation(): void
     {
         $className = Name\ClassName::fromString(Test\Fixture\ClassUsingAttributes::class);
-        $methodName = Name\MethodName::fromString('foo');
-        $parameterName = Name\ParameterName::fromString('bar');
+        $methodName = Name\MethodName::fromString('barBaz');
+        $parameterName = Name\ParameterName::fromString('bazQux');
 
         $location = Location\ClassMethodParameterLocation::create(
             $className,
@@ -48,8 +48,8 @@ final class ClassMethodParameterLocationTest extends Framework\TestCase
     {
         $one = Location\ClassMethodParameterLocation::create(
             Name\ClassName::fromString(self::class),
-            Name\MethodName::fromString('foo'),
-            Name\ParameterName::fromString('bar'),
+            Name\MethodName::fromString('fooBar'),
+            Name\ParameterName::fromString('barBaz'),
         );
         $two = $this->createStub(Location\Location::class);
 
@@ -60,13 +60,13 @@ final class ClassMethodParameterLocationTest extends Framework\TestCase
     {
         $one = Location\ClassMethodParameterLocation::create(
             Name\ClassName::fromString(self::class),
-            Name\MethodName::fromString('foo'),
-            Name\ParameterName::fromString('bar'),
+            Name\MethodName::fromString('fooBar'),
+            Name\ParameterName::fromString('barBaz'),
         );
         $two = Location\ClassMethodParameterLocation::create(
             Name\ClassName::fromString(parent::class),
-            Name\MethodName::fromString('foo'),
-            Name\ParameterName::fromString('bar'),
+            Name\MethodName::fromString('fooBar'),
+            Name\ParameterName::fromString('barBaz'),
         );
 
         self::assertFalse($one->equals($two));
@@ -76,13 +76,13 @@ final class ClassMethodParameterLocationTest extends Framework\TestCase
     {
         $one = Location\ClassMethodParameterLocation::create(
             Name\ClassName::fromString(self::class),
-            Name\MethodName::fromString('foo'),
-            Name\ParameterName::fromString('bar'),
+            Name\MethodName::fromString('fooBar'),
+            Name\ParameterName::fromString('barBaz'),
         );
         $two = Location\ClassMethodParameterLocation::create(
             Name\ClassName::fromString(self::class),
-            Name\MethodName::fromString('baz'),
-            Name\ParameterName::fromString('bar'),
+            Name\MethodName::fromString('bazQux'),
+            Name\ParameterName::fromString('barBaz'),
         );
 
         self::assertFalse($one->equals($two));
@@ -92,13 +92,13 @@ final class ClassMethodParameterLocationTest extends Framework\TestCase
     {
         $one = Location\ClassMethodParameterLocation::create(
             Name\ClassName::fromString(self::class),
-            Name\MethodName::fromString('foo'),
-            Name\ParameterName::fromString('bar'),
+            Name\MethodName::fromString('fooBar'),
+            Name\ParameterName::fromString('barBaz'),
         );
         $two = Location\ClassMethodParameterLocation::create(
             Name\ClassName::fromString(self::class),
-            Name\MethodName::fromString('foo'),
-            Name\ParameterName::fromString('baz'),
+            Name\MethodName::fromString('fooBar'),
+            Name\ParameterName::fromString('bazQux'),
         );
 
         self::assertFalse($one->equals($two));
@@ -108,13 +108,13 @@ final class ClassMethodParameterLocationTest extends Framework\TestCase
     {
         $one = Location\ClassMethodParameterLocation::create(
             Name\ClassName::fromString(self::class),
-            Name\MethodName::fromString('foo'),
-            Name\ParameterName::fromString('bar'),
+            Name\MethodName::fromString('fooBar'),
+            Name\ParameterName::fromString('barBaz'),
         );
         $two = Location\ClassMethodParameterLocation::create(
             Name\ClassName::fromString(self::class),
-            Name\MethodName::fromString('foo'),
-            Name\ParameterName::fromString('bar'),
+            Name\MethodName::fromString('fooBar'),
+            Name\ParameterName::fromString('barBaz'),
         );
 
         self::assertTrue($one->equals($two));

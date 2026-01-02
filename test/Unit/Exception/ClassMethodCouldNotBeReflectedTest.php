@@ -34,7 +34,7 @@ final class ClassMethodCouldNotBeReflectedTest extends Framework\TestCase
     {
         $classMethodLocation = Location\ClassMethodLocation::create(
             Name\ClassName::fromString(Test\Fixture\ClassUsingAttributes::class),
-            Name\MethodName::fromString('bar'),
+            Name\MethodName::fromString('bazQux'),
         );
         $reflectionException = new \ReflectionException(self::faker()->sentence());
 

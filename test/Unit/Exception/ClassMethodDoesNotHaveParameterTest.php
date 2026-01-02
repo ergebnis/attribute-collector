@@ -35,8 +35,8 @@ final class ClassMethodDoesNotHaveParameterTest extends Framework\TestCase
     {
         $classMethodParameterLocation = Location\ClassMethodParameterLocation::create(
             Name\ClassName::fromString(Test\Fixture\ClassUsingAttributes::class),
-            Name\MethodName::fromString('foo'),
-            Name\ParameterName::fromString('bar'),
+            Name\MethodName::fromString('barBaz'),
+            Name\ParameterName::fromString('bazQux'),
         );
 
         $exception = Exception\ClassMethodDoesNotHaveParameter::forClassMethodParameterLocation($classMethodParameterLocation);
