@@ -139,7 +139,7 @@ final class TraversingAttributeFromClassNameCollectorTest extends Framework\Test
             Attribute::create(
                 Location\ClassPropertyLocation::create(
                     Name\ClassName::fromString(Test\Fixture\ClassUsingAttributes::class),
-                    Name\PropertyName::fromString('foo'),
+                    Name\PropertyName::fromString('fooBar'),
                 ),
                 new Test\Fixture\AttributeWithParameters(
                     'bar',
@@ -149,14 +149,14 @@ final class TraversingAttributeFromClassNameCollectorTest extends Framework\Test
             Attribute::create(
                 Location\ClassPropertyLocation::create(
                     Name\ClassName::fromString(Test\Fixture\ClassUsingAttributes::class),
-                    Name\PropertyName::fromString('foo'),
+                    Name\PropertyName::fromString('fooBar'),
                 ),
                 new Test\Fixture\AttributeWithoutParameters(),
             ),
             Attribute::create(
                 Location\ClassMethodLocation::create(
                     Name\ClassName::fromString(Test\Fixture\ClassUsingAttributes::class),
-                    Name\MethodName::fromString('foo'),
+                    Name\MethodName::fromString('barBaz'),
                 ),
                 new Test\Fixture\AttributeWithParameters(
                     'bar',
@@ -166,15 +166,15 @@ final class TraversingAttributeFromClassNameCollectorTest extends Framework\Test
             Attribute::create(
                 Location\ClassMethodLocation::create(
                     Name\ClassName::fromString(Test\Fixture\ClassUsingAttributes::class),
-                    Name\MethodName::fromString('foo'),
+                    Name\MethodName::fromString('barBaz'),
                 ),
                 new Test\Fixture\AttributeWithoutParameters(),
             ),
             Attribute::create(
                 Location\ClassMethodParameterLocation::create(
                     Name\ClassName::fromString(Test\Fixture\ClassUsingAttributes::class),
-                    Name\MethodName::fromString('foo'),
-                    Name\ParameterName::fromString('bar'),
+                    Name\MethodName::fromString('barBaz'),
+                    Name\ParameterName::fromString('bazQux'),
                 ),
                 new Test\Fixture\AttributeWithParameters(
                     'bar',
@@ -184,8 +184,8 @@ final class TraversingAttributeFromClassNameCollectorTest extends Framework\Test
             Attribute::create(
                 Location\ClassMethodParameterLocation::create(
                     Name\ClassName::fromString(Test\Fixture\ClassUsingAttributes::class),
-                    Name\MethodName::fromString('foo'),
-                    Name\ParameterName::fromString('bar'),
+                    Name\MethodName::fromString('barBaz'),
+                    Name\ParameterName::fromString('bazQux'),
                 ),
                 new Test\Fixture\AttributeWithoutParameters(),
             ),

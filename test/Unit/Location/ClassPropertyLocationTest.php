@@ -29,7 +29,7 @@ final class ClassPropertyLocationTest extends Framework\TestCase
     public function testCreateReturnsLocation(): void
     {
         $className = Name\ClassName::fromString(Test\Fixture\ClassUsingAttributes::class);
-        $propertyName = Name\PropertyName::fromString('foo');
+        $propertyName = Name\PropertyName::fromString('fooBar');
 
         $location = Location\ClassPropertyLocation::create(
             $className,
@@ -44,7 +44,7 @@ final class ClassPropertyLocationTest extends Framework\TestCase
     {
         $one = Location\ClassPropertyLocation::create(
             Name\ClassName::fromString(self::class),
-            Name\PropertyName::fromString('foo'),
+            Name\PropertyName::fromString('fooBar'),
         );
         $two = $this->createStub(Location\Location::class);
 
@@ -55,11 +55,11 @@ final class ClassPropertyLocationTest extends Framework\TestCase
     {
         $one = Location\ClassPropertyLocation::create(
             Name\ClassName::fromString(self::class),
-            Name\PropertyName::fromString('foo'),
+            Name\PropertyName::fromString('fooBar'),
         );
         $two = Location\ClassPropertyLocation::create(
             Name\ClassName::fromString(parent::class),
-            Name\PropertyName::fromString('foo'),
+            Name\PropertyName::fromString('fooBar'),
         );
 
         self::assertFalse($one->equals($two));
@@ -69,11 +69,11 @@ final class ClassPropertyLocationTest extends Framework\TestCase
     {
         $one = Location\ClassPropertyLocation::create(
             Name\ClassName::fromString(self::class),
-            Name\PropertyName::fromString('foo'),
+            Name\PropertyName::fromString('fooBar'),
         );
         $two = Location\ClassPropertyLocation::create(
             Name\ClassName::fromString(self::class),
-            Name\PropertyName::fromString('bar'),
+            Name\PropertyName::fromString('barBaz'),
         );
 
         self::assertFalse($one->equals($two));
@@ -83,11 +83,11 @@ final class ClassPropertyLocationTest extends Framework\TestCase
     {
         $one = Location\ClassPropertyLocation::create(
             Name\ClassName::fromString(self::class),
-            Name\PropertyName::fromString('foo'),
+            Name\PropertyName::fromString('fooBar'),
         );
         $two = Location\ClassPropertyLocation::create(
             Name\ClassName::fromString(self::class),
-            Name\PropertyName::fromString('foo'),
+            Name\PropertyName::fromString('fooBar'),
         );
 
         self::assertTrue($one->equals($two));

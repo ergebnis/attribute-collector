@@ -33,8 +33,8 @@ final class FunctionDoesNotHaveParameterTest extends Framework\TestCase
     public function testForFunctionParameterLocationReturnsException(): void
     {
         $functionParameterLocation = Location\FunctionParameterLocation::create(
-            Name\FunctionName::fromString('Ergebnis\AttributeCollector\Test\Fixture\foo'),
-            Name\ParameterName::fromString('bar'),
+            Name\FunctionName::fromString('Ergebnis\AttributeCollector\Test\Fixture\quuxCorge'),
+            Name\ParameterName::fromString('corgeGrault'),
         );
 
         $exception = Exception\FunctionDoesNotHaveParameter::forFunctionParameterLocation($functionParameterLocation);

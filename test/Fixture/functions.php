@@ -18,14 +18,14 @@ namespace Ergebnis\AttributeCollector\Test\Fixture;
     bar: 234,
 )]
 #[AttributeWithoutParameters()]
-function foo(
+function quuxCorge(
     #[AttributeWithParameters(
         foo: 'quz',
         bar: 345,
     )]
     #[AttributeWithoutParameters()]
-    string $bar,
-    int $baz,
+    string $corgeGrault,
+    int $graultGarply,
 ): void {
 }
 
@@ -34,15 +34,15 @@ function foo(
     bar: 345,
 )]
 #[AttributeWithoutParameters()]
-function bar(
+function garplyWaldo(
     #[AttributeWithoutParameters()]
-    string $baz,
-    float $qux,
+    string $waldoFred,
+    float $fredPlugh,
 ): void {
 }
 
-function baz(
-    string $qux,
-    int $baz,
+function plughXyzzy(
+    string $xyzzyThud,
+    int $thudFoo,
 ): void {
 }

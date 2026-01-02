@@ -29,7 +29,7 @@ final class ClassMethodLocationTest extends Framework\TestCase
     public function testCreateReturnsLocation(): void
     {
         $className = Name\ClassName::fromString(Test\Fixture\ClassUsingAttributes::class);
-        $methodName = Name\MethodName::fromString('foo');
+        $methodName = Name\MethodName::fromString('barBaz');
 
         $location = Location\ClassMethodLocation::create(
             $className,
@@ -44,7 +44,7 @@ final class ClassMethodLocationTest extends Framework\TestCase
     {
         $one = Location\ClassMethodLocation::create(
             Name\ClassName::fromString(self::class),
-            Name\MethodName::fromString('foo'),
+            Name\MethodName::fromString('fooBar'),
         );
         $two = $this->createStub(Location\Location::class);
 
@@ -55,11 +55,11 @@ final class ClassMethodLocationTest extends Framework\TestCase
     {
         $one = Location\ClassMethodLocation::create(
             Name\ClassName::fromString(self::class),
-            Name\MethodName::fromString('foo'),
+            Name\MethodName::fromString('fooBar'),
         );
         $two = Location\ClassMethodLocation::create(
             Name\ClassName::fromString(parent::class),
-            Name\MethodName::fromString('foo'),
+            Name\MethodName::fromString('fooBar'),
         );
 
         self::assertFalse($one->equals($two));
@@ -69,11 +69,11 @@ final class ClassMethodLocationTest extends Framework\TestCase
     {
         $one = Location\ClassMethodLocation::create(
             Name\ClassName::fromString(self::class),
-            Name\MethodName::fromString('foo'),
+            Name\MethodName::fromString('fooBar'),
         );
         $two = Location\ClassMethodLocation::create(
             Name\ClassName::fromString(self::class),
-            Name\MethodName::fromString('bar'),
+            Name\MethodName::fromString('barBaz'),
         );
 
         self::assertFalse($one->equals($two));
@@ -83,11 +83,11 @@ final class ClassMethodLocationTest extends Framework\TestCase
     {
         $one = Location\ClassMethodLocation::create(
             Name\ClassName::fromString(self::class),
-            Name\MethodName::fromString('foo'),
+            Name\MethodName::fromString('fooBar'),
         );
         $two = Location\ClassMethodLocation::create(
             Name\ClassName::fromString(self::class),
-            Name\MethodName::fromString('foo'),
+            Name\MethodName::fromString('fooBar'),
         );
 
         self::assertTrue($one->equals($two));
