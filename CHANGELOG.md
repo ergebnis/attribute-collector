@@ -24,6 +24,7 @@ For a full diff see [`e66cfff...main`][e66cfff...main].
 - Added `Collector\TraversingAttributeFromClassNameCollector`, which allows collecting attributes by iterating over and traversing into locations from class names ([#12]), by [@localheinz]
 - Added `Name\ClassName::equals()`, `Name\ConstantName::equals()`, `Name\FunctionName::equals()`, `Name\MethodName::equals()`, `Name\ParameterName::equals()`, and `Name\PropertyName::equals()` ([#13]), by [@localheinz]
 - Added `Location\ClassLocation::equals()`, `Location\ClassConstantLocation::equals()`, `Location\ClassPropertyLocation::equals()`, `Location\ClassMethodLocation::equals()`, `Location\ClassMethodParameterLocation::equals()`, `Location\FunctionLocation::equals()`, `Location\FunctionParameterLocation::equals()`, and `Location\ConstantLocation::equals()` ([#14]), by [@localheinz]
+- Added `Collector\TraversingAttributeFromFinderCollector`, which allows collecting attributes by iterating over and traversing into locations from class names found with a finder ([#20]), by [@localheinz]
 
 [e66cfff...main]: https://github.com/ergebnis/attribute-collector/compare/e66cfff...main
 
@@ -41,5 +42,6 @@ For a full diff see [`e66cfff...main`][e66cfff...main].
 [#12]: https://github.com/ergebnis/attribute-collector/pull/12
 [#13]: https://github.com/ergebnis/attribute-collector/pull/13
 [#14]: https://github.com/ergebnis/attribute-collector/pull/14
+[#20]: https://github.com/ergebnis/attribute-collector/pull/20
 
 [@localheinz]: https://github.com/localheinz
