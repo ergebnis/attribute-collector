@@ -30,5 +30,5 @@ interface AttributeFromLocationCollector
      * @throws Exception\FunctionCouldNotBeReflected
      * @throws Exception\FunctionDoesNotHaveParameter
      */
-    public function collectFromLocation(Location\ClassLocation ...$locations): AttributeCollection;
+    public function collectFromLocation(Location\Location ...$locations): AttributeCollection;
 }
