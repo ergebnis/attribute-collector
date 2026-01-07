@@ -88,6 +88,7 @@ This package provides the following locations that describe where [attributes](#
 This package provides the following collectors for collecting attributes:
 
 - [`Ergebnis\AttributeCollector\Collector\TraversingAttributeFromClassNameCollector`](#collectortraversingattributefromclassnamecollector)
+- [`Ergebnis\AttributeCollector\Collector\TraversingAttributeFromFinderCollector`](#collectortraversingattributefromfindercollector)
 - [`Ergebnis\AttributeCollector\Collector\TraversingAttributeFromLocationCollector`](#collectortraversingattributefromlocationcollector)
 
 ### `Collector\TraversingAttributeFromClassNameCollector`
@@ -159,6 +160,41 @@ foreach ($attributeCollection->toArray() as $attribute) {
     // inspect or process concrete attribute instance here
 }
 ```
+### `Collector\TraversingAttributeFromFinderCollector`
+
+Use `Collector\TraversingAttributeFromFinderCollector` to collect [attributes](#attributes) by iterating over and traversing into [locations](#locations) found in classy constructs from an iterable of `SplFileInfo`s:
+
+```php
+<?php
+
+declare(strict_types=1);
+
+use Ergebnis\AttributeCollector;
+use Symfony\Component\Finder;
+
+$finder = Finder\Finder::create()
+  ->files()
+  ->in(__DIR__ . '/src');
+
+$attributeCollector = new AttributeCollector\Collector\TraversingAttributeFromFinderCollector();
+
+$attributeCollection = $attributeCollector->collectFromFinder($finder);
+
+foreach ($attributeCollection->toArray() as $attribute) {
+    $instance = $attribute->instance();
+
+    // inspect or process concrete attribute instance here
+}
+```
+
+> [!NOTE]
+>
+> This collector is currently limited to collecting attributes by traversing into classy constructs found by [`ergebnis/classy`](https://github.com/ergebnis/classy), such as
+>
+> - classes
+> - enums
+> - interfaces
+> - traits
 
 ### `Collector\TraversingAttributeFromLocationCollector`
 
