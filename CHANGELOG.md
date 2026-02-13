@@ -6,7 +6,11 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## Unreleased
 
-For a full diff see [`e66cfff...main`][e66cfff...main].
+For a full diff see [`0.1.0...main`][0.1.0...main].
+
+## [0.1.0][0.1.0] - 2026-02-13
+
+For a full diff see [`e66cfff...0.1.0`][e66cfff...0.1.0].
 
 ### Added
 
@@ -26,7 +30,10 @@ For a full diff see [`e66cfff...main`][e66cfff...main].
 - Added `Location\ClassLocation::equals()`, `Location\ClassConstantLocation::equals()`, `Location\ClassPropertyLocation::equals()`, `Location\ClassMethodLocation::equals()`, `Location\ClassMethodParameterLocation::equals()`, `Location\FunctionLocation::equals()`, `Location\FunctionParameterLocation::equals()`, and `Location\ConstantLocation::equals()` ([#14]), by [@localheinz]
 - Added `Collector\TraversingAttributeFromFinderCollector`, which allows collecting attributes by iterating over and traversing into locations from class names found with a finder ([#20]), by [@localheinz]
 
-[e66cfff...main]: https://github.com/ergebnis/attribute-collector/compare/e66cfff...main
+[0.1.0]: https://github.com/ergebnis/attribute-collector/releases/tag/0.1.0
+
+[e66cfff...0.1.0]: https://github.com/ergebnis/attribute-collector/compare/e66cfff...0.1.0
+[0.1.0...main]: https://github.com/ergebnis/attribute-collector/compare/0.1.0...main
 
 [#1]: https://github.com/ergebnis/attribute-collector/pull/1
 [#2]: https://github.com/ergebnis/attribute-collector/pull/2
