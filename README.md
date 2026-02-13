@@ -74,14 +74,14 @@ $filteredAttributeCollection = $attributeCollector->whereAttributeLocationEquals
 
 This package provides the following locations that describe where [attributes](#attributes) could be or are located:
 
-- `Location\ClassLocation`
-- `Location\ClassConstantLocation`
-- `Location\ClassPropertyLocation`
-- `Location\ClassMethodLocation`
-- `Location\ClassMethodParameterLocation`
-- `Location\ConstantLocation`
-- `Location\FunctionLocation`
-- `Location\FunctionParameterLocation`
+- `Ergebnis\AttributeCollector\Location\ClassLocation`
+- `Ergebnis\AttributeCollector\Location\ClassConstantLocation`
+- `Ergebnis\AttributeCollector\Location\ClassPropertyLocation`
+- `Ergebnis\AttributeCollector\Location\ClassMethodLocation`
+- `Ergebnis\AttributeCollector\Location\ClassMethodParameterLocation`
+- `Ergebnis\AttributeCollector\Location\ConstantLocation`
+- `Ergebnis\AttributeCollector\Location\FunctionLocation`
+- `Ergebnis\AttributeCollector\Location\FunctionParameterLocation`
 
 ## Collectors
 
