@@ -1,9 +1,9 @@
 # attribute-collector
 
-[![Integrate](https://github.com/ergebnis/attribute-collector/workflows/Integrate/badge.svg)](https://github.com/ergebnis/attribute-collector/actions)
-[![Merge](https://github.com/ergebnis/attribute-collector/workflows/Merge/badge.svg)](https://github.com/ergebnis/attribute-collector/actions)
-[![Release](https://github.com/ergebnis/attribute-collector/workflows/Release/badge.svg)](https://github.com/ergebnis/attribute-collector/actions)
-[![Renew](https://github.com/ergebnis/attribute-collector/workflows/Renew/badge.svg)](https://github.com/ergebnis/attribute-collector/actions)
+[![Integrate](https://github.com/ergebnis/attribute-collector/actions/workflows/integrate.yaml/badge.svg?branch=main)](https://github.com/ergebnis/attribute-collector/actions/workflows/integrate.yaml)
+[![Merge](https://github.com/ergebnis/attribute-collector/actions/workflows/merge.yaml/badge.svg)](https://github.com/ergebnis/attribute-collector/actions/workflows/merge.yaml)
+[![Release](https://github.com/ergebnis/attribute-collector/actions/workflows/release.yaml/badge.svg)](https://github.com/ergebnis/attribute-collector/actions/workflows/release.yaml)
+[![Renew](https://github.com/ergebnis/attribute-collector/actions/workflows/renew.yaml/badge.svg)](https://github.com/ergebnis/attribute-collector/actions/workflows/renew.yaml)
 
 [![Code Coverage](https://codecov.io/gh/ergebnis/attribute-collector/branch/main/graph/badge.svg)](https://codecov.io/gh/ergebnis/attribute-collector)
 
