@@ -9,7 +9,7 @@
 
 [![Latest Stable Version](https://poser.pugx.org/ergebnis/attribute-collector/v/stable)](https://packagist.org/packages/ergebnis/attribute-collector)
 [![Total Downloads](https://poser.pugx.org/ergebnis/attribute-collector/downloads)](https://packagist.org/packages/ergebnis/attribute-collector)
-[![Monthly Downloads](http://poser.pugx.org/ergebnis/attribute-collector/d/monthly)](https://packagist.org/packages/ergebnis/attribute-collector)
+[![Monthly Downloads](https://poser.pugx.org/ergebnis/attribute-collector/d/monthly)](https://packagist.org/packages/ergebnis/attribute-collector)
 
 This project provides a [`composer`](https://getcomposer.org) package with collectors for collecting [attributes](https://www.php.net/manual/en/language.attributes.overview.php) located on classes, class constants, properties, methods, method parameters, functions, function parameters, and constants.
 
