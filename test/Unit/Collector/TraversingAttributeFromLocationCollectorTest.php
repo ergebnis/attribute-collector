@@ -493,7 +493,7 @@ final class TraversingAttributeFromLocationCollectorTest extends Framework\TestC
     }
 
     /**
-     * @requires PHP < 8.5
+     * @requires PHP < 8.5.0
      */
     public function testCollectFromLocationThrowsAttributeCollectionNotSupportedWhenPhpVersionIsLessThanPhp85ForConstantLocation(): void
     {
@@ -507,7 +507,7 @@ final class TraversingAttributeFromLocationCollectorTest extends Framework\TestC
     }
 
     /**
-     * @requires PHP >= 8.5
+     * @requires PHP >= 8.5.0
      */
     public function testCollectFromLocationThrowsConstantCouldNotBeReflectedWhenConstantCouldNotBeReflectedForConstantLocation(): void
     {
@@ -521,7 +521,7 @@ final class TraversingAttributeFromLocationCollectorTest extends Framework\TestC
     }
 
     /**
-     * @requires PHP >= 8.5
+     * @requires PHP >= 8.5.0
      */
     public function testCollectFromLocationReturnsEmptyAttributeCollectionWhenLocationIsConstantLocationForConstantNotUsingAttributes(): void
     {
@@ -535,7 +535,7 @@ final class TraversingAttributeFromLocationCollectorTest extends Framework\TestC
     }
 
     /**
-     * @requires PHP >= 8.5
+     * @requires PHP >= 8.5.0
      */
     public function testCollectFromLocationReturnsAttributeCollectionWhenLocationIsConstantLocationForConstantUsingAttributes(): void
     {
@@ -551,7 +551,7 @@ final class TraversingAttributeFromLocationCollectorTest extends Framework\TestC
     }
 
     /**
-     * @requires PHP >= 8.5
+     * @requires PHP >= 8.5.0
      */
     public function testCollectFromLocationReturnsAttributeCollectionWhenLocationsContainDuplicateConstantLocationsForConstantUsingAttributes(): void
     {
