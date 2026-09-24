@@ -8,6 +8,10 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 For a full diff see [`0.1.0...main`][0.1.0...main].
 
+### Changed
+
+- Allowed installation on PHP 8.6 ([#159]), by [@localheinz]
+
 ## [0.1.0][0.1.0] - 2026-02-13
 
 For a full diff see [`e66cfff...0.1.0`][e66cfff...0.1.0].
@@ -50,5 +54,6 @@ For a full diff see [`e66cfff...0.1.0`][e66cfff...0.1.0].
 [#13]: https://github.com/ergebnis/attribute-collector/pull/13
 [#14]: https://github.com/ergebnis/attribute-collector/pull/14
 [#20]: https://github.com/ergebnis/attribute-collector/pull/20
+[#159]: https://github.com/ergebnis/attribute-collector/pull/159
 
 [@localheinz]: https://github.com/localheinz
