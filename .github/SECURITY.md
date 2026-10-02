@@ -4,7 +4,7 @@
 
 The following versions of `ergebnis/attribute-collector` have active support:
 
-- `~0.1.0`
+- `~0.2.0`
 
 ## Unsupported Versions
 
