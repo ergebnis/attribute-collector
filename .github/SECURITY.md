@@ -10,7 +10,7 @@ The following versions of `ergebnis/attribute-collector` have active support:
 
 The following versions of `ergebnis/attribute-collector` have reached their end of life:
 
-- `<0.2.0`
+- `<0.3.0`
 
 ## Reporting a Vulnerability
 
