@@ -8,6 +8,10 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 For a full diff see [`0.2.0...main`][0.2.0...main].
 
+### Added
+
+- Added support for PHP 8.6 ([#217]), by [@localheinz]
+
 ## [`0.2.0`][0.2.0]
 
 For a full diff see [`0.1.0...0.2.0`][0.1.0...0.2.0].
@@ -61,5 +65,6 @@ For a full diff see [`e66cfff...0.1.0`][e66cfff...0.1.0].
 [#14]: https://github.com/ergebnis/attribute-collector/pull/14
 [#20]: https://github.com/ergebnis/attribute-collector/pull/20
 [#159]: https://github.com/ergebnis/attribute-collector/pull/159
+[#217]: https://github.com/ergebnis/attribute-collector/pull/217
 
 [@localheinz]: https://github.com/localheinz
