@@ -4,13 +4,13 @@
 
 The following versions of `ergebnis/attribute-collector` have active support:
 
-- `~0.2.0`
+- `~0.4.0`
 
 ## Unsupported Versions
 
 The following versions of `ergebnis/attribute-collector` have reached their end of life:
 
-- `<0.3.0`
+- `<0.4.0`
 
 ## Reporting a Vulnerability
 

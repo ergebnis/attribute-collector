@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "79d46ec7ae6ba02be74d2ba65ab08627",
+    "content-hash": "a7b15e96f1b8aa051771118f0a03d062",
     "packages": [
         {
             "name": "ergebnis/classy",
