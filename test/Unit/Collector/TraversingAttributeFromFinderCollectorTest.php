@@ -50,11 +50,11 @@ final class TraversingAttributeFromFinderCollectorTest extends Framework\TestCas
         self::filesystem()->mkdir(self::temporaryDirectory());
 
         $source = <<<'TXT'
-<?php
+            <?php
 
-final class MessedUp
-{
-TXT;
+            final class MessedUp
+            {
+            TXT;
 
         self::filesystem()->dumpFile(
             self::fileWithParseError(),
