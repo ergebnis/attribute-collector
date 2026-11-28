@@ -36,6 +36,7 @@ final class FunctionLocation implements Location
         if (!$other instanceof self) {
             return false;
         }
+
         return $this->functionName->equals($other->functionName);
     }
 }

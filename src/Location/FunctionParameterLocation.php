@@ -52,6 +52,7 @@ final class FunctionParameterLocation implements Location
         if (!$this->functionName->equals($other->functionName)) {
             return false;
         }
+
         return $this->parameterName->equals($other->parameterName);
     }
 }

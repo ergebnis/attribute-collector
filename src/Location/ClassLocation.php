@@ -36,6 +36,7 @@ final class ClassLocation implements Location
         if (!$other instanceof self) {
             return false;
         }
+
         return $this->className->equals($other->className);
     }
 }

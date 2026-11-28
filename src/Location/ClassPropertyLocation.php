@@ -52,6 +52,7 @@ final class ClassPropertyLocation implements Location
         if (!$this->className->equals($other->className)) {
             return false;
         }
+
         return $this->propertyName->equals($other->propertyName);
     }
 }

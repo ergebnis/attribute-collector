@@ -52,6 +52,7 @@ final class ClassMethodLocation implements Location
         if (!$this->className->equals($other->className)) {
             return false;
         }
+
         return $this->methodName->equals($other->methodName);
     }
 }

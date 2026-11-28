@@ -36,6 +36,7 @@ final class ConstantLocation implements Location
         if (!$other instanceof self) {
             return false;
         }
+
         return $this->constantName->equals($other->constantName);
     }
 }

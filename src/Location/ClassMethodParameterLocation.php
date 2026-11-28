@@ -64,6 +64,7 @@ final class ClassMethodParameterLocation implements Location
         if (!$this->methodName->equals($other->methodName)) {
             return false;
         }
+
         return $this->parameterName->equals($other->parameterName);
     }
 }

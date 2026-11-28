@@ -52,6 +52,7 @@ final class ClassConstantLocation implements Location
         if (!$this->className->equals($other->className)) {
             return false;
         }
+
         return $this->constantName->equals($other->constantName);
     }
 }
