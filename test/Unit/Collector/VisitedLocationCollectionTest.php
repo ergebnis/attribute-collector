@@ -13,9 +13,7 @@ declare(strict_types=1);
 
 namespace Ergebnis\AttributeCollector\Test\Unit\Collector;
 
-use Ergebnis\AttributeCollector\Collector;
-use Ergebnis\AttributeCollector\Location;
-use Ergebnis\AttributeCollector\Name;
+use Ergebnis\AttributeCollector;
 use PHPUnit\Framework;
 
 /**
@@ -28,18 +26,18 @@ final class VisitedLocationCollectionTest extends Framework\TestCase
 {
     public function testHasReturnsFalseWhenCollectionIsEmpty(): void
     {
-        $location = Location\ClassLocation::create(Name\ClassName::fromString(\stdClass::class));
+        $location = AttributeCollector\Location\ClassLocation::create(AttributeCollector\Name\ClassName::fromString(\stdClass::class));
 
-        $collection = new Collector\VisitedLocationCollection();
+        $collection = new AttributeCollector\Collector\VisitedLocationCollection();
 
         self::assertFalse($collection->has($location));
     }
 
     public function testHasReturnsTrueWhenCollectionHasIdenticalLocation(): void
     {
-        $location = Location\ClassLocation::create(Name\ClassName::fromString(\stdClass::class));
+        $location = AttributeCollector\Location\ClassLocation::create(AttributeCollector\Name\ClassName::fromString(\stdClass::class));
 
-        $collection = new Collector\VisitedLocationCollection();
+        $collection = new AttributeCollector\Collector\VisitedLocationCollection();
 
         $collection->add($location);
 
@@ -48,10 +46,10 @@ final class VisitedLocationCollectionTest extends Framework\TestCase
 
     public function testHasReturnsTrueWhenCollectionHasEqualLocation(): void
     {
-        $one = Location\ClassLocation::create(Name\ClassName::fromString(\stdClass::class));
-        $two = Location\ClassLocation::create(Name\ClassName::fromString(\stdClass::class));
+        $one = AttributeCollector\Location\ClassLocation::create(AttributeCollector\Name\ClassName::fromString(\stdClass::class));
+        $two = AttributeCollector\Location\ClassLocation::create(AttributeCollector\Name\ClassName::fromString(\stdClass::class));
 
-        $collection = new Collector\VisitedLocationCollection();
+        $collection = new AttributeCollector\Collector\VisitedLocationCollection();
 
         $collection->add($one);
 

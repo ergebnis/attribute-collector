@@ -13,7 +13,7 @@ declare(strict_types=1);
 
 namespace Ergebnis\AttributeCollector\Collector;
 
-use Ergebnis\AttributeCollector\Location;
+use Ergebnis\AttributeCollector;
 
 /**
  * @internal
@@ -21,16 +21,16 @@ use Ergebnis\AttributeCollector\Location;
 final class VisitedLocationCollection
 {
     /**
-     * @var list<Location\Location>
+     * @var list<AttributeCollector\Location\Location>
      */
     private array $visitedLocations = [];
 
-    public function add(Location\Location $location): void
+    public function add(AttributeCollector\Location\Location $location): void
     {
         $this->visitedLocations[] = $location;
     }
 
-    public function has(Location\Location $location): bool
+    public function has(AttributeCollector\Location\Location $location): bool
     {
         foreach ($this->visitedLocations as $visitedLocation) {
             if ($visitedLocation->equals($location)) {

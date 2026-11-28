@@ -13,8 +13,7 @@ declare(strict_types=1);
 
 namespace Ergebnis\AttributeCollector\Test\Unit\Location;
 
-use Ergebnis\AttributeCollector\Location;
-use Ergebnis\AttributeCollector\Name;
+use Ergebnis\AttributeCollector;
 use PHPUnit\Framework;
 
 /**
@@ -27,10 +26,10 @@ final class FunctionParameterLocationTest extends Framework\TestCase
 {
     public function testCreateReturnsLocation(): void
     {
-        $functionName = Name\FunctionName::fromString('Ergebnis\AttributeCollector\Test\Fixture\quuxCorge');
-        $parameterName = Name\ParameterName::fromString('corgeGrault');
+        $functionName = AttributeCollector\Name\FunctionName::fromString('Ergebnis\AttributeCollector\Test\Fixture\quuxCorge');
+        $parameterName = AttributeCollector\Name\ParameterName::fromString('corgeGrault');
 
-        $location = Location\FunctionParameterLocation::create(
+        $location = AttributeCollector\Location\FunctionParameterLocation::create(
             $functionName,
             $parameterName,
         );
@@ -41,24 +40,24 @@ final class FunctionParameterLocationTest extends Framework\TestCase
 
     public function testEqualsReturnsFalseWhenTypesAreDifferent(): void
     {
-        $one = Location\FunctionParameterLocation::create(
-            Name\FunctionName::fromString('fooBar'),
-            Name\ParameterName::fromString('barBaz'),
+        $one = AttributeCollector\Location\FunctionParameterLocation::create(
+            AttributeCollector\Name\FunctionName::fromString('fooBar'),
+            AttributeCollector\Name\ParameterName::fromString('barBaz'),
         );
-        $two = $this->createStub(Location\Location::class);
+        $two = $this->createStub(AttributeCollector\Location\Location::class);
 
         self::assertFalse($one->equals($two));
     }
 
     public function testEqualsReturnsFalseWhenFunctionNamesAreDifferent(): void
     {
-        $one = Location\FunctionParameterLocation::create(
-            Name\FunctionName::fromString('fooBar'),
-            Name\ParameterName::fromString('barBaz'),
+        $one = AttributeCollector\Location\FunctionParameterLocation::create(
+            AttributeCollector\Name\FunctionName::fromString('fooBar'),
+            AttributeCollector\Name\ParameterName::fromString('barBaz'),
         );
-        $two = Location\FunctionParameterLocation::create(
-            Name\FunctionName::fromString('bazQux'),
-            Name\ParameterName::fromString('barBaz'),
+        $two = AttributeCollector\Location\FunctionParameterLocation::create(
+            AttributeCollector\Name\FunctionName::fromString('bazQux'),
+            AttributeCollector\Name\ParameterName::fromString('barBaz'),
         );
 
         self::assertFalse($one->equals($two));
@@ -66,13 +65,13 @@ final class FunctionParameterLocationTest extends Framework\TestCase
 
     public function testEqualsReturnsFalseWhenParameterNamesAreDifferent(): void
     {
-        $one = Location\FunctionParameterLocation::create(
-            Name\FunctionName::fromString('fooBar'),
-            Name\ParameterName::fromString('barBaz'),
+        $one = AttributeCollector\Location\FunctionParameterLocation::create(
+            AttributeCollector\Name\FunctionName::fromString('fooBar'),
+            AttributeCollector\Name\ParameterName::fromString('barBaz'),
         );
-        $two = Location\FunctionParameterLocation::create(
-            Name\FunctionName::fromString('fooBar'),
-            Name\ParameterName::fromString('bazQux'),
+        $two = AttributeCollector\Location\FunctionParameterLocation::create(
+            AttributeCollector\Name\FunctionName::fromString('fooBar'),
+            AttributeCollector\Name\ParameterName::fromString('bazQux'),
         );
 
         self::assertFalse($one->equals($two));
@@ -80,13 +79,13 @@ final class FunctionParameterLocationTest extends Framework\TestCase
 
     public function testEqualsReturnsTrueWhenFunctionNamesAndParameterNamesAreEqual(): void
     {
-        $one = Location\FunctionParameterLocation::create(
-            Name\FunctionName::fromString('fooBar'),
-            Name\ParameterName::fromString('barBaz'),
+        $one = AttributeCollector\Location\FunctionParameterLocation::create(
+            AttributeCollector\Name\FunctionName::fromString('fooBar'),
+            AttributeCollector\Name\ParameterName::fromString('barBaz'),
         );
-        $two = Location\FunctionParameterLocation::create(
-            Name\FunctionName::fromString('fooBar'),
-            Name\ParameterName::fromString('barBaz'),
+        $two = AttributeCollector\Location\FunctionParameterLocation::create(
+            AttributeCollector\Name\FunctionName::fromString('fooBar'),
+            AttributeCollector\Name\ParameterName::fromString('barBaz'),
         );
 
         self::assertTrue($one->equals($two));

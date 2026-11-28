@@ -13,9 +13,7 @@ declare(strict_types=1);
 
 namespace Ergebnis\AttributeCollector\Test\Unit\Location;
 
-use Ergebnis\AttributeCollector\Location;
-use Ergebnis\AttributeCollector\Name;
-use Ergebnis\AttributeCollector\Test;
+use Ergebnis\AttributeCollector;
 use PHPUnit\Framework;
 
 /**
@@ -25,21 +23,21 @@ use PHPUnit\Framework;
  */
 final class ConstantLocationTest extends Framework\TestCase
 {
-    use Test\Util\Helper;
+    use AttributeCollector\Test\Util\Helper;
 
     public function testCreateReturnsLocation(): void
     {
-        $constantName = Name\ConstantName::fromString(self::faker()->word());
+        $constantName = AttributeCollector\Name\ConstantName::fromString(self::faker()->word());
 
-        $location = Location\ConstantLocation::create($constantName);
+        $location = AttributeCollector\Location\ConstantLocation::create($constantName);
 
         self::assertSame($constantName, $location->constantName());
     }
 
     public function testEqualsReturnsFalseWhenTypesAreDifferent(): void
     {
-        $one = Location\ConstantLocation::create(Name\ConstantName::fromString('FOO'));
-        $two = $this->createStub(Location\Location::class);
+        $one = AttributeCollector\Location\ConstantLocation::create(AttributeCollector\Name\ConstantName::fromString('FOO'));
+        $two = $this->createStub(AttributeCollector\Location\Location::class);
 
         self::assertFalse($one->equals($two));
     }
@@ -48,8 +46,8 @@ final class ConstantLocationTest extends Framework\TestCase
     {
         $faker = self::faker()->unique();
 
-        $one = Location\ConstantLocation::create(Name\ConstantName::fromString($faker->word()));
-        $two = Location\ConstantLocation::create(Name\ConstantName::fromString($faker->word()));
+        $one = AttributeCollector\Location\ConstantLocation::create(AttributeCollector\Name\ConstantName::fromString($faker->word()));
+        $two = AttributeCollector\Location\ConstantLocation::create(AttributeCollector\Name\ConstantName::fromString($faker->word()));
 
         self::assertFalse($one->equals($two));
     }
@@ -58,8 +56,8 @@ final class ConstantLocationTest extends Framework\TestCase
     {
         $value = self::faker()->word();
 
-        $one = Location\ConstantLocation::create(Name\ConstantName::fromString($value));
-        $two = Location\ConstantLocation::create(Name\ConstantName::fromString($value));
+        $one = AttributeCollector\Location\ConstantLocation::create(AttributeCollector\Name\ConstantName::fromString($value));
+        $two = AttributeCollector\Location\ConstantLocation::create(AttributeCollector\Name\ConstantName::fromString($value));
 
         self::assertTrue($one->equals($two));
     }

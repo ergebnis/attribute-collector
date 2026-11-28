@@ -13,7 +13,7 @@ declare(strict_types=1);
 
 namespace Ergebnis\AttributeCollector\Name;
 
-use Ergebnis\AttributeCollector\Exception;
+use Ergebnis\AttributeCollector;
 
 final class FunctionName
 {
@@ -22,12 +22,12 @@ final class FunctionName
     }
 
     /**
-     * @throws Exception\InvalidFunctionName
+     * @throws AttributeCollector\Exception\InvalidFunctionName
      */
     public static function fromString(string $value): self
     {
         if ('' === \trim($value)) {
-            throw Exception\InvalidFunctionName::blankOrEmpty();
+            throw AttributeCollector\Exception\InvalidFunctionName::blankOrEmpty();
         }
 
         return new self($value);

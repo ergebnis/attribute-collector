@@ -13,11 +13,11 @@ declare(strict_types=1);
 
 namespace Ergebnis\AttributeCollector\Exception;
 
-use Ergebnis\AttributeCollector\Location;
+use Ergebnis\AttributeCollector;
 
 final class ClassMethodDoesNotHaveParameter extends \RuntimeException implements Exception
 {
-    public static function forClassMethodParameterLocation(Location\ClassMethodParameterLocation $classMethodParameterLocation): self
+    public static function forClassMethodParameterLocation(AttributeCollector\Location\ClassMethodParameterLocation $classMethodParameterLocation): self
     {
         return new self(\sprintf(
             'Class method "%s::%s()" does not have a parameter "$%s".',

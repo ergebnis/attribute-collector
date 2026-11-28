@@ -13,7 +13,7 @@ declare(strict_types=1);
 
 namespace Ergebnis\AttributeCollector\Name;
 
-use Ergebnis\AttributeCollector\Exception;
+use Ergebnis\AttributeCollector;
 
 final class ParameterName
 {
@@ -22,12 +22,12 @@ final class ParameterName
     }
 
     /**
-     * @throws Exception\InvalidParameterName
+     * @throws AttributeCollector\Exception\InvalidParameterName
      */
     public static function fromString(string $value): self
     {
         if ('' === \trim($value)) {
-            throw Exception\InvalidParameterName::blankOrEmpty();
+            throw AttributeCollector\Exception\InvalidParameterName::blankOrEmpty();
         }
 
         return new self($value);

@@ -13,10 +13,7 @@ declare(strict_types=1);
 
 namespace Ergebnis\AttributeCollector\Test\Unit\Exception;
 
-use Ergebnis\AttributeCollector\Exception;
-use Ergebnis\AttributeCollector\Location;
-use Ergebnis\AttributeCollector\Name;
-use Ergebnis\AttributeCollector\Test;
+use Ergebnis\AttributeCollector;
 use PHPUnit\Framework;
 
 /**
@@ -27,14 +24,14 @@ use PHPUnit\Framework;
  */
 final class FunctionCouldNotBeReflectedTest extends Framework\TestCase
 {
-    use Test\Util\Helper;
+    use AttributeCollector\Test\Util\Helper;
 
     public function testForFunctionLocationWithReflectionExceptionReturnsException(): void
     {
-        $functionLocation = Location\FunctionLocation::create(Name\FunctionName::fromString('Ergebnis\AttributeCollector\Test\Fixture\quuxCorge'));
+        $functionLocation = AttributeCollector\Location\FunctionLocation::create(AttributeCollector\Name\FunctionName::fromString('Ergebnis\AttributeCollector\Test\Fixture\quuxCorge'));
         $reflectionException = new \ReflectionException(self::faker()->sentence());
 
-        $exception = Exception\FunctionCouldNotBeReflected::forFunctionLocationWithReflectionException(
+        $exception = AttributeCollector\Exception\FunctionCouldNotBeReflected::forFunctionLocationWithReflectionException(
             $functionLocation,
             $reflectionException,
         );

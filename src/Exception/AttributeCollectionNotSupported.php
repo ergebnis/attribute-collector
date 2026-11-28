@@ -13,11 +13,11 @@ declare(strict_types=1);
 
 namespace Ergebnis\AttributeCollector\Exception;
 
-use Ergebnis\AttributeCollector\Location;
+use Ergebnis\AttributeCollector;
 
 final class AttributeCollectionNotSupported extends \InvalidArgumentException implements Exception
 {
-    public static function forLocation(Location\Location $location): self
+    public static function forLocation(AttributeCollector\Location\Location $location): self
     {
         return new self(\sprintf(
             'Attribute collection is not supported for locations of type "%s".',

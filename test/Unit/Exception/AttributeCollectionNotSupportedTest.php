@@ -13,8 +13,7 @@ declare(strict_types=1);
 
 namespace Ergebnis\AttributeCollector\Test\Unit\Exception;
 
-use Ergebnis\AttributeCollector\Exception;
-use Ergebnis\AttributeCollector\Location;
+use Ergebnis\AttributeCollector;
 use PHPUnit\Framework;
 
 /**
@@ -24,9 +23,9 @@ final class AttributeCollectionNotSupportedTest extends Framework\TestCase
 {
     public function testForLocationReturnsException(): void
     {
-        $location = $this->createStub(Location\Location::class);
+        $location = $this->createStub(AttributeCollector\Location\Location::class);
 
-        $exception = Exception\AttributeCollectionNotSupported::forLocation($location);
+        $exception = AttributeCollector\Exception\AttributeCollectionNotSupported::forLocation($location);
 
         $message = \sprintf(
             'Attribute collection is not supported for locations of type "%s".',

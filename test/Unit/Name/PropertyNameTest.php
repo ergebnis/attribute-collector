@@ -13,9 +13,7 @@ declare(strict_types=1);
 
 namespace Ergebnis\AttributeCollector\Test\Unit\Name;
 
-use Ergebnis\AttributeCollector\Exception;
-use Ergebnis\AttributeCollector\Name;
-use Ergebnis\AttributeCollector\Test;
+use Ergebnis\AttributeCollector;
 use PHPUnit\Framework;
 
 /**
@@ -25,7 +23,7 @@ use PHPUnit\Framework;
  */
 final class PropertyNameTest extends Framework\TestCase
 {
-    use Test\Util\Helper;
+    use AttributeCollector\Test\Util\Helper;
 
     /**
      * @dataProvider \Ergebnis\DataProvider\StringProvider::blank
@@ -33,16 +31,16 @@ final class PropertyNameTest extends Framework\TestCase
      */
     public function testFromStringRejectsInvalidValue(string $value): void
     {
-        $this->expectException(Exception\InvalidPropertyName::class);
+        $this->expectException(AttributeCollector\Exception\InvalidPropertyName::class);
 
-        Name\PropertyName::fromString($value);
+        AttributeCollector\Name\PropertyName::fromString($value);
     }
 
     public function testFromStringReturnsPropertyName(): void
     {
         $value = self::faker()->word();
 
-        $propertyName = Name\PropertyName::fromString($value);
+        $propertyName = AttributeCollector\Name\PropertyName::fromString($value);
 
         self::assertSame($value, $propertyName->toString());
     }
@@ -51,8 +49,8 @@ final class PropertyNameTest extends Framework\TestCase
     {
         $faker = self::faker()->unique();
 
-        $one = Name\PropertyName::fromString($faker->word());
-        $two = Name\PropertyName::fromString($faker->word());
+        $one = AttributeCollector\Name\PropertyName::fromString($faker->word());
+        $two = AttributeCollector\Name\PropertyName::fromString($faker->word());
 
         self::assertFalse($one->equals($two));
     }
@@ -61,16 +59,16 @@ final class PropertyNameTest extends Framework\TestCase
     {
         $value = self::faker()->word();
 
-        $one = Name\PropertyName::fromString($value);
-        $two = Name\PropertyName::fromString($value);
+        $one = AttributeCollector\Name\PropertyName::fromString($value);
+        $two = AttributeCollector\Name\PropertyName::fromString($value);
 
         self::assertTrue($one->equals($two));
     }
 
     public function testEqualsReturnsTrueWhenValuesAreEqualWithDifferentCase(): void
     {
-        $one = Name\PropertyName::fromString('FoO');
-        $two = Name\PropertyName::fromString('fOo');
+        $one = AttributeCollector\Name\PropertyName::fromString('FoO');
+        $two = AttributeCollector\Name\PropertyName::fromString('fOo');
 
         self::assertTrue($one->equals($two));
     }

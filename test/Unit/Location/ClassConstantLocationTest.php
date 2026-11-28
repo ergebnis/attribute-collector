@@ -13,9 +13,7 @@ declare(strict_types=1);
 
 namespace Ergebnis\AttributeCollector\Test\Unit\Location;
 
-use Ergebnis\AttributeCollector\Location;
-use Ergebnis\AttributeCollector\Name;
-use Ergebnis\AttributeCollector\Test;
+use Ergebnis\AttributeCollector;
 use PHPUnit\Framework;
 
 /**
@@ -28,10 +26,10 @@ final class ClassConstantLocationTest extends Framework\TestCase
 {
     public function testCreateReturnsLocation(): void
     {
-        $className = Name\ClassName::fromString(Test\Fixture\ClassUsingAttributes::class);
-        $constantName = Name\ConstantName::fromString('FOO');
+        $className = AttributeCollector\Name\ClassName::fromString(AttributeCollector\Test\Fixture\ClassUsingAttributes::class);
+        $constantName = AttributeCollector\Name\ConstantName::fromString('FOO');
 
-        $location = Location\ClassConstantLocation::create(
+        $location = AttributeCollector\Location\ClassConstantLocation::create(
             $className,
             $constantName,
         );
@@ -42,24 +40,24 @@ final class ClassConstantLocationTest extends Framework\TestCase
 
     public function testEqualsReturnsFalseWhenTypesAreDifferent(): void
     {
-        $one = Location\ClassConstantLocation::create(
-            Name\ClassName::fromString(self::class),
-            Name\ConstantName::fromString('FOO'),
+        $one = AttributeCollector\Location\ClassConstantLocation::create(
+            AttributeCollector\Name\ClassName::fromString(self::class),
+            AttributeCollector\Name\ConstantName::fromString('FOO'),
         );
-        $two = $this->createStub(Location\Location::class);
+        $two = $this->createStub(AttributeCollector\Location\Location::class);
 
         self::assertFalse($one->equals($two));
     }
 
     public function testEqualsReturnsFalseWhenClassNamesAreDifferent(): void
     {
-        $one = Location\ClassConstantLocation::create(
-            Name\ClassName::fromString(self::class),
-            Name\ConstantName::fromString('FOO'),
+        $one = AttributeCollector\Location\ClassConstantLocation::create(
+            AttributeCollector\Name\ClassName::fromString(self::class),
+            AttributeCollector\Name\ConstantName::fromString('FOO'),
         );
-        $two = Location\ClassConstantLocation::create(
-            Name\ClassName::fromString(parent::class),
-            Name\ConstantName::fromString('FOO'),
+        $two = AttributeCollector\Location\ClassConstantLocation::create(
+            AttributeCollector\Name\ClassName::fromString(parent::class),
+            AttributeCollector\Name\ConstantName::fromString('FOO'),
         );
 
         self::assertFalse($one->equals($two));
@@ -67,13 +65,13 @@ final class ClassConstantLocationTest extends Framework\TestCase
 
     public function testEqualsReturnsFalseWhenConstantNamesAreDifferent(): void
     {
-        $one = Location\ClassConstantLocation::create(
-            Name\ClassName::fromString(self::class),
-            Name\ConstantName::fromString('FOO'),
+        $one = AttributeCollector\Location\ClassConstantLocation::create(
+            AttributeCollector\Name\ClassName::fromString(self::class),
+            AttributeCollector\Name\ConstantName::fromString('FOO'),
         );
-        $two = Location\ClassConstantLocation::create(
-            Name\ClassName::fromString(self::class),
-            Name\ConstantName::fromString('BAR'),
+        $two = AttributeCollector\Location\ClassConstantLocation::create(
+            AttributeCollector\Name\ClassName::fromString(self::class),
+            AttributeCollector\Name\ConstantName::fromString('BAR'),
         );
 
         self::assertFalse($one->equals($two));
@@ -81,13 +79,13 @@ final class ClassConstantLocationTest extends Framework\TestCase
 
     public function testEqualsReturnsTrueWhenValuesAreEqual(): void
     {
-        $one = Location\ClassConstantLocation::create(
-            Name\ClassName::fromString(self::class),
-            Name\ConstantName::fromString('FOO'),
+        $one = AttributeCollector\Location\ClassConstantLocation::create(
+            AttributeCollector\Name\ClassName::fromString(self::class),
+            AttributeCollector\Name\ConstantName::fromString('FOO'),
         );
-        $two = Location\ClassConstantLocation::create(
-            Name\ClassName::fromString(self::class),
-            Name\ConstantName::fromString('FOO'),
+        $two = AttributeCollector\Location\ClassConstantLocation::create(
+            AttributeCollector\Name\ClassName::fromString(self::class),
+            AttributeCollector\Name\ConstantName::fromString('FOO'),
         );
 
         self::assertTrue($one->equals($two));

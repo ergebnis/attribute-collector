@@ -13,12 +13,7 @@ declare(strict_types=1);
 
 namespace Ergebnis\AttributeCollector\Test\Unit\Collector;
 
-use Ergebnis\AttributeCollector\Attribute;
-use Ergebnis\AttributeCollector\Collector;
-use Ergebnis\AttributeCollector\Exception;
-use Ergebnis\AttributeCollector\Location;
-use Ergebnis\AttributeCollector\Name;
-use Ergebnis\AttributeCollector\Test;
+use Ergebnis\AttributeCollector;
 use PHPUnit\Framework;
 
 /**
@@ -43,7 +38,7 @@ use PHPUnit\Framework;
  */
 final class TraversingAttributeFromFinderCollectorTest extends Framework\TestCase
 {
-    use Test\Util\Helper;
+    use AttributeCollector\Test\Util\Helper;
 
     protected function setUp(): void
     {
@@ -71,7 +66,7 @@ final class TraversingAttributeFromFinderCollectorTest extends Framework\TestCas
     {
         $finder = new \ArrayIterator();
 
-        $collector = new Collector\TraversingAttributeFromFinderCollector();
+        $collector = new AttributeCollector\Collector\TraversingAttributeFromFinderCollector();
 
         $collection = $collector->collectFromFinder($finder);
 
@@ -86,9 +81,9 @@ final class TraversingAttributeFromFinderCollectorTest extends Framework\TestCas
             new \SplFileInfo(__DIR__ . '/../../Fixture/ClassUsingAttributes.php'),
         ]);
 
-        $collector = new Collector\TraversingAttributeFromFinderCollector();
+        $collector = new AttributeCollector\Collector\TraversingAttributeFromFinderCollector();
 
-        $this->expectException(Exception\FinderContainsFileThatCouldNotBeParsed::class);
+        $this->expectException(AttributeCollector\Exception\FinderContainsFileThatCouldNotBeParsed::class);
 
         $collector->collectFromFinder($finder);
     }
@@ -99,7 +94,7 @@ final class TraversingAttributeFromFinderCollectorTest extends Framework\TestCas
             new \SplFileInfo(__DIR__ . '/../../Fixture/ClassNotUsingAttributes.php'),
         ]);
 
-        $collector = new Collector\TraversingAttributeFromFinderCollector();
+        $collector = new AttributeCollector\Collector\TraversingAttributeFromFinderCollector();
 
         $collection = $collector->collectFromFinder($finder);
 
@@ -113,7 +108,7 @@ final class TraversingAttributeFromFinderCollectorTest extends Framework\TestCas
             new \SplFileInfo(__DIR__ . '/../../Fixture/ClassUsingAttributes.php'),
         ]);
 
-        $collector = new Collector\TraversingAttributeFromFinderCollector();
+        $collector = new AttributeCollector\Collector\TraversingAttributeFromFinderCollector();
 
         $collection = $collector->collectFromFinder($finder);
 
@@ -130,7 +125,7 @@ final class TraversingAttributeFromFinderCollectorTest extends Framework\TestCas
             new \SplFileInfo(__DIR__ . '/../../Fixture/ClassUsingAttributes.php'),
         ]);
 
-        $collector = new Collector\TraversingAttributeFromFinderCollector();
+        $collector = new AttributeCollector\Collector\TraversingAttributeFromFinderCollector();
 
         $collection = $collector->collectFromFinder($finder);
 
@@ -140,91 +135,91 @@ final class TraversingAttributeFromFinderCollectorTest extends Framework\TestCas
     }
 
     /**
-     * @return list<Attribute>
+     * @return list<AttributeCollector\Attribute>
      */
     private static function attributesFromClassNameForClassUsingAttributes(): array
     {
         return [
-            Attribute::create(
-                Location\ClassLocation::create(Name\ClassName::fromString(Test\Fixture\ClassUsingAttributes::class)),
-                new Test\Fixture\AttributeWithParameters(
+            AttributeCollector\Attribute::create(
+                AttributeCollector\Location\ClassLocation::create(AttributeCollector\Name\ClassName::fromString(AttributeCollector\Test\Fixture\ClassUsingAttributes::class)),
+                new AttributeCollector\Test\Fixture\AttributeWithParameters(
                     'bar',
                     1,
                 ),
             ),
-            Attribute::create(
-                Location\ClassLocation::create(Name\ClassName::fromString(Test\Fixture\ClassUsingAttributes::class)),
-                new Test\Fixture\AttributeWithoutParameters(),
+            AttributeCollector\Attribute::create(
+                AttributeCollector\Location\ClassLocation::create(AttributeCollector\Name\ClassName::fromString(AttributeCollector\Test\Fixture\ClassUsingAttributes::class)),
+                new AttributeCollector\Test\Fixture\AttributeWithoutParameters(),
             ),
-            Attribute::create(
-                Location\ClassConstantLocation::create(
-                    Name\ClassName::fromString(Test\Fixture\ClassUsingAttributes::class),
-                    Name\ConstantName::fromString('FOO'),
+            AttributeCollector\Attribute::create(
+                AttributeCollector\Location\ClassConstantLocation::create(
+                    AttributeCollector\Name\ClassName::fromString(AttributeCollector\Test\Fixture\ClassUsingAttributes::class),
+                    AttributeCollector\Name\ConstantName::fromString('FOO'),
                 ),
-                new Test\Fixture\AttributeWithParameters(
+                new AttributeCollector\Test\Fixture\AttributeWithParameters(
                     'bar',
                     123,
                 ),
             ),
-            Attribute::create(
-                Location\ClassConstantLocation::create(
-                    Name\ClassName::fromString(Test\Fixture\ClassUsingAttributes::class),
-                    Name\ConstantName::fromString('FOO'),
+            AttributeCollector\Attribute::create(
+                AttributeCollector\Location\ClassConstantLocation::create(
+                    AttributeCollector\Name\ClassName::fromString(AttributeCollector\Test\Fixture\ClassUsingAttributes::class),
+                    AttributeCollector\Name\ConstantName::fromString('FOO'),
                 ),
-                new Test\Fixture\AttributeWithoutParameters(),
+                new AttributeCollector\Test\Fixture\AttributeWithoutParameters(),
             ),
-            Attribute::create(
-                Location\ClassPropertyLocation::create(
-                    Name\ClassName::fromString(Test\Fixture\ClassUsingAttributes::class),
-                    Name\PropertyName::fromString('fooBar'),
+            AttributeCollector\Attribute::create(
+                AttributeCollector\Location\ClassPropertyLocation::create(
+                    AttributeCollector\Name\ClassName::fromString(AttributeCollector\Test\Fixture\ClassUsingAttributes::class),
+                    AttributeCollector\Name\PropertyName::fromString('fooBar'),
                 ),
-                new Test\Fixture\AttributeWithParameters(
+                new AttributeCollector\Test\Fixture\AttributeWithParameters(
                     'bar',
                     234,
                 ),
             ),
-            Attribute::create(
-                Location\ClassPropertyLocation::create(
-                    Name\ClassName::fromString(Test\Fixture\ClassUsingAttributes::class),
-                    Name\PropertyName::fromString('fooBar'),
+            AttributeCollector\Attribute::create(
+                AttributeCollector\Location\ClassPropertyLocation::create(
+                    AttributeCollector\Name\ClassName::fromString(AttributeCollector\Test\Fixture\ClassUsingAttributes::class),
+                    AttributeCollector\Name\PropertyName::fromString('fooBar'),
                 ),
-                new Test\Fixture\AttributeWithoutParameters(),
+                new AttributeCollector\Test\Fixture\AttributeWithoutParameters(),
             ),
-            Attribute::create(
-                Location\ClassMethodLocation::create(
-                    Name\ClassName::fromString(Test\Fixture\ClassUsingAttributes::class),
-                    Name\MethodName::fromString('barBaz'),
+            AttributeCollector\Attribute::create(
+                AttributeCollector\Location\ClassMethodLocation::create(
+                    AttributeCollector\Name\ClassName::fromString(AttributeCollector\Test\Fixture\ClassUsingAttributes::class),
+                    AttributeCollector\Name\MethodName::fromString('barBaz'),
                 ),
-                new Test\Fixture\AttributeWithParameters(
+                new AttributeCollector\Test\Fixture\AttributeWithParameters(
                     'bar',
                     345,
                 ),
             ),
-            Attribute::create(
-                Location\ClassMethodLocation::create(
-                    Name\ClassName::fromString(Test\Fixture\ClassUsingAttributes::class),
-                    Name\MethodName::fromString('barBaz'),
+            AttributeCollector\Attribute::create(
+                AttributeCollector\Location\ClassMethodLocation::create(
+                    AttributeCollector\Name\ClassName::fromString(AttributeCollector\Test\Fixture\ClassUsingAttributes::class),
+                    AttributeCollector\Name\MethodName::fromString('barBaz'),
                 ),
-                new Test\Fixture\AttributeWithoutParameters(),
+                new AttributeCollector\Test\Fixture\AttributeWithoutParameters(),
             ),
-            Attribute::create(
-                Location\ClassMethodParameterLocation::create(
-                    Name\ClassName::fromString(Test\Fixture\ClassUsingAttributes::class),
-                    Name\MethodName::fromString('barBaz'),
-                    Name\ParameterName::fromString('bazQux'),
+            AttributeCollector\Attribute::create(
+                AttributeCollector\Location\ClassMethodParameterLocation::create(
+                    AttributeCollector\Name\ClassName::fromString(AttributeCollector\Test\Fixture\ClassUsingAttributes::class),
+                    AttributeCollector\Name\MethodName::fromString('barBaz'),
+                    AttributeCollector\Name\ParameterName::fromString('bazQux'),
                 ),
-                new Test\Fixture\AttributeWithParameters(
+                new AttributeCollector\Test\Fixture\AttributeWithParameters(
                     'bar',
                     456,
                 ),
             ),
-            Attribute::create(
-                Location\ClassMethodParameterLocation::create(
-                    Name\ClassName::fromString(Test\Fixture\ClassUsingAttributes::class),
-                    Name\MethodName::fromString('barBaz'),
-                    Name\ParameterName::fromString('bazQux'),
+            AttributeCollector\Attribute::create(
+                AttributeCollector\Location\ClassMethodParameterLocation::create(
+                    AttributeCollector\Name\ClassName::fromString(AttributeCollector\Test\Fixture\ClassUsingAttributes::class),
+                    AttributeCollector\Name\MethodName::fromString('barBaz'),
+                    AttributeCollector\Name\ParameterName::fromString('bazQux'),
                 ),
-                new Test\Fixture\AttributeWithoutParameters(),
+                new AttributeCollector\Test\Fixture\AttributeWithoutParameters(),
             ),
         ];
     }

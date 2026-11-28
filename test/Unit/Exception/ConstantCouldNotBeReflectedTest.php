@@ -13,10 +13,7 @@ declare(strict_types=1);
 
 namespace Ergebnis\AttributeCollector\Test\Unit\Exception;
 
-use Ergebnis\AttributeCollector\Exception;
-use Ergebnis\AttributeCollector\Location;
-use Ergebnis\AttributeCollector\Name;
-use Ergebnis\AttributeCollector\Test;
+use Ergebnis\AttributeCollector;
 use PHPUnit\Framework;
 
 /**
@@ -27,14 +24,14 @@ use PHPUnit\Framework;
  */
 final class ConstantCouldNotBeReflectedTest extends Framework\TestCase
 {
-    use Test\Util\Helper;
+    use AttributeCollector\Test\Util\Helper;
 
     public function testForConstantLocationWithReflectionExceptionReturnsException(): void
     {
-        $constantLocation = Location\ConstantLocation::create(Name\ConstantName::fromString('Ergebnis\AttributeCollector\Test\Fixture\FOO'));
+        $constantLocation = AttributeCollector\Location\ConstantLocation::create(AttributeCollector\Name\ConstantName::fromString('Ergebnis\AttributeCollector\Test\Fixture\FOO'));
         $reflectionException = new \ReflectionException(self::faker()->sentence());
 
-        $exception = Exception\ConstantCouldNotBeReflected::forConstantLocationWithReflectionException(
+        $exception = AttributeCollector\Exception\ConstantCouldNotBeReflected::forConstantLocationWithReflectionException(
             $constantLocation,
             $reflectionException,
         );

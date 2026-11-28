@@ -13,9 +13,7 @@ declare(strict_types=1);
 
 namespace Ergebnis\AttributeCollector\Test\Unit\Name;
 
-use Ergebnis\AttributeCollector\Exception;
-use Ergebnis\AttributeCollector\Name;
-use Ergebnis\AttributeCollector\Test;
+use Ergebnis\AttributeCollector;
 use PHPUnit\Framework;
 
 /**
@@ -25,7 +23,7 @@ use PHPUnit\Framework;
  */
 final class MethodNameTest extends Framework\TestCase
 {
-    use Test\Util\Helper;
+    use AttributeCollector\Test\Util\Helper;
 
     /**
      * @dataProvider \Ergebnis\DataProvider\StringProvider::blank
@@ -33,16 +31,16 @@ final class MethodNameTest extends Framework\TestCase
      */
     public function testFromStringRejectsInvalidValue(string $value): void
     {
-        $this->expectException(Exception\InvalidMethodName::class);
+        $this->expectException(AttributeCollector\Exception\InvalidMethodName::class);
 
-        Name\MethodName::fromString($value);
+        AttributeCollector\Name\MethodName::fromString($value);
     }
 
     public function testFromStringReturnsMethodName(): void
     {
         $value = self::faker()->word();
 
-        $methodName = Name\MethodName::fromString($value);
+        $methodName = AttributeCollector\Name\MethodName::fromString($value);
 
         self::assertSame($value, $methodName->toString());
     }
@@ -51,8 +49,8 @@ final class MethodNameTest extends Framework\TestCase
     {
         $faker = self::faker()->unique();
 
-        $one = Name\MethodName::fromString($faker->word());
-        $two = Name\MethodName::fromString($faker->word());
+        $one = AttributeCollector\Name\MethodName::fromString($faker->word());
+        $two = AttributeCollector\Name\MethodName::fromString($faker->word());
 
         self::assertFalse($one->equals($two));
     }
@@ -61,16 +59,16 @@ final class MethodNameTest extends Framework\TestCase
     {
         $value = self::faker()->word();
 
-        $one = Name\MethodName::fromString($value);
-        $two = Name\MethodName::fromString($value);
+        $one = AttributeCollector\Name\MethodName::fromString($value);
+        $two = AttributeCollector\Name\MethodName::fromString($value);
 
         self::assertTrue($one->equals($two));
     }
 
     public function testEqualsReturnsTrueWhenValuesAreEqualWithDifferentCase(): void
     {
-        $one = Name\MethodName::fromString('FoO');
-        $two = Name\MethodName::fromString('fOo');
+        $one = AttributeCollector\Name\MethodName::fromString('FoO');
+        $two = AttributeCollector\Name\MethodName::fromString('fOo');
 
         self::assertTrue($one->equals($two));
     }

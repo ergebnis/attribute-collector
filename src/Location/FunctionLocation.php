@@ -13,20 +13,20 @@ declare(strict_types=1);
 
 namespace Ergebnis\AttributeCollector\Location;
 
-use Ergebnis\AttributeCollector\Name;
+use Ergebnis\AttributeCollector;
 
 final class FunctionLocation implements Location
 {
-    private function __construct(private Name\FunctionName $functionName)
+    private function __construct(private AttributeCollector\Name\FunctionName $functionName)
     {
     }
 
-    public static function create(Name\FunctionName $functionName): self
+    public static function create(AttributeCollector\Name\FunctionName $functionName): self
     {
         return new self($functionName);
     }
 
-    public function functionName(): Name\FunctionName
+    public function functionName(): AttributeCollector\Name\FunctionName
     {
         return $this->functionName;
     }
@@ -36,11 +36,6 @@ final class FunctionLocation implements Location
         if (!$other instanceof self) {
             return false;
         }
-
-        if (!$this->functionName->equals($other->functionName)) {
-            return false;
-        }
-
-        return true;
+        return $this->functionName->equals($other->functionName);
     }
 }

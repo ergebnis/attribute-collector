@@ -13,10 +13,7 @@ declare(strict_types=1);
 
 namespace Ergebnis\AttributeCollector\Test\Unit\Exception;
 
-use Ergebnis\AttributeCollector\Exception;
-use Ergebnis\AttributeCollector\Location;
-use Ergebnis\AttributeCollector\Name;
-use Ergebnis\AttributeCollector\Test;
+use Ergebnis\AttributeCollector;
 use PHPUnit\Framework;
 
 /**
@@ -28,16 +25,16 @@ use PHPUnit\Framework;
  */
 final class FunctionDoesNotHaveParameterTest extends Framework\TestCase
 {
-    use Test\Util\Helper;
+    use AttributeCollector\Test\Util\Helper;
 
     public function testForFunctionParameterLocationReturnsException(): void
     {
-        $functionParameterLocation = Location\FunctionParameterLocation::create(
-            Name\FunctionName::fromString('Ergebnis\AttributeCollector\Test\Fixture\quuxCorge'),
-            Name\ParameterName::fromString('corgeGrault'),
+        $functionParameterLocation = AttributeCollector\Location\FunctionParameterLocation::create(
+            AttributeCollector\Name\FunctionName::fromString('Ergebnis\AttributeCollector\Test\Fixture\quuxCorge'),
+            AttributeCollector\Name\ParameterName::fromString('corgeGrault'),
         );
 
-        $exception = Exception\FunctionDoesNotHaveParameter::forFunctionParameterLocation($functionParameterLocation);
+        $exception = AttributeCollector\Exception\FunctionDoesNotHaveParameter::forFunctionParameterLocation($functionParameterLocation);
 
         $message = \sprintf(
             'Function "%s()" does not have a parameter "$%s".',

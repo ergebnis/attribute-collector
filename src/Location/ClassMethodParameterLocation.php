@@ -13,21 +13,21 @@ declare(strict_types=1);
 
 namespace Ergebnis\AttributeCollector\Location;
 
-use Ergebnis\AttributeCollector\Name;
+use Ergebnis\AttributeCollector;
 
 final class ClassMethodParameterLocation implements Location
 {
     private function __construct(
-        private Name\ClassName $className,
-        private Name\MethodName $methodName,
-        private Name\ParameterName $parameterName,
+        private AttributeCollector\Name\ClassName $className,
+        private AttributeCollector\Name\MethodName $methodName,
+        private AttributeCollector\Name\ParameterName $parameterName,
     ) {
     }
 
     public static function create(
-        Name\ClassName $className,
-        Name\MethodName $methodName,
-        Name\ParameterName $parameterName,
+        AttributeCollector\Name\ClassName $className,
+        AttributeCollector\Name\MethodName $methodName,
+        AttributeCollector\Name\ParameterName $parameterName,
     ): self {
         return new self(
             $className,
@@ -36,17 +36,17 @@ final class ClassMethodParameterLocation implements Location
         );
     }
 
-    public function className(): Name\ClassName
+    public function className(): AttributeCollector\Name\ClassName
     {
         return $this->className;
     }
 
-    public function methodName(): Name\MethodName
+    public function methodName(): AttributeCollector\Name\MethodName
     {
         return $this->methodName;
     }
 
-    public function parameterName(): Name\ParameterName
+    public function parameterName(): AttributeCollector\Name\ParameterName
     {
         return $this->parameterName;
     }
@@ -64,11 +64,6 @@ final class ClassMethodParameterLocation implements Location
         if (!$this->methodName->equals($other->methodName)) {
             return false;
         }
-
-        if (!$this->parameterName->equals($other->parameterName)) {
-            return false;
-        }
-
-        return true;
+        return $this->parameterName->equals($other->parameterName);
     }
 }
