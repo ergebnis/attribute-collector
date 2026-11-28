@@ -13,8 +13,7 @@ declare(strict_types=1);
 
 namespace Ergebnis\AttributeCollector\Test\Unit\Location;
 
-use Ergebnis\AttributeCollector\Location;
-use Ergebnis\AttributeCollector\Name;
+use Ergebnis\AttributeCollector;
 use PHPUnit\Framework;
 
 /**
@@ -26,33 +25,33 @@ final class FunctionLocationTest extends Framework\TestCase
 {
     public function testCreateReturnsLocation(): void
     {
-        $functionName = Name\FunctionName::fromString('Ergebnis\\AttributeCollector\\Test\\Fixture\\quuxCorge');
+        $functionName = AttributeCollector\Name\FunctionName::fromString('Ergebnis\\AttributeCollector\\Test\\Fixture\\quuxCorge');
 
-        $location = Location\FunctionLocation::create($functionName);
+        $location = AttributeCollector\Location\FunctionLocation::create($functionName);
 
         self::assertSame($functionName, $location->functionName());
     }
 
     public function testEqualsReturnsFalseWhenTypesAreDifferent(): void
     {
-        $one = Location\FunctionLocation::create(Name\FunctionName::fromString('fooBar'));
-        $two = $this->createStub(Location\Location::class);
+        $one = AttributeCollector\Location\FunctionLocation::create(AttributeCollector\Name\FunctionName::fromString('fooBar'));
+        $two = $this->createStub(AttributeCollector\Location\Location::class);
 
         self::assertFalse($one->equals($two));
     }
 
     public function testEqualsReturnsFalseWhenFunctionNamesAreDifferent(): void
     {
-        $one = Location\FunctionLocation::create(Name\FunctionName::fromString('fooBar'));
-        $two = Location\FunctionLocation::create(Name\FunctionName::fromString('barBaz'));
+        $one = AttributeCollector\Location\FunctionLocation::create(AttributeCollector\Name\FunctionName::fromString('fooBar'));
+        $two = AttributeCollector\Location\FunctionLocation::create(AttributeCollector\Name\FunctionName::fromString('barBaz'));
 
         self::assertFalse($one->equals($two));
     }
 
     public function testEqualsReturnsTrueWhenFunctionNamesAreEqual(): void
     {
-        $one = Location\FunctionLocation::create(Name\FunctionName::fromString('fooBar'));
-        $two = Location\FunctionLocation::create(Name\FunctionName::fromString('fooBar'));
+        $one = AttributeCollector\Location\FunctionLocation::create(AttributeCollector\Name\FunctionName::fromString('fooBar'));
+        $two = AttributeCollector\Location\FunctionLocation::create(AttributeCollector\Name\FunctionName::fromString('fooBar'));
 
         self::assertTrue($one->equals($two));
     }

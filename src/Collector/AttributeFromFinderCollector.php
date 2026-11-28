@@ -13,15 +13,14 @@ declare(strict_types=1);
 
 namespace Ergebnis\AttributeCollector\Collector;
 
-use Ergebnis\AttributeCollector\AttributeCollection;
-use Ergebnis\AttributeCollector\Exception;
+use Ergebnis\AttributeCollector;
 
 interface AttributeFromFinderCollector
 {
     /**
      * @param iterable<\SplFileInfo> $finder
      *
-     * @throws Exception\FinderContainsFileThatCouldNotBeParsed
+     * @throws AttributeCollector\Exception\FinderContainsFileThatCouldNotBeParsed
      */
-    public function collectFromFinder(iterable $finder): AttributeCollection;
+    public function collectFromFinder(iterable $finder): AttributeCollector\AttributeCollection;
 }

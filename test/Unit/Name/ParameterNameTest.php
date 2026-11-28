@@ -13,9 +13,7 @@ declare(strict_types=1);
 
 namespace Ergebnis\AttributeCollector\Test\Unit\Name;
 
-use Ergebnis\AttributeCollector\Exception;
-use Ergebnis\AttributeCollector\Name;
-use Ergebnis\AttributeCollector\Test;
+use Ergebnis\AttributeCollector;
 use PHPUnit\Framework;
 
 /**
@@ -25,7 +23,7 @@ use PHPUnit\Framework;
  */
 final class ParameterNameTest extends Framework\TestCase
 {
-    use Test\Util\Helper;
+    use AttributeCollector\Test\Util\Helper;
 
     /**
      * @dataProvider \Ergebnis\DataProvider\StringProvider::blank
@@ -33,16 +31,16 @@ final class ParameterNameTest extends Framework\TestCase
      */
     public function testFromStringRejectsInvalidValue(string $value): void
     {
-        $this->expectException(Exception\InvalidParameterName::class);
+        $this->expectException(AttributeCollector\Exception\InvalidParameterName::class);
 
-        Name\ParameterName::fromString($value);
+        AttributeCollector\Name\ParameterName::fromString($value);
     }
 
     public function testFromStringReturnsParameterName(): void
     {
         $value = self::faker()->word();
 
-        $parameterName = Name\ParameterName::fromString($value);
+        $parameterName = AttributeCollector\Name\ParameterName::fromString($value);
 
         self::assertSame($value, $parameterName->toString());
     }
@@ -51,8 +49,8 @@ final class ParameterNameTest extends Framework\TestCase
     {
         $faker = self::faker()->unique();
 
-        $one = Name\ParameterName::fromString($faker->word());
-        $two = Name\ParameterName::fromString($faker->word());
+        $one = AttributeCollector\Name\ParameterName::fromString($faker->word());
+        $two = AttributeCollector\Name\ParameterName::fromString($faker->word());
 
         self::assertFalse($one->equals($two));
     }
@@ -61,16 +59,16 @@ final class ParameterNameTest extends Framework\TestCase
     {
         $value = self::faker()->word();
 
-        $one = Name\ParameterName::fromString($value);
-        $two = Name\ParameterName::fromString($value);
+        $one = AttributeCollector\Name\ParameterName::fromString($value);
+        $two = AttributeCollector\Name\ParameterName::fromString($value);
 
         self::assertTrue($one->equals($two));
     }
 
     public function testEqualsReturnsTrueWhenValuesAreEqualWithDifferentCase(): void
     {
-        $one = Name\ParameterName::fromString('FoO');
-        $two = Name\ParameterName::fromString('fOo');
+        $one = AttributeCollector\Name\ParameterName::fromString('FoO');
+        $two = AttributeCollector\Name\ParameterName::fromString('fOo');
 
         self::assertTrue($one->equals($two));
     }

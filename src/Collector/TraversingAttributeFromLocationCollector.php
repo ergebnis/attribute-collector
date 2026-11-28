@@ -13,15 +13,11 @@ declare(strict_types=1);
 
 namespace Ergebnis\AttributeCollector\Collector;
 
-use Ergebnis\AttributeCollector\Attribute;
-use Ergebnis\AttributeCollector\AttributeCollection;
-use Ergebnis\AttributeCollector\Exception;
-use Ergebnis\AttributeCollector\Location;
-use Ergebnis\AttributeCollector\Name;
+use Ergebnis\AttributeCollector;
 
 final class TraversingAttributeFromLocationCollector implements AttributeFromLocationCollector
 {
-    public function collectFromLocation(Location\Location ...$locations): AttributeCollection
+    public function collectFromLocation(AttributeCollector\Location\Location ...$locations): AttributeCollector\AttributeCollection
     {
         $visitedLocationCollection = new VisitedLocationCollection();
 
@@ -29,62 +25,62 @@ final class TraversingAttributeFromLocationCollector implements AttributeFromLoc
 
         foreach ($locations as $location) {
             $collectedAttributes = match ($location::class) {
-                Location\ClassLocation::class => self::collectFromClassLocation(
+                AttributeCollector\Location\ClassConstantLocation::class => self::collectFromClassConstantLocation(
                     $location,
                     $visitedLocationCollection,
                 ),
-                Location\ClassConstantLocation::class => self::collectFromClassConstantLocation(
+                AttributeCollector\Location\ClassLocation::class => self::collectFromClassLocation(
                     $location,
                     $visitedLocationCollection,
                 ),
-                Location\ClassPropertyLocation::class => self::collectFromClassPropertyLocation(
+                AttributeCollector\Location\ClassMethodLocation::class => self::collectFromClassMethodLocation(
                     $location,
                     $visitedLocationCollection,
                 ),
-                Location\ClassMethodLocation::class => self::collectFromClassMethodLocation(
+                AttributeCollector\Location\ClassMethodParameterLocation::class => self::collectFromClassMethodParameterLocation(
                     $location,
                     $visitedLocationCollection,
                 ),
-                Location\ClassMethodParameterLocation::class => self::collectFromClassMethodParameterLocation(
+                AttributeCollector\Location\ClassPropertyLocation::class => self::collectFromClassPropertyLocation(
                     $location,
                     $visitedLocationCollection,
                 ),
-                Location\ConstantLocation::class => self::collectFromConstantLocation(
+                AttributeCollector\Location\ConstantLocation::class => self::collectFromConstantLocation(
                     $location,
                     $visitedLocationCollection,
                 ),
-                Location\FunctionLocation::class => self::collectFromFunctionLocation(
+                AttributeCollector\Location\FunctionLocation::class => self::collectFromFunctionLocation(
                     $location,
                     $visitedLocationCollection,
                 ),
-                Location\FunctionParameterLocation::class => self::collectFromFunctionParameterLocation(
+                AttributeCollector\Location\FunctionParameterLocation::class => self::collectFromFunctionParameterLocation(
                     $location,
                     $visitedLocationCollection,
                 ),
-                default => throw Exception\AttributeCollectionNotSupported::forLocation($location),
+                default => throw AttributeCollector\Exception\AttributeCollectionNotSupported::forLocation($location),
             };
 
             if ([] === $collectedAttributes) {
                 continue;
             }
 
-            /** @var list<Attribute> $attributes */
+            /** @var list<AttributeCollector\Attribute> $attributes */
             $attributes = [
                 ...$attributes,
                 ...$collectedAttributes,
             ];
         }
 
-        return AttributeCollection::create(...$attributes);
+        return AttributeCollector\AttributeCollection::create(...$attributes);
     }
 
     /**
-     * @throws Exception\ClassCouldNotBeReflected
+     * @throws AttributeCollector\Exception\ClassCouldNotBeReflected
      *
-     * @return list<Attribute>
+     * @return list<AttributeCollector\Attribute>
      */
     private static function collectFromClassLocation(
-        Location\ClassLocation $classLocation,
+        AttributeCollector\Location\ClassLocation $classLocation,
         VisitedLocationCollection $visitedLocationCollection,
     ): array {
         if ($visitedLocationCollection->has($classLocation)) {
@@ -94,7 +90,7 @@ final class TraversingAttributeFromLocationCollector implements AttributeFromLoc
         try {
             $reflectionClass = new \ReflectionClass($classLocation->className()->toString());
         } catch (\ReflectionException $reflectionException) {
-            throw Exception\ClassCouldNotBeReflected::forClassLocationWithReflectionException(
+            throw AttributeCollector\Exception\ClassCouldNotBeReflected::forClassLocationWithReflectionException(
                 $classLocation,
                 $reflectionException,
             );
@@ -102,19 +98,19 @@ final class TraversingAttributeFromLocationCollector implements AttributeFromLoc
 
         $attributes = [];
 
-        $classLocation = Location\ClassLocation::create(Name\ClassName::fromString($reflectionClass->getName()));
+        $classLocation = AttributeCollector\Location\ClassLocation::create(AttributeCollector\Name\ClassName::fromString($reflectionClass->getName()));
 
         foreach ($reflectionClass->getAttributes() as $reflectionAttributeLocatedOnClass) {
-            $attributes[] = Attribute::create(
+            $attributes[] = AttributeCollector\Attribute::create(
                 $classLocation,
                 $reflectionAttributeLocatedOnClass->newInstance(),
             );
         }
 
         foreach ($reflectionClass->getReflectionConstants() as $reflectionConstant) {
-            $classConstantLocation = Location\ClassConstantLocation::create(
+            $classConstantLocation = AttributeCollector\Location\ClassConstantLocation::create(
                 $classLocation->className(),
-                Name\ConstantName::fromString($reflectionConstant->getName()),
+                AttributeCollector\Name\ConstantName::fromString($reflectionConstant->getName()),
             );
 
             if ($visitedLocationCollection->has($classConstantLocation)) {
@@ -122,7 +118,7 @@ final class TraversingAttributeFromLocationCollector implements AttributeFromLoc
             }
 
             foreach ($reflectionConstant->getAttributes() as $reflectionAttributeLocatedOnClassConstant) {
-                $attributes[] = Attribute::create(
+                $attributes[] = AttributeCollector\Attribute::create(
                     $classConstantLocation,
                     $reflectionAttributeLocatedOnClassConstant->newInstance(),
                 );
@@ -132,9 +128,9 @@ final class TraversingAttributeFromLocationCollector implements AttributeFromLoc
         }
 
         foreach ($reflectionClass->getProperties() as $reflectionProperty) {
-            $classPropertyLocation = Location\ClassPropertyLocation::create(
+            $classPropertyLocation = AttributeCollector\Location\ClassPropertyLocation::create(
                 $classLocation->className(),
-                Name\PropertyName::fromString($reflectionProperty->getName()),
+                AttributeCollector\Name\PropertyName::fromString($reflectionProperty->getName()),
             );
 
             if ($visitedLocationCollection->has($classPropertyLocation)) {
@@ -142,7 +138,7 @@ final class TraversingAttributeFromLocationCollector implements AttributeFromLoc
             }
 
             foreach ($reflectionProperty->getAttributes() as $reflectionAttributeLocatedOnClassProperty) {
-                $attributes[] = Attribute::create(
+                $attributes[] = AttributeCollector\Attribute::create(
                     $classPropertyLocation,
                     $reflectionAttributeLocatedOnClassProperty->newInstance(),
                 );
@@ -152,9 +148,9 @@ final class TraversingAttributeFromLocationCollector implements AttributeFromLoc
         }
 
         foreach ($reflectionClass->getMethods() as $reflectionMethod) {
-            $classMethodLocation = Location\ClassMethodLocation::create(
+            $classMethodLocation = AttributeCollector\Location\ClassMethodLocation::create(
                 $classLocation->className(),
-                Name\MethodName::fromString($reflectionMethod->getName()),
+                AttributeCollector\Name\MethodName::fromString($reflectionMethod->getName()),
             );
 
             if ($visitedLocationCollection->has($classMethodLocation)) {
@@ -162,17 +158,17 @@ final class TraversingAttributeFromLocationCollector implements AttributeFromLoc
             }
 
             foreach ($reflectionMethod->getAttributes() as $reflectionAttributeLocatedOnMethod) {
-                $attributes[] = Attribute::create(
+                $attributes[] = AttributeCollector\Attribute::create(
                     $classMethodLocation,
                     $reflectionAttributeLocatedOnMethod->newInstance(),
                 );
             }
 
             foreach ($reflectionMethod->getParameters() as $reflectionMethodParameter) {
-                $classMethodParameterLocation = Location\ClassMethodParameterLocation::create(
+                $classMethodParameterLocation = AttributeCollector\Location\ClassMethodParameterLocation::create(
                     $classLocation->className(),
                     $classMethodLocation->methodName(),
-                    Name\ParameterName::fromString($reflectionMethodParameter->getName()),
+                    AttributeCollector\Name\ParameterName::fromString($reflectionMethodParameter->getName()),
                 );
 
                 if ($visitedLocationCollection->has($classMethodParameterLocation)) {
@@ -180,7 +176,7 @@ final class TraversingAttributeFromLocationCollector implements AttributeFromLoc
                 }
 
                 foreach ($reflectionMethodParameter->getAttributes() as $reflectionAttributeLocatedOnMethodParameter) {
-                    $attributes[] = Attribute::create(
+                    $attributes[] = AttributeCollector\Attribute::create(
                         $classMethodParameterLocation,
                         $reflectionAttributeLocatedOnMethodParameter->newInstance(),
                     );
@@ -198,12 +194,12 @@ final class TraversingAttributeFromLocationCollector implements AttributeFromLoc
     }
 
     /**
-     * @throws Exception\ClassConstantCouldNotBeReflected
+     * @throws AttributeCollector\Exception\ClassConstantCouldNotBeReflected
      *
-     * @return list<Attribute>
+     * @return list<AttributeCollector\Attribute>
      */
     private static function collectFromClassConstantLocation(
-        Location\ClassConstantLocation $classConstantLocation,
+        AttributeCollector\Location\ClassConstantLocation $classConstantLocation,
         VisitedLocationCollection $visitedLocationCollection,
     ): array {
         if ($visitedLocationCollection->has($classConstantLocation)) {
@@ -216,7 +212,7 @@ final class TraversingAttributeFromLocationCollector implements AttributeFromLoc
                 $classConstantLocation->constantName()->toString(),
             );
         } catch (\ReflectionException $reflectionException) {
-            throw Exception\ClassConstantCouldNotBeReflected::forClassConstantLocationAndReflectionException(
+            throw AttributeCollector\Exception\ClassConstantCouldNotBeReflected::forClassConstantLocationAndReflectionException(
                 $classConstantLocation,
                 $reflectionException,
             );
@@ -226,13 +222,13 @@ final class TraversingAttributeFromLocationCollector implements AttributeFromLoc
 
         $attributes = [];
 
-        $classConstantLocation = Location\ClassConstantLocation::create(
-            Name\ClassName::fromString($reflectionClass->getName()),
-            Name\ConstantName::fromString($reflectionClassConstant->getName()),
+        $classConstantLocation = AttributeCollector\Location\ClassConstantLocation::create(
+            AttributeCollector\Name\ClassName::fromString($reflectionClass->getName()),
+            AttributeCollector\Name\ConstantName::fromString($reflectionClassConstant->getName()),
         );
 
         foreach ($reflectionClassConstant->getAttributes() as $reflectionAttributeLocatedOnClassConstant) {
-            $attributes[] = Attribute::create(
+            $attributes[] = AttributeCollector\Attribute::create(
                 $classConstantLocation,
                 $reflectionAttributeLocatedOnClassConstant->newInstance(),
             );
@@ -244,12 +240,12 @@ final class TraversingAttributeFromLocationCollector implements AttributeFromLoc
     }
 
     /**
-     * @throws Exception\ClassPropertyCouldNotBeReflected
+     * @throws AttributeCollector\Exception\ClassPropertyCouldNotBeReflected
      *
-     * @return list<Attribute>
+     * @return list<AttributeCollector\Attribute>
      */
     private static function collectFromClassPropertyLocation(
-        Location\ClassPropertyLocation $classPropertyLocation,
+        AttributeCollector\Location\ClassPropertyLocation $classPropertyLocation,
         VisitedLocationCollection $visitedLocationCollection,
     ): array {
         if ($visitedLocationCollection->has($classPropertyLocation)) {
@@ -262,7 +258,7 @@ final class TraversingAttributeFromLocationCollector implements AttributeFromLoc
                 $classPropertyLocation->propertyName()->toString(),
             );
         } catch (\ReflectionException $reflectionException) {
-            throw Exception\ClassPropertyCouldNotBeReflected::forClassPropertyLocationWithReflectionException(
+            throw AttributeCollector\Exception\ClassPropertyCouldNotBeReflected::forClassPropertyLocationWithReflectionException(
                 $classPropertyLocation,
                 $reflectionException,
             );
@@ -272,13 +268,13 @@ final class TraversingAttributeFromLocationCollector implements AttributeFromLoc
 
         $reflectionClass = new \ReflectionClass($classPropertyLocation->className()->toString());
 
-        $classPropertyLocation = Location\ClassPropertyLocation::create(
-            Name\ClassName::fromString($reflectionClass->getName()),
-            Name\PropertyName::fromString($reflectionProperty->getName()),
+        $classPropertyLocation = AttributeCollector\Location\ClassPropertyLocation::create(
+            AttributeCollector\Name\ClassName::fromString($reflectionClass->getName()),
+            AttributeCollector\Name\PropertyName::fromString($reflectionProperty->getName()),
         );
 
         foreach ($reflectionProperty->getAttributes() as $reflectionAttributeLocatedOnClassProperty) {
-            $attributes[] = Attribute::create(
+            $attributes[] = AttributeCollector\Attribute::create(
                 $classPropertyLocation,
                 $reflectionAttributeLocatedOnClassProperty->newInstance(),
             );
@@ -290,12 +286,12 @@ final class TraversingAttributeFromLocationCollector implements AttributeFromLoc
     }
 
     /**
-     * @throws Exception\ClassMethodCouldNotBeReflected
+     * @throws AttributeCollector\Exception\ClassMethodCouldNotBeReflected
      *
-     * @return list<Attribute>
+     * @return list<AttributeCollector\Attribute>
      */
     private static function collectFromClassMethodLocation(
-        Location\ClassMethodLocation $classMethodLocation,
+        AttributeCollector\Location\ClassMethodLocation $classMethodLocation,
         VisitedLocationCollection $visitedLocationCollection,
     ): array {
         if ($visitedLocationCollection->has($classMethodLocation)) {
@@ -308,7 +304,7 @@ final class TraversingAttributeFromLocationCollector implements AttributeFromLoc
                 $classMethodLocation->methodName()->toString(),
             );
         } catch (\ReflectionException $reflectionException) {
-            throw Exception\ClassMethodCouldNotBeReflected::forClassMethodLocationWithReflectionException(
+            throw AttributeCollector\Exception\ClassMethodCouldNotBeReflected::forClassMethodLocationWithReflectionException(
                 $classMethodLocation,
                 $reflectionException,
             );
@@ -318,22 +314,22 @@ final class TraversingAttributeFromLocationCollector implements AttributeFromLoc
 
         $reflectionClass = new \ReflectionClass($classMethodLocation->className()->toString());
 
-        $classMethodLocation = Location\ClassMethodLocation::create(
-            Name\ClassName::fromString($reflectionClass->getName()),
-            Name\MethodName::fromString($reflectionMethod->getName()),
+        $classMethodLocation = AttributeCollector\Location\ClassMethodLocation::create(
+            AttributeCollector\Name\ClassName::fromString($reflectionClass->getName()),
+            AttributeCollector\Name\MethodName::fromString($reflectionMethod->getName()),
         );
 
         foreach ($reflectionMethod->getAttributes() as $reflectionAttributeLocatedOnClassMethod) {
-            $attributes[] = Attribute::create(
+            $attributes[] = AttributeCollector\Attribute::create(
                 $classMethodLocation,
                 $reflectionAttributeLocatedOnClassMethod->newInstance(),
             );
 
             foreach ($reflectionMethod->getParameters() as $reflectionMethodParameter) {
-                $classMethodParameterLocation = Location\ClassMethodParameterLocation::create(
+                $classMethodParameterLocation = AttributeCollector\Location\ClassMethodParameterLocation::create(
                     $classMethodLocation->className(),
                     $classMethodLocation->methodName(),
-                    Name\ParameterName::fromString($reflectionMethodParameter->getName()),
+                    AttributeCollector\Name\ParameterName::fromString($reflectionMethodParameter->getName()),
                 );
 
                 if ($visitedLocationCollection->has($classMethodParameterLocation)) {
@@ -341,7 +337,7 @@ final class TraversingAttributeFromLocationCollector implements AttributeFromLoc
                 }
 
                 foreach ($reflectionMethodParameter->getAttributes() as $reflectionAttributeLocatedOnMethodParameter) {
-                    $attributes[] = Attribute::create(
+                    $attributes[] = AttributeCollector\Attribute::create(
                         $classMethodParameterLocation,
                         $reflectionAttributeLocatedOnMethodParameter->newInstance(),
                     );
@@ -357,13 +353,13 @@ final class TraversingAttributeFromLocationCollector implements AttributeFromLoc
     }
 
     /**
-     * @throws Exception\ClassMethodCouldNotBeReflected
-     * @throws Exception\ClassMethodDoesNotHaveParameter
+     * @throws AttributeCollector\Exception\ClassMethodCouldNotBeReflected
+     * @throws AttributeCollector\Exception\ClassMethodDoesNotHaveParameter
      *
-     * @return list<Attribute>
+     * @return list<AttributeCollector\Attribute>
      */
     private static function collectFromClassMethodParameterLocation(
-        Location\ClassMethodParameterLocation $classMethodParameterLocation,
+        AttributeCollector\Location\ClassMethodParameterLocation $classMethodParameterLocation,
         VisitedLocationCollection $visitedLocationCollection,
     ): array {
         if ($visitedLocationCollection->has($classMethodParameterLocation)) {
@@ -376,8 +372,8 @@ final class TraversingAttributeFromLocationCollector implements AttributeFromLoc
                 $classMethodParameterLocation->methodName()->toString(),
             );
         } catch (\ReflectionException $reflectionException) {
-            throw Exception\ClassMethodCouldNotBeReflected::forClassMethodLocationWithReflectionException(
-                Location\ClassMethodLocation::create(
+            throw AttributeCollector\Exception\ClassMethodCouldNotBeReflected::forClassMethodLocationWithReflectionException(
+                AttributeCollector\Location\ClassMethodLocation::create(
                     $classMethodParameterLocation->className(),
                     $classMethodParameterLocation->methodName(),
                 ),
@@ -391,21 +387,21 @@ final class TraversingAttributeFromLocationCollector implements AttributeFromLoc
         );
 
         if (!$reflectionParameter instanceof \ReflectionParameter) {
-            throw Exception\ClassMethodDoesNotHaveParameter::forClassMethodParameterLocation($classMethodParameterLocation);
+            throw AttributeCollector\Exception\ClassMethodDoesNotHaveParameter::forClassMethodParameterLocation($classMethodParameterLocation);
         }
 
         $attributes = [];
 
         $reflectionClass = new \ReflectionClass($classMethodParameterLocation->className()->toString());
 
-        $classMethodParameterLocation = Location\ClassMethodParameterLocation::create(
-            Name\ClassName::fromString($reflectionClass->getName()),
-            Name\MethodName::fromString($reflectionMethod->getName()),
-            Name\ParameterName::fromString($reflectionParameter->getName()),
+        $classMethodParameterLocation = AttributeCollector\Location\ClassMethodParameterLocation::create(
+            AttributeCollector\Name\ClassName::fromString($reflectionClass->getName()),
+            AttributeCollector\Name\MethodName::fromString($reflectionMethod->getName()),
+            AttributeCollector\Name\ParameterName::fromString($reflectionParameter->getName()),
         );
 
         foreach ($reflectionParameter->getAttributes() as $reflectionAttributeLocatedOnMethodParameter) {
-            $attributes[] = Attribute::create(
+            $attributes[] = AttributeCollector\Attribute::create(
                 $classMethodParameterLocation,
                 $reflectionAttributeLocatedOnMethodParameter->newInstance(),
             );
@@ -418,7 +414,7 @@ final class TraversingAttributeFromLocationCollector implements AttributeFromLoc
 
     private static function findReflectionMethodParameterWithParameterName(
         \ReflectionMethod $reflectionMethod,
-        Name\ParameterName $parameterName,
+        AttributeCollector\Name\ParameterName $parameterName,
     ): ?\ReflectionParameter {
         foreach ($reflectionMethod->getParameters() as $reflectionParameter) {
             if ($reflectionParameter->getName() === $parameterName->toString()) {
@@ -430,17 +426,17 @@ final class TraversingAttributeFromLocationCollector implements AttributeFromLoc
     }
 
     /**
-     * @throws Exception\AttributeCollectionNotSupported
-     * @throws Exception\ConstantCouldNotBeReflected
+     * @throws AttributeCollector\Exception\AttributeCollectionNotSupported
+     * @throws AttributeCollector\Exception\ConstantCouldNotBeReflected
      *
-     * @return list<Attribute>
+     * @return list<AttributeCollector\Attribute>
      */
     private static function collectFromConstantLocation(
-        Location\ConstantLocation $constantLocation,
+        AttributeCollector\Location\ConstantLocation $constantLocation,
         VisitedLocationCollection $visitedLocationCollection,
     ): array {
         if (\PHP_VERSION_ID < 80500) {
-            throw Exception\AttributeCollectionNotSupported::forLocation($constantLocation);
+            throw AttributeCollector\Exception\AttributeCollectionNotSupported::forLocation($constantLocation);
         }
 
         if ($visitedLocationCollection->has($constantLocation)) {
@@ -450,7 +446,7 @@ final class TraversingAttributeFromLocationCollector implements AttributeFromLoc
         try {
             $reflectionConstant = new \ReflectionConstant($constantLocation->constantName()->toString());
         } catch (\ReflectionException $reflectionException) {
-            throw Exception\ConstantCouldNotBeReflected::forConstantLocationWithReflectionException(
+            throw AttributeCollector\Exception\ConstantCouldNotBeReflected::forConstantLocationWithReflectionException(
                 $constantLocation,
                 $reflectionException,
             );
@@ -458,10 +454,10 @@ final class TraversingAttributeFromLocationCollector implements AttributeFromLoc
 
         $attributes = [];
 
-        $constantLocation = Location\ConstantLocation::create(Name\ConstantName::fromString($reflectionConstant->getName()));
+        $constantLocation = AttributeCollector\Location\ConstantLocation::create(AttributeCollector\Name\ConstantName::fromString($reflectionConstant->getName()));
 
         foreach ($reflectionConstant->getAttributes() as $reflectionAttributedLocatedOnConstant) {
-            $attributes[] = Attribute::create(
+            $attributes[] = AttributeCollector\Attribute::create(
                 $constantLocation,
                 $reflectionAttributedLocatedOnConstant->newInstance(),
             );
@@ -473,12 +469,12 @@ final class TraversingAttributeFromLocationCollector implements AttributeFromLoc
     }
 
     /**
-     * @throws Exception\FunctionCouldNotBeReflected
+     * @throws AttributeCollector\Exception\FunctionCouldNotBeReflected
      *
-     * @return list<Attribute>
+     * @return list<AttributeCollector\Attribute>
      */
     private static function collectFromFunctionLocation(
-        Location\FunctionLocation $functionLocation,
+        AttributeCollector\Location\FunctionLocation $functionLocation,
         VisitedLocationCollection $visitedLocationCollection,
     ): array {
         if ($visitedLocationCollection->has($functionLocation)) {
@@ -488,7 +484,7 @@ final class TraversingAttributeFromLocationCollector implements AttributeFromLoc
         try {
             $reflectionFunction = new \ReflectionFunction($functionLocation->functionName()->toString());
         } catch (\ReflectionException $reflectionException) {
-            throw Exception\FunctionCouldNotBeReflected::forFunctionLocationWithReflectionException(
+            throw AttributeCollector\Exception\FunctionCouldNotBeReflected::forFunctionLocationWithReflectionException(
                 $functionLocation,
                 $reflectionException,
             );
@@ -496,18 +492,18 @@ final class TraversingAttributeFromLocationCollector implements AttributeFromLoc
 
         $attributes = [];
 
-        $functionLocation = Location\FunctionLocation::create(Name\FunctionName::fromString($reflectionFunction->getName()));
+        $functionLocation = AttributeCollector\Location\FunctionLocation::create(AttributeCollector\Name\FunctionName::fromString($reflectionFunction->getName()));
 
         foreach ($reflectionFunction->getAttributes() as $reflectionAttributeLocatedOnFunction) {
-            $attributes[] = Attribute::create(
+            $attributes[] = AttributeCollector\Attribute::create(
                 $functionLocation,
                 $reflectionAttributeLocatedOnFunction->newInstance(),
             );
 
             foreach ($reflectionFunction->getParameters() as $reflectionFunctionParameter) {
-                $functionParameterLocation = Location\FunctionParameterLocation::create(
+                $functionParameterLocation = AttributeCollector\Location\FunctionParameterLocation::create(
                     $functionLocation->functionName(),
-                    Name\ParameterName::fromString($reflectionFunctionParameter->getName()),
+                    AttributeCollector\Name\ParameterName::fromString($reflectionFunctionParameter->getName()),
                 );
 
                 if ($visitedLocationCollection->has($functionParameterLocation)) {
@@ -515,7 +511,7 @@ final class TraversingAttributeFromLocationCollector implements AttributeFromLoc
                 }
 
                 foreach ($reflectionFunctionParameter->getAttributes() as $reflectionAttributeLocatedOnFunctionParameter) {
-                    $attributes[] = Attribute::create(
+                    $attributes[] = AttributeCollector\Attribute::create(
                         $functionParameterLocation,
                         $reflectionAttributeLocatedOnFunctionParameter->newInstance(),
                     );
@@ -531,12 +527,12 @@ final class TraversingAttributeFromLocationCollector implements AttributeFromLoc
     }
 
     /**
-     * @throws Exception\FunctionCouldNotBeReflected
+     * @throws AttributeCollector\Exception\FunctionCouldNotBeReflected
      *
-     * @return list<Attribute>
+     * @return list<AttributeCollector\Attribute>
      */
     private static function collectFromFunctionParameterLocation(
-        Location\FunctionParameterLocation $functionParameterLocation,
+        AttributeCollector\Location\FunctionParameterLocation $functionParameterLocation,
         VisitedLocationCollection $visitedLocationCollection,
     ): array {
         if ($visitedLocationCollection->has($functionParameterLocation)) {
@@ -546,8 +542,8 @@ final class TraversingAttributeFromLocationCollector implements AttributeFromLoc
         try {
             $reflectionFunction = new \ReflectionFunction($functionParameterLocation->functionName()->toString());
         } catch (\ReflectionException $reflectionException) {
-            throw Exception\FunctionCouldNotBeReflected::forFunctionLocationWithReflectionException(
-                Location\FunctionLocation::create($functionParameterLocation->functionName()),
+            throw AttributeCollector\Exception\FunctionCouldNotBeReflected::forFunctionLocationWithReflectionException(
+                AttributeCollector\Location\FunctionLocation::create($functionParameterLocation->functionName()),
                 $reflectionException,
             );
         }
@@ -558,18 +554,18 @@ final class TraversingAttributeFromLocationCollector implements AttributeFromLoc
         );
 
         if (!$reflectionParameter instanceof \ReflectionParameter) {
-            throw Exception\FunctionDoesNotHaveParameter::forFunctionParameterLocation($functionParameterLocation);
+            throw AttributeCollector\Exception\FunctionDoesNotHaveParameter::forFunctionParameterLocation($functionParameterLocation);
         }
 
         $attributes = [];
 
-        $functionParameterLocation = Location\FunctionParameterLocation::create(
-            Name\FunctionName::fromString($reflectionFunction->getName()),
-            Name\ParameterName::fromString($reflectionParameter->getName()),
+        $functionParameterLocation = AttributeCollector\Location\FunctionParameterLocation::create(
+            AttributeCollector\Name\FunctionName::fromString($reflectionFunction->getName()),
+            AttributeCollector\Name\ParameterName::fromString($reflectionParameter->getName()),
         );
 
         foreach ($reflectionParameter->getAttributes() as $reflectionAttributeLocatedOnFunctionParameter) {
-            $attributes[] = Attribute::create(
+            $attributes[] = AttributeCollector\Attribute::create(
                 $functionParameterLocation,
                 $reflectionAttributeLocatedOnFunctionParameter->newInstance(),
             );
@@ -582,7 +578,7 @@ final class TraversingAttributeFromLocationCollector implements AttributeFromLoc
 
     private static function findReflectionFunctionParameterWithParameterName(
         \ReflectionFunction $reflectionFunction,
-        Name\ParameterName $parameterName,
+        AttributeCollector\Name\ParameterName $parameterName,
     ): ?\ReflectionParameter {
         foreach ($reflectionFunction->getParameters() as $reflectionParameter) {
             if ($reflectionParameter->getName() === $parameterName->toString()) {

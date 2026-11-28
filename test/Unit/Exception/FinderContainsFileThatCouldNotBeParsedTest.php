@@ -13,8 +13,7 @@ declare(strict_types=1);
 
 namespace Ergebnis\AttributeCollector\Test\Unit\Exception;
 
-use Ergebnis\AttributeCollector\Exception;
-use Ergebnis\AttributeCollector\Test;
+use Ergebnis\AttributeCollector;
 use PHPUnit\Framework;
 
 /**
@@ -22,13 +21,13 @@ use PHPUnit\Framework;
  */
 final class FinderContainsFileThatCouldNotBeParsedTest extends Framework\TestCase
 {
-    use Test\Util\Helper;
+    use AttributeCollector\Test\Util\Helper;
 
     public function testForFunctionParameterLocationReturnsException(): void
     {
         $message = self::faker()->sentence();
 
-        $exception = Exception\FinderContainsFileThatCouldNotBeParsed::withMessage($message);
+        $exception = AttributeCollector\Exception\FinderContainsFileThatCouldNotBeParsed::withMessage($message);
 
         self::assertSame($message, $exception->getMessage());
     }

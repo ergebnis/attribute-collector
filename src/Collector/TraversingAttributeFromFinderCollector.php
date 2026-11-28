@@ -13,25 +13,23 @@ declare(strict_types=1);
 
 namespace Ergebnis\AttributeCollector\Collector;
 
-use Ergebnis\AttributeCollector\AttributeCollection;
-use Ergebnis\AttributeCollector\Exception;
-use Ergebnis\AttributeCollector\Name;
+use Ergebnis\AttributeCollector;
 use Ergebnis\Classy;
 
 final class TraversingAttributeFromFinderCollector implements AttributeFromFinderCollector
 {
-    public function collectFromFinder(iterable $finder): AttributeCollection
+    public function collectFromFinder(iterable $finder): AttributeCollector\AttributeCollection
     {
         $constructFromFinderCollector = new Classy\Collector\DefaultConstructFromFinderCollector(new Classy\Collector\TokenGetAllConstructFromSourceCollector());
 
         try {
             $constructsFromSplFileInfo = $constructFromFinderCollector->collectFromFinder($finder);
-        } catch (Classy\Exception\FileCouldNotBeParsed $exception) {
-            throw Exception\FinderContainsFileThatCouldNotBeParsed::withMessage($exception->getMessage());
+        } catch (Classy\Exception\FileCouldNotBeParsed $fileCouldNotBeParsed) {
+            throw AttributeCollector\Exception\FinderContainsFileThatCouldNotBeParsed::withMessage($fileCouldNotBeParsed->getMessage());
         }
 
-        $classNames = \array_map(static function (Classy\ConstructFromSplFileInfo $construct): Name\ClassName {
-            return Name\ClassName::fromString($construct->name()->toString());
+        $classNames = \array_map(static function (Classy\ConstructFromSplFileInfo $construct): AttributeCollector\Name\ClassName {
+            return AttributeCollector\Name\ClassName::fromString($construct->name()->toString());
         }, $constructsFromSplFileInfo);
 
         $traversingAttributeFromClassNameCollector = new TraversingAttributeFromClassNameCollector();

@@ -13,9 +13,7 @@ declare(strict_types=1);
 
 namespace Ergebnis\AttributeCollector\Test\Unit\Location;
 
-use Ergebnis\AttributeCollector\Location;
-use Ergebnis\AttributeCollector\Name;
-use Ergebnis\AttributeCollector\Test;
+use Ergebnis\AttributeCollector;
 use PHPUnit\Framework;
 
 /**
@@ -28,10 +26,10 @@ final class ClassPropertyLocationTest extends Framework\TestCase
 {
     public function testCreateReturnsLocation(): void
     {
-        $className = Name\ClassName::fromString(Test\Fixture\ClassUsingAttributes::class);
-        $propertyName = Name\PropertyName::fromString('fooBar');
+        $className = AttributeCollector\Name\ClassName::fromString(AttributeCollector\Test\Fixture\ClassUsingAttributes::class);
+        $propertyName = AttributeCollector\Name\PropertyName::fromString('fooBar');
 
-        $location = Location\ClassPropertyLocation::create(
+        $location = AttributeCollector\Location\ClassPropertyLocation::create(
             $className,
             $propertyName,
         );
@@ -42,24 +40,24 @@ final class ClassPropertyLocationTest extends Framework\TestCase
 
     public function testEqualsReturnsFalseWhenTypesAreDifferent(): void
     {
-        $one = Location\ClassPropertyLocation::create(
-            Name\ClassName::fromString(self::class),
-            Name\PropertyName::fromString('fooBar'),
+        $one = AttributeCollector\Location\ClassPropertyLocation::create(
+            AttributeCollector\Name\ClassName::fromString(self::class),
+            AttributeCollector\Name\PropertyName::fromString('fooBar'),
         );
-        $two = $this->createStub(Location\Location::class);
+        $two = $this->createStub(AttributeCollector\Location\Location::class);
 
         self::assertFalse($one->equals($two));
     }
 
     public function testEqualsReturnsFalseWhenClassNamesAreDifferent(): void
     {
-        $one = Location\ClassPropertyLocation::create(
-            Name\ClassName::fromString(self::class),
-            Name\PropertyName::fromString('fooBar'),
+        $one = AttributeCollector\Location\ClassPropertyLocation::create(
+            AttributeCollector\Name\ClassName::fromString(self::class),
+            AttributeCollector\Name\PropertyName::fromString('fooBar'),
         );
-        $two = Location\ClassPropertyLocation::create(
-            Name\ClassName::fromString(parent::class),
-            Name\PropertyName::fromString('fooBar'),
+        $two = AttributeCollector\Location\ClassPropertyLocation::create(
+            AttributeCollector\Name\ClassName::fromString(parent::class),
+            AttributeCollector\Name\PropertyName::fromString('fooBar'),
         );
 
         self::assertFalse($one->equals($two));
@@ -67,13 +65,13 @@ final class ClassPropertyLocationTest extends Framework\TestCase
 
     public function testEqualsReturnsFalseWhenPropertyNamesAreDifferent(): void
     {
-        $one = Location\ClassPropertyLocation::create(
-            Name\ClassName::fromString(self::class),
-            Name\PropertyName::fromString('fooBar'),
+        $one = AttributeCollector\Location\ClassPropertyLocation::create(
+            AttributeCollector\Name\ClassName::fromString(self::class),
+            AttributeCollector\Name\PropertyName::fromString('fooBar'),
         );
-        $two = Location\ClassPropertyLocation::create(
-            Name\ClassName::fromString(self::class),
-            Name\PropertyName::fromString('barBaz'),
+        $two = AttributeCollector\Location\ClassPropertyLocation::create(
+            AttributeCollector\Name\ClassName::fromString(self::class),
+            AttributeCollector\Name\PropertyName::fromString('barBaz'),
         );
 
         self::assertFalse($one->equals($two));
@@ -81,13 +79,13 @@ final class ClassPropertyLocationTest extends Framework\TestCase
 
     public function testEqualsReturnsTrueWhenClassNamesAndPropertyNamesAreEqual(): void
     {
-        $one = Location\ClassPropertyLocation::create(
-            Name\ClassName::fromString(self::class),
-            Name\PropertyName::fromString('fooBar'),
+        $one = AttributeCollector\Location\ClassPropertyLocation::create(
+            AttributeCollector\Name\ClassName::fromString(self::class),
+            AttributeCollector\Name\PropertyName::fromString('fooBar'),
         );
-        $two = Location\ClassPropertyLocation::create(
-            Name\ClassName::fromString(self::class),
-            Name\PropertyName::fromString('fooBar'),
+        $two = AttributeCollector\Location\ClassPropertyLocation::create(
+            AttributeCollector\Name\ClassName::fromString(self::class),
+            AttributeCollector\Name\PropertyName::fromString('fooBar'),
         );
 
         self::assertTrue($one->equals($two));

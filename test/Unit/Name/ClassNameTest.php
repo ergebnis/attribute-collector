@@ -13,8 +13,7 @@ declare(strict_types=1);
 
 namespace Ergebnis\AttributeCollector\Test\Unit\Name;
 
-use Ergebnis\AttributeCollector\Exception;
-use Ergebnis\AttributeCollector\Name;
+use Ergebnis\AttributeCollector;
 use PHPUnit\Framework;
 
 /**
@@ -30,40 +29,40 @@ final class ClassNameTest extends Framework\TestCase
      */
     public function testFromStringRejectsInvalidValue(string $value): void
     {
-        $this->expectException(Exception\InvalidClassName::class);
+        $this->expectException(AttributeCollector\Exception\InvalidClassName::class);
 
-        Name\ClassName::fromString($value);
+        AttributeCollector\Name\ClassName::fromString($value);
     }
 
     public function testFromStringReturnsClassName(): void
     {
         $value = self::class;
 
-        $className = Name\ClassName::fromString($value);
+        $className = AttributeCollector\Name\ClassName::fromString($value);
 
         self::assertSame($value, $className->toString());
     }
 
     public function testEqualsReturnsFalseWhenValuesAreDifferent(): void
     {
-        $one = Name\ClassName::fromString(self::class);
-        $two = Name\ClassName::fromString(parent::class);
+        $one = AttributeCollector\Name\ClassName::fromString(self::class);
+        $two = AttributeCollector\Name\ClassName::fromString(parent::class);
 
         self::assertFalse($one->equals($two));
     }
 
     public function testEqualsReturnsTrueWhenValuesAreEqual(): void
     {
-        $one = Name\ClassName::fromString(self::class);
-        $two = Name\ClassName::fromString(self::class);
+        $one = AttributeCollector\Name\ClassName::fromString(self::class);
+        $two = AttributeCollector\Name\ClassName::fromString(self::class);
 
         self::assertTrue($one->equals($two));
     }
 
     public function testEqualsReturnsTrueWhenValuesAreEqualWithDifferentCase(): void
     {
-        $one = Name\ClassName::fromString('FoO');
-        $two = Name\ClassName::fromString('fOo');
+        $one = AttributeCollector\Name\ClassName::fromString('FoO');
+        $two = AttributeCollector\Name\ClassName::fromString('fOo');
 
         self::assertTrue($one->equals($two));
     }

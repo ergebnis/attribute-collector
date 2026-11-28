@@ -13,7 +13,7 @@ declare(strict_types=1);
 
 namespace Ergebnis\AttributeCollector\Name;
 
-use Ergebnis\AttributeCollector\Exception;
+use Ergebnis\AttributeCollector;
 
 final class PropertyName
 {
@@ -22,12 +22,12 @@ final class PropertyName
     }
 
     /**
-     * @throws Exception\InvalidPropertyName
+     * @throws AttributeCollector\Exception\InvalidPropertyName
      */
     public static function fromString(string $value): self
     {
         if ('' === \trim($value)) {
-            throw Exception\InvalidPropertyName::blankOrEmpty();
+            throw AttributeCollector\Exception\InvalidPropertyName::blankOrEmpty();
         }
 
         return new self($value);

@@ -13,7 +13,7 @@ declare(strict_types=1);
 
 namespace Ergebnis\AttributeCollector\Test\Unit\Exception;
 
-use Ergebnis\AttributeCollector\Exception;
+use Ergebnis\AttributeCollector;
 use PHPUnit\Framework;
 
 /**
@@ -23,7 +23,7 @@ final class InvalidParameterNameTest extends Framework\TestCase
 {
     public function testBlankOrEmptyReturnsException(): void
     {
-        $exception = Exception\InvalidParameterName::blankOrEmpty();
+        $exception = AttributeCollector\Exception\InvalidParameterName::blankOrEmpty();
 
         self::assertSame('Parameter name cannot be blank or empty.', $exception->getMessage());
     }

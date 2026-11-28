@@ -13,22 +13,18 @@ declare(strict_types=1);
 
 namespace Ergebnis\AttributeCollector\Collector;
 
-use Ergebnis\AttributeCollector\Attribute;
-use Ergebnis\AttributeCollector\AttributeCollection;
-use Ergebnis\AttributeCollector\Exception;
-use Ergebnis\AttributeCollector\Location;
-use Ergebnis\AttributeCollector\Name;
+use Ergebnis\AttributeCollector;
 
 final class TraversingAttributeFromClassNameCollector implements AttributeFromClassNameCollector
 {
-    public function collectFromClassName(Name\ClassName ...$classNames): AttributeCollection
+    public function collectFromClassName(AttributeCollector\Name\ClassName ...$classNames): AttributeCollector\AttributeCollection
     {
         $visitedLocationCollection = new VisitedLocationCollection();
 
         $attributes = [];
 
         foreach ($classNames as $className) {
-            $classLocation = Location\ClassLocation::create($className);
+            $classLocation = AttributeCollector\Location\ClassLocation::create($className);
 
             if ($visitedLocationCollection->has($classLocation)) {
                 continue;
@@ -37,29 +33,29 @@ final class TraversingAttributeFromClassNameCollector implements AttributeFromCl
             try {
                 $reflectionClass = new \ReflectionClass($className->toString());
             } catch (\ReflectionException $reflectionException) {
-                throw Exception\ClassCouldNotBeReflected::forClassLocationWithReflectionException(
+                throw AttributeCollector\Exception\ClassCouldNotBeReflected::forClassLocationWithReflectionException(
                     $classLocation,
                     $reflectionException,
                 );
             }
 
-            $classLocation = Location\ClassLocation::create(Name\ClassName::fromString($reflectionClass->getName()));
+            $classLocation = AttributeCollector\Location\ClassLocation::create(AttributeCollector\Name\ClassName::fromString($reflectionClass->getName()));
 
             foreach ($reflectionClass->getAttributes() as $reflectionAttributeLocatedOnClass) {
-                $attributes[] = Attribute::create(
+                $attributes[] = AttributeCollector\Attribute::create(
                     $classLocation,
                     $reflectionAttributeLocatedOnClass->newInstance(),
                 );
             }
 
             foreach ($reflectionClass->getReflectionConstants() as $reflectionConstant) {
-                $classConstantLocation = Location\ClassConstantLocation::create(
+                $classConstantLocation = AttributeCollector\Location\ClassConstantLocation::create(
                     $classLocation->className(),
-                    Name\ConstantName::fromString($reflectionConstant->getName()),
+                    AttributeCollector\Name\ConstantName::fromString($reflectionConstant->getName()),
                 );
 
                 foreach ($reflectionConstant->getAttributes() as $reflectionAttributeLocatedOnClassConstant) {
-                    $attributes[] = Attribute::create(
+                    $attributes[] = AttributeCollector\Attribute::create(
                         $classConstantLocation,
                         $reflectionAttributeLocatedOnClassConstant->newInstance(),
                     );
@@ -67,13 +63,13 @@ final class TraversingAttributeFromClassNameCollector implements AttributeFromCl
             }
 
             foreach ($reflectionClass->getProperties() as $reflectionProperty) {
-                $classPropertyLocation = Location\ClassPropertyLocation::create(
+                $classPropertyLocation = AttributeCollector\Location\ClassPropertyLocation::create(
                     $classLocation->className(),
-                    Name\PropertyName::fromString($reflectionProperty->getName()),
+                    AttributeCollector\Name\PropertyName::fromString($reflectionProperty->getName()),
                 );
 
                 foreach ($reflectionProperty->getAttributes() as $reflectionAttributeLocatedOnClassProperty) {
-                    $attributes[] = Attribute::create(
+                    $attributes[] = AttributeCollector\Attribute::create(
                         $classPropertyLocation,
                         $reflectionAttributeLocatedOnClassProperty->newInstance(),
                     );
@@ -81,27 +77,27 @@ final class TraversingAttributeFromClassNameCollector implements AttributeFromCl
             }
 
             foreach ($reflectionClass->getMethods() as $reflectionMethod) {
-                $classMethodLocation = Location\ClassMethodLocation::create(
+                $classMethodLocation = AttributeCollector\Location\ClassMethodLocation::create(
                     $classLocation->className(),
-                    Name\MethodName::fromString($reflectionMethod->getName()),
+                    AttributeCollector\Name\MethodName::fromString($reflectionMethod->getName()),
                 );
 
                 foreach ($reflectionMethod->getAttributes() as $reflectionAttributeLocatedOnMethod) {
-                    $attributes[] = Attribute::create(
+                    $attributes[] = AttributeCollector\Attribute::create(
                         $classMethodLocation,
                         $reflectionAttributeLocatedOnMethod->newInstance(),
                     );
                 }
 
                 foreach ($reflectionMethod->getParameters() as $reflectionMethodParameter) {
-                    $classMethodParameterLocation = Location\ClassMethodParameterLocation::create(
+                    $classMethodParameterLocation = AttributeCollector\Location\ClassMethodParameterLocation::create(
                         $classLocation->className(),
                         $classMethodLocation->methodName(),
-                        Name\ParameterName::fromString($reflectionMethodParameter->getName()),
+                        AttributeCollector\Name\ParameterName::fromString($reflectionMethodParameter->getName()),
                     );
 
                     foreach ($reflectionMethodParameter->getAttributes() as $reflectionAttributeLocatedOnMethodParameter) {
-                        $attributes[] = Attribute::create(
+                        $attributes[] = AttributeCollector\Attribute::create(
                             $classMethodParameterLocation,
                             $reflectionAttributeLocatedOnMethodParameter->newInstance(),
                         );
@@ -112,6 +108,6 @@ final class TraversingAttributeFromClassNameCollector implements AttributeFromCl
             $visitedLocationCollection->add($classLocation);
         }
 
-        return AttributeCollection::create(...$attributes);
+        return AttributeCollector\AttributeCollection::create(...$attributes);
     }
 }

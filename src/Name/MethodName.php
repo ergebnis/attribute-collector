@@ -13,7 +13,7 @@ declare(strict_types=1);
 
 namespace Ergebnis\AttributeCollector\Name;
 
-use Ergebnis\AttributeCollector\Exception;
+use Ergebnis\AttributeCollector;
 
 final class MethodName
 {
@@ -22,12 +22,12 @@ final class MethodName
     }
 
     /**
-     * @throws Exception\InvalidMethodName
+     * @throws AttributeCollector\Exception\InvalidMethodName
      */
     public static function fromString(string $value): self
     {
         if ('' === \trim($value)) {
-            throw Exception\InvalidMethodName::blankOrEmpty();
+            throw AttributeCollector\Exception\InvalidMethodName::blankOrEmpty();
         }
 
         return new self($value);

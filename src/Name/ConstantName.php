@@ -13,7 +13,7 @@ declare(strict_types=1);
 
 namespace Ergebnis\AttributeCollector\Name;
 
-use Ergebnis\AttributeCollector\Exception;
+use Ergebnis\AttributeCollector;
 
 final class ConstantName
 {
@@ -22,12 +22,12 @@ final class ConstantName
     }
 
     /**
-     * @throws Exception\InvalidConstantName
+     * @throws AttributeCollector\Exception\InvalidConstantName
      */
     public static function fromString(string $value): self
     {
         if ('' === \trim($value)) {
-            throw Exception\InvalidConstantName::blankOrEmpty();
+            throw AttributeCollector\Exception\InvalidConstantName::blankOrEmpty();
         }
 
         return new self($value);

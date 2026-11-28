@@ -13,14 +13,12 @@ declare(strict_types=1);
 
 namespace Ergebnis\AttributeCollector\Collector;
 
-use Ergebnis\AttributeCollector\AttributeCollection;
-use Ergebnis\AttributeCollector\Exception;
-use Ergebnis\AttributeCollector\Name;
+use Ergebnis\AttributeCollector;
 
 interface AttributeFromClassNameCollector
 {
     /**
-     * @throws Exception\ClassCouldNotBeReflected
+     * @throws AttributeCollector\Exception\ClassCouldNotBeReflected
      */
-    public function collectFromClassName(Name\ClassName ...$classNames): AttributeCollection;
+    public function collectFromClassName(AttributeCollector\Name\ClassName ...$classNames): AttributeCollector\AttributeCollection;
 }

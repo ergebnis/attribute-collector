@@ -13,11 +13,11 @@ declare(strict_types=1);
 
 namespace Ergebnis\AttributeCollector\Exception;
 
-use Ergebnis\AttributeCollector\Location;
+use Ergebnis\AttributeCollector;
 
 final class FunctionDoesNotHaveParameter extends \RuntimeException implements Exception
 {
-    public static function forFunctionParameterLocation(Location\FunctionParameterLocation $functionParameterLocation): self
+    public static function forFunctionParameterLocation(AttributeCollector\Location\FunctionParameterLocation $functionParameterLocation): self
     {
         return new self(\sprintf(
             'Function "%s()" does not have a parameter "$%s".',

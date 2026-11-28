@@ -13,7 +13,7 @@ declare(strict_types=1);
 
 namespace Ergebnis\AttributeCollector\Test\Unit\Exception;
 
-use Ergebnis\AttributeCollector\Exception;
+use Ergebnis\AttributeCollector;
 use PHPUnit\Framework;
 
 /**
@@ -23,7 +23,7 @@ final class InvalidClassNameTest extends Framework\TestCase
 {
     public function testBlankOrEmptyReturnsException(): void
     {
-        $exception = Exception\InvalidClassName::blankOrEmpty();
+        $exception = AttributeCollector\Exception\InvalidClassName::blankOrEmpty();
 
         self::assertSame('Class name cannot be blank or empty.', $exception->getMessage());
     }

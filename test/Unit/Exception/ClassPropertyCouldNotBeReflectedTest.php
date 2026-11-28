@@ -13,10 +13,7 @@ declare(strict_types=1);
 
 namespace Ergebnis\AttributeCollector\Test\Unit\Exception;
 
-use Ergebnis\AttributeCollector\Exception;
-use Ergebnis\AttributeCollector\Location;
-use Ergebnis\AttributeCollector\Name;
-use Ergebnis\AttributeCollector\Test;
+use Ergebnis\AttributeCollector;
 use PHPUnit\Framework;
 
 /**
@@ -28,17 +25,17 @@ use PHPUnit\Framework;
  */
 final class ClassPropertyCouldNotBeReflectedTest extends Framework\TestCase
 {
-    use Test\Util\Helper;
+    use AttributeCollector\Test\Util\Helper;
 
     public function testForClassPropertyLocationWithReflectionExceptionReturnsException(): void
     {
-        $classPropertyLocation = Location\ClassPropertyLocation::create(
-            Name\ClassName::fromString(Test\Fixture\ClassUsingAttributes::class),
-            Name\PropertyName::fromString('FOO'),
+        $classPropertyLocation = AttributeCollector\Location\ClassPropertyLocation::create(
+            AttributeCollector\Name\ClassName::fromString(AttributeCollector\Test\Fixture\ClassUsingAttributes::class),
+            AttributeCollector\Name\PropertyName::fromString('FOO'),
         );
         $reflectionException = new \ReflectionException(self::faker()->sentence());
 
-        $exception = Exception\ClassPropertyCouldNotBeReflected::forClassPropertyLocationWithReflectionException(
+        $exception = AttributeCollector\Exception\ClassPropertyCouldNotBeReflected::forClassPropertyLocationWithReflectionException(
             $classPropertyLocation,
             $reflectionException,
         );

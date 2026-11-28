@@ -13,12 +13,12 @@ declare(strict_types=1);
 
 namespace Ergebnis\AttributeCollector\Exception;
 
-use Ergebnis\AttributeCollector\Location;
+use Ergebnis\AttributeCollector;
 
 final class ClassCouldNotBeReflected extends \RuntimeException implements Exception
 {
     public static function forClassLocationWithReflectionException(
-        Location\ClassLocation $classLocation,
+        AttributeCollector\Location\ClassLocation $classLocation,
         \ReflectionException $reflectionException,
     ): self {
         return new self(

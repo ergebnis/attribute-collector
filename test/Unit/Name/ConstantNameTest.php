@@ -13,9 +13,7 @@ declare(strict_types=1);
 
 namespace Ergebnis\AttributeCollector\Test\Unit\Name;
 
-use Ergebnis\AttributeCollector\Exception;
-use Ergebnis\AttributeCollector\Name;
-use Ergebnis\AttributeCollector\Test;
+use Ergebnis\AttributeCollector;
 use PHPUnit\Framework;
 
 /**
@@ -25,7 +23,7 @@ use PHPUnit\Framework;
  */
 final class ConstantNameTest extends Framework\TestCase
 {
-    use Test\Util\Helper;
+    use AttributeCollector\Test\Util\Helper;
 
     /**
      * @dataProvider \Ergebnis\DataProvider\StringProvider::blank
@@ -33,16 +31,16 @@ final class ConstantNameTest extends Framework\TestCase
      */
     public function testFromStringRejectsInvalidValue(string $value): void
     {
-        $this->expectException(Exception\InvalidConstantName::class);
+        $this->expectException(AttributeCollector\Exception\InvalidConstantName::class);
 
-        Name\ConstantName::fromString($value);
+        AttributeCollector\Name\ConstantName::fromString($value);
     }
 
     public function testFromStringReturnsConstantName(): void
     {
         $value = self::faker()->word();
 
-        $constantName = Name\ConstantName::fromString($value);
+        $constantName = AttributeCollector\Name\ConstantName::fromString($value);
 
         self::assertSame($value, $constantName->toString());
     }
@@ -51,8 +49,8 @@ final class ConstantNameTest extends Framework\TestCase
     {
         $faker = self::faker()->unique();
 
-        $one = Name\ConstantName::fromString($faker->word());
-        $two = Name\ConstantName::fromString($faker->word());
+        $one = AttributeCollector\Name\ConstantName::fromString($faker->word());
+        $two = AttributeCollector\Name\ConstantName::fromString($faker->word());
 
         self::assertFalse($one->equals($two));
     }
@@ -61,16 +59,16 @@ final class ConstantNameTest extends Framework\TestCase
     {
         $value = self::faker()->word();
 
-        $one = Name\ConstantName::fromString($value);
-        $two = Name\ConstantName::fromString($value);
+        $one = AttributeCollector\Name\ConstantName::fromString($value);
+        $two = AttributeCollector\Name\ConstantName::fromString($value);
 
         self::assertTrue($one->equals($two));
     }
 
     public function testEqualsReturnsTrueWhenValuesAreEqualWithDifferentCase(): void
     {
-        $one = Name\ConstantName::fromString('FoO');
-        $two = Name\ConstantName::fromString('fOo');
+        $one = AttributeCollector\Name\ConstantName::fromString('FoO');
+        $two = AttributeCollector\Name\ConstantName::fromString('fOo');
 
         self::assertTrue($one->equals($two));
     }

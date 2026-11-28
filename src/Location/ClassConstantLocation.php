@@ -13,19 +13,19 @@ declare(strict_types=1);
 
 namespace Ergebnis\AttributeCollector\Location;
 
-use Ergebnis\AttributeCollector\Name;
+use Ergebnis\AttributeCollector;
 
 final class ClassConstantLocation implements Location
 {
     private function __construct(
-        private Name\ClassName $className,
-        private Name\ConstantName $constantName,
+        private AttributeCollector\Name\ClassName $className,
+        private AttributeCollector\Name\ConstantName $constantName,
     ) {
     }
 
     public static function create(
-        Name\ClassName $className,
-        Name\ConstantName $constantName,
+        AttributeCollector\Name\ClassName $className,
+        AttributeCollector\Name\ConstantName $constantName,
     ): self {
         return new self(
             $className,
@@ -33,12 +33,12 @@ final class ClassConstantLocation implements Location
         );
     }
 
-    public function className(): Name\ClassName
+    public function className(): AttributeCollector\Name\ClassName
     {
         return $this->className;
     }
 
-    public function constantName(): Name\ConstantName
+    public function constantName(): AttributeCollector\Name\ConstantName
     {
         return $this->constantName;
     }
@@ -53,10 +53,6 @@ final class ClassConstantLocation implements Location
             return false;
         }
 
-        if (!$this->constantName->equals($other->constantName)) {
-            return false;
-        }
-
-        return true;
+        return $this->constantName->equals($other->constantName);
     }
 }

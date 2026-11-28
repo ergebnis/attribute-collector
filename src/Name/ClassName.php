@@ -13,7 +13,7 @@ declare(strict_types=1);
 
 namespace Ergebnis\AttributeCollector\Name;
 
-use Ergebnis\AttributeCollector\Exception;
+use Ergebnis\AttributeCollector;
 
 final class ClassName
 {
@@ -27,12 +27,12 @@ final class ClassName
     /**
      * @param class-string $value
      *
-     * @throws Exception\InvalidClassName
+     * @throws AttributeCollector\Exception\InvalidClassName
      */
     public static function fromString(string $value): self
     {
         if ('' === \trim($value)) {
-            throw Exception\InvalidClassName::blankOrEmpty();
+            throw AttributeCollector\Exception\InvalidClassName::blankOrEmpty();
         }
 
         return new self($value);

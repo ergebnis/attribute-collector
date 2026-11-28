@@ -13,9 +13,7 @@ declare(strict_types=1);
 
 namespace Ergebnis\AttributeCollector\Test\Unit\Location;
 
-use Ergebnis\AttributeCollector\Location;
-use Ergebnis\AttributeCollector\Name;
-use Ergebnis\AttributeCollector\Test;
+use Ergebnis\AttributeCollector;
 use PHPUnit\Framework;
 
 /**
@@ -29,11 +27,11 @@ final class ClassMethodParameterLocationTest extends Framework\TestCase
 {
     public function testCreateReturnsLocation(): void
     {
-        $className = Name\ClassName::fromString(Test\Fixture\ClassUsingAttributes::class);
-        $methodName = Name\MethodName::fromString('barBaz');
-        $parameterName = Name\ParameterName::fromString('bazQux');
+        $className = AttributeCollector\Name\ClassName::fromString(AttributeCollector\Test\Fixture\ClassUsingAttributes::class);
+        $methodName = AttributeCollector\Name\MethodName::fromString('barBaz');
+        $parameterName = AttributeCollector\Name\ParameterName::fromString('bazQux');
 
-        $location = Location\ClassMethodParameterLocation::create(
+        $location = AttributeCollector\Location\ClassMethodParameterLocation::create(
             $className,
             $methodName,
             $parameterName,
@@ -46,27 +44,27 @@ final class ClassMethodParameterLocationTest extends Framework\TestCase
 
     public function testEqualsReturnsFalseWhenTypesAreDifferent(): void
     {
-        $one = Location\ClassMethodParameterLocation::create(
-            Name\ClassName::fromString(self::class),
-            Name\MethodName::fromString('fooBar'),
-            Name\ParameterName::fromString('barBaz'),
+        $one = AttributeCollector\Location\ClassMethodParameterLocation::create(
+            AttributeCollector\Name\ClassName::fromString(self::class),
+            AttributeCollector\Name\MethodName::fromString('fooBar'),
+            AttributeCollector\Name\ParameterName::fromString('barBaz'),
         );
-        $two = $this->createStub(Location\Location::class);
+        $two = $this->createStub(AttributeCollector\Location\Location::class);
 
         self::assertFalse($one->equals($two));
     }
 
     public function testEqualsReturnsFalseWhenClassNamesAreDifferent(): void
     {
-        $one = Location\ClassMethodParameterLocation::create(
-            Name\ClassName::fromString(self::class),
-            Name\MethodName::fromString('fooBar'),
-            Name\ParameterName::fromString('barBaz'),
+        $one = AttributeCollector\Location\ClassMethodParameterLocation::create(
+            AttributeCollector\Name\ClassName::fromString(self::class),
+            AttributeCollector\Name\MethodName::fromString('fooBar'),
+            AttributeCollector\Name\ParameterName::fromString('barBaz'),
         );
-        $two = Location\ClassMethodParameterLocation::create(
-            Name\ClassName::fromString(parent::class),
-            Name\MethodName::fromString('fooBar'),
-            Name\ParameterName::fromString('barBaz'),
+        $two = AttributeCollector\Location\ClassMethodParameterLocation::create(
+            AttributeCollector\Name\ClassName::fromString(parent::class),
+            AttributeCollector\Name\MethodName::fromString('fooBar'),
+            AttributeCollector\Name\ParameterName::fromString('barBaz'),
         );
 
         self::assertFalse($one->equals($two));
@@ -74,15 +72,15 @@ final class ClassMethodParameterLocationTest extends Framework\TestCase
 
     public function testEqualsReturnsFalseWhenMethodNamesAreDifferent(): void
     {
-        $one = Location\ClassMethodParameterLocation::create(
-            Name\ClassName::fromString(self::class),
-            Name\MethodName::fromString('fooBar'),
-            Name\ParameterName::fromString('barBaz'),
+        $one = AttributeCollector\Location\ClassMethodParameterLocation::create(
+            AttributeCollector\Name\ClassName::fromString(self::class),
+            AttributeCollector\Name\MethodName::fromString('fooBar'),
+            AttributeCollector\Name\ParameterName::fromString('barBaz'),
         );
-        $two = Location\ClassMethodParameterLocation::create(
-            Name\ClassName::fromString(self::class),
-            Name\MethodName::fromString('bazQux'),
-            Name\ParameterName::fromString('barBaz'),
+        $two = AttributeCollector\Location\ClassMethodParameterLocation::create(
+            AttributeCollector\Name\ClassName::fromString(self::class),
+            AttributeCollector\Name\MethodName::fromString('bazQux'),
+            AttributeCollector\Name\ParameterName::fromString('barBaz'),
         );
 
         self::assertFalse($one->equals($two));
@@ -90,15 +88,15 @@ final class ClassMethodParameterLocationTest extends Framework\TestCase
 
     public function testEqualsReturnsFalseWhenParameterNamesAreDifferent(): void
     {
-        $one = Location\ClassMethodParameterLocation::create(
-            Name\ClassName::fromString(self::class),
-            Name\MethodName::fromString('fooBar'),
-            Name\ParameterName::fromString('barBaz'),
+        $one = AttributeCollector\Location\ClassMethodParameterLocation::create(
+            AttributeCollector\Name\ClassName::fromString(self::class),
+            AttributeCollector\Name\MethodName::fromString('fooBar'),
+            AttributeCollector\Name\ParameterName::fromString('barBaz'),
         );
-        $two = Location\ClassMethodParameterLocation::create(
-            Name\ClassName::fromString(self::class),
-            Name\MethodName::fromString('fooBar'),
-            Name\ParameterName::fromString('bazQux'),
+        $two = AttributeCollector\Location\ClassMethodParameterLocation::create(
+            AttributeCollector\Name\ClassName::fromString(self::class),
+            AttributeCollector\Name\MethodName::fromString('fooBar'),
+            AttributeCollector\Name\ParameterName::fromString('bazQux'),
         );
 
         self::assertFalse($one->equals($two));
@@ -106,15 +104,15 @@ final class ClassMethodParameterLocationTest extends Framework\TestCase
 
     public function testEqualsReturnsTrueWhenClassNamesMethodNamesAndPropertyNamesAreEqual(): void
     {
-        $one = Location\ClassMethodParameterLocation::create(
-            Name\ClassName::fromString(self::class),
-            Name\MethodName::fromString('fooBar'),
-            Name\ParameterName::fromString('barBaz'),
+        $one = AttributeCollector\Location\ClassMethodParameterLocation::create(
+            AttributeCollector\Name\ClassName::fromString(self::class),
+            AttributeCollector\Name\MethodName::fromString('fooBar'),
+            AttributeCollector\Name\ParameterName::fromString('barBaz'),
         );
-        $two = Location\ClassMethodParameterLocation::create(
-            Name\ClassName::fromString(self::class),
-            Name\MethodName::fromString('fooBar'),
-            Name\ParameterName::fromString('barBaz'),
+        $two = AttributeCollector\Location\ClassMethodParameterLocation::create(
+            AttributeCollector\Name\ClassName::fromString(self::class),
+            AttributeCollector\Name\MethodName::fromString('fooBar'),
+            AttributeCollector\Name\ParameterName::fromString('barBaz'),
         );
 
         self::assertTrue($one->equals($two));

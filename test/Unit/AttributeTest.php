@@ -13,10 +13,7 @@ declare(strict_types=1);
 
 namespace Ergebnis\AttributeCollector\Test\Unit;
 
-use Ergebnis\AttributeCollector\Attribute;
-use Ergebnis\AttributeCollector\Location;
-use Ergebnis\AttributeCollector\Name;
-use Ergebnis\AttributeCollector\Test;
+use Ergebnis\AttributeCollector;
 use PHPUnit\Framework;
 
 /**
@@ -27,24 +24,24 @@ use PHPUnit\Framework;
  */
 final class AttributeTest extends Framework\TestCase
 {
-    use Test\Util\Helper;
+    use AttributeCollector\Test\Util\Helper;
 
     public function testCreateReturnsAttribute(): void
     {
         $faker = self::faker();
 
-        $instance = new Test\Fixture\AttributeWithParameters(
+        $instance = new AttributeCollector\Test\Fixture\AttributeWithParameters(
             $faker->word(),
             $faker->numberBetween(1),
         );
-        $location = Location\ClassLocation::create(Name\ClassName::fromString(Test\Fixture\ClassUsingAttributeWithParameters::class));
+        $location = AttributeCollector\Location\ClassLocation::create(AttributeCollector\Name\ClassName::fromString(AttributeCollector\Test\Fixture\ClassUsingAttributeWithParameters::class));
 
-        $attribute = Attribute::create(
+        $attribute = AttributeCollector\Attribute::create(
             $location,
             $instance,
         );
 
-        self::assertEquals(Name\ClassName::fromString($instance::class), $attribute->className());
+        self::assertEquals(AttributeCollector\Name\ClassName::fromString($instance::class), $attribute->className());
         self::assertSame($location, $attribute->location());
         self::assertNotSame($instance, $attribute->instance());
         self::assertEquals($instance, $attribute->instance());

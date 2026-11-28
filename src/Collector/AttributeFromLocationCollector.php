@@ -13,22 +13,20 @@ declare(strict_types=1);
 
 namespace Ergebnis\AttributeCollector\Collector;
 
-use Ergebnis\AttributeCollector\AttributeCollection;
-use Ergebnis\AttributeCollector\Exception;
-use Ergebnis\AttributeCollector\Location;
+use Ergebnis\AttributeCollector;
 
 interface AttributeFromLocationCollector
 {
     /**
-     * @throws Exception\AttributeCollectionNotSupported
-     * @throws Exception\ClassConstantCouldNotBeReflected
-     * @throws Exception\ClassCouldNotBeReflected
-     * @throws Exception\ClassMethodCouldNotBeReflected
-     * @throws Exception\ClassMethodDoesNotHaveParameter
-     * @throws Exception\ClassPropertyCouldNotBeReflected
-     * @throws Exception\ConstantCouldNotBeReflected
-     * @throws Exception\FunctionCouldNotBeReflected
-     * @throws Exception\FunctionDoesNotHaveParameter
+     * @throws AttributeCollector\Exception\AttributeCollectionNotSupported
+     * @throws AttributeCollector\Exception\ClassConstantCouldNotBeReflected
+     * @throws AttributeCollector\Exception\ClassCouldNotBeReflected
+     * @throws AttributeCollector\Exception\ClassMethodCouldNotBeReflected
+     * @throws AttributeCollector\Exception\ClassMethodDoesNotHaveParameter
+     * @throws AttributeCollector\Exception\ClassPropertyCouldNotBeReflected
+     * @throws AttributeCollector\Exception\ConstantCouldNotBeReflected
+     * @throws AttributeCollector\Exception\FunctionCouldNotBeReflected
+     * @throws AttributeCollector\Exception\FunctionDoesNotHaveParameter
      */
-    public function collectFromLocation(Location\Location ...$locations): AttributeCollection;
+    public function collectFromLocation(AttributeCollector\Location\Location ...$locations): AttributeCollector\AttributeCollection;
 }

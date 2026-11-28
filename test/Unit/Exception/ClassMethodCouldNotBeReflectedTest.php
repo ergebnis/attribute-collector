@@ -13,10 +13,7 @@ declare(strict_types=1);
 
 namespace Ergebnis\AttributeCollector\Test\Unit\Exception;
 
-use Ergebnis\AttributeCollector\Exception;
-use Ergebnis\AttributeCollector\Location;
-use Ergebnis\AttributeCollector\Name;
-use Ergebnis\AttributeCollector\Test;
+use Ergebnis\AttributeCollector;
 use PHPUnit\Framework;
 
 /**
@@ -28,17 +25,17 @@ use PHPUnit\Framework;
  */
 final class ClassMethodCouldNotBeReflectedTest extends Framework\TestCase
 {
-    use Test\Util\Helper;
+    use AttributeCollector\Test\Util\Helper;
 
     public function testForClassMethodLocationWithReflectionExceptionReturnsException(): void
     {
-        $classMethodLocation = Location\ClassMethodLocation::create(
-            Name\ClassName::fromString(Test\Fixture\ClassUsingAttributes::class),
-            Name\MethodName::fromString('bazQux'),
+        $classMethodLocation = AttributeCollector\Location\ClassMethodLocation::create(
+            AttributeCollector\Name\ClassName::fromString(AttributeCollector\Test\Fixture\ClassUsingAttributes::class),
+            AttributeCollector\Name\MethodName::fromString('bazQux'),
         );
         $reflectionException = new \ReflectionException(self::faker()->sentence());
 
-        $exception = Exception\ClassMethodCouldNotBeReflected::forClassMethodLocationWithReflectionException(
+        $exception = AttributeCollector\Exception\ClassMethodCouldNotBeReflected::forClassMethodLocationWithReflectionException(
             $classMethodLocation,
             $reflectionException,
         );
